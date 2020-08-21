@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<!-- MyBatis 작동 규칙 정의 -->
+	<settings>
+		<setting name="cacheEnabled" value="false" />
+		<!-- <setting name="useGenereateKeys" value="false" /> -->
+		<setting name="mapUnderscoreToCamelCase" value="true" />
+		<setting name="jdbcTypeForNull" value="NULL"/>
+	</settings>
+
+	<!-- 클래스 별칭 설정 -->
+	<typeAliases>
+		<typeAlias alias="boardVO"
+			type="com.project.study.board.model.BoardVO" />
+		<typeAlias alias="memberVO"
+			type="com.project.study.member.model.MemberVO" />
+		<typeAlias alias="commentVO"
+			type="com.project.study.board.model.CommentVO" />
+		<typeAlias alias="studyVO"
+			type="com.project.study.study.model.StudyVO" />
+		<typeAlias alias="studyDetailVO"
+			type="com.project.study.study.model.StudyDetailVO" />
+		<typeAlias alias="qnaVO"
+			type="com.project.study.qna.model.QnAVO" />	
+		<typeAlias alias="fileVO"
+			type="com.project.study.file.model.FileVO" />	
+	
+	</typeAliases>
+
+</configuration>

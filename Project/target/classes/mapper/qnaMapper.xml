@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="qnaDAO">
+
+	<!-- 스터디 별 QnA 목록 -->
+	<select id="getQnAList" parameterType="int" resultType="qnaVO">
+		select qna_num, qna_title, userid, writedate, views
+		from qna
+		where board_num = #{boardNum}
+	</select>
+
+	<!-- QnA 상세조회 -->
+	<select id="getQnA" parameterType="int" resultType="qnaVO">
+		select *
+		from qna
+		where qna_num = #{qnaNum}
+	</select>
+
+	<!-- QnA 삽입 -->
+	<insert id="insertQnA" parameterType="qnaVO">
+		insert into
+		qna(board_num, qna_title, qna_content, userid)
+		values(#{boardNum}, #{qnaTitle}, #{qnaContent}, #{userId})
+	</insert>
+
+	<!-- QnA 수정 -->
+	<update id="updateQnA" parameterType="qnaVO">
+		update qna
+		set qna_title = #{qnaTitle}, qna_content=#{qnaContent}
+		where qna_num = #{qnaNum}
+	</update>
+
+	<!-- QnA 삭제 -->
+	<delete id="deleteQnA" parameterType="int">
+		delete from qna
+		where qna_num = #{qnaNum}
+	</delete>
+
+	<!-- QnA 조회수 올리기 -->
+	<update id="increaseViews" parameterType="int">
+		update qna
+		set views = views +1
+		where qna_num = #{qnaNum}
+	</update>
+</mapper>
+

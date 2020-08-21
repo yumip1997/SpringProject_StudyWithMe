@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="boardDAO">
+	<!-- 스터디 모집 글 목록 -->
+	<select id="getBoardList" resultType="boardVO">
+		select board_num, board_title, study_type,
+		writedate, views, likes, userid, enabled
+		from board
+		order by board_num desc
+	</select>
+	
+	<!-- 스터디 타입에 따른 목록 -->
+	<select id="getBoardListbyType" parameterType="String" resultType="boardVO">
+		select board_num, board_title, study_type,
+		writedate, views, likes, userid, enabled
+		from board
+		where study_type= #{studyType}
+		order by board_num desc, writedate desc
+	</select>
+
+	<!-- 스터디 모집 글 상세 조회 -->
+	<select id="getBoard" parameterType="int" resultType="boardVO">
+		select *
+		from board
+		where board_num = #{boardNum}
+	</select>
+	
+	<!-- 스터디 모집 글 검색 -->
+	<select id="searchBoard" resultType="boardVO">
+	select board_num, board_title, study_type,
+	writedate, views, likes, userid, enabled
+	from board
+	<include refid="completedSearch"></include>
+	order by board_num desc, writedate desc
+	</select>
+	
+	<!-- 검색된 스터디의 수 -->
+	<select id="countBoard" resultType="int">
+	select count(*)
+	from board
+	<include refid="completedSearch"></include>
+	</select>
+	
+	<!-- 스터디 검색 sql -->
+	<sql id="search">
+	<choose>
+	<when test="searchOption == 'all'">
+	where board_title like concat('%', #{keyword}, '%')
+	or board_content like concat('%', #{keyword}, '%')
+	</when>
+	<otherwise>
+	where ${searchOption} like concat('%', #{keyword}, '%')
+	</otherwise>
+	</choose>
+	</sql>
+	
+	<sql id="completedSearch">
+	<choose>
+	<when test="studyType !=null and !studyType.equals('')">
+	<include refid="search"></include>
+	and study_type = #{studyType}
+	</when>
+	<otherwise>
+	<include refid="search"></include>
+	</otherwise>
+	</choose>
+	</sql>
+
+	<!-- 스터디 모집 글 삽입 -->
+	<insert id="insertBoard" parameterType="boardVO">
+		insert into board(board_title,
+		board_content, study_title, study_type, userid)
+		values(#{boardTitle}, #{boardContent}, #{studyTitle}, #{studyType}, #{userId})
+	</insert>
+
+	<!-- 스터디 모집 글 수정 -->
+	<update id="updateBoard" parameterType="boardVO">
+		update board
+		set board_title = #{boardTitle}, board_content = #{boardContent},
+		study_title = #{studyTitle}, study_type = #{studyType}
+		where board_num = #{boardNum}
+	</update>
+	
+	<!-- 스터디 모집 마감 여부 변경 -->
+	<update id="updateCloseBoard" parameterType="java.util.HashMap">
+	update board set
+	enabled = #{enabled}
+	where board_num = #{boardNum}
+	</update>
+
+	<!-- 특정 회원 스터디 모집 글 삭제 -->
+	<delete id="deleteBoardbyMem" parameterType="String">
+		delete from board
+		where userId = #{userId}
+	</delete>
+
+	<!-- 조회수 올리기 -->
+	<update id="increaseViews" parameterType="int">
+		update board
+		set views = views+1
+		where board_num = #{boardNum}
+	</update>
+	
+	<!-- 스터디 모집글 번호의 최대 값 -->
+	<select id="getMaxBoardNum" resultType="int">
+	select max(board_num) from board;
+	</select>
+</mapper>

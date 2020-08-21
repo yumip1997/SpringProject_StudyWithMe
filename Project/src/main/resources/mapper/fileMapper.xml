@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="fileDAO">
+
+<!-- 스터디 별 파일 목록 -->
+<select id="getFileList" parameterType="int" resultType="fileVO">
+select file_num, file_title, file_upload_date, userid ,views
+from file
+where board_num = #{boardNum}
+</select>
+
+<!-- 파일 상세조회  & 다운로드-->
+<select id="getFile" parameterType="int" resultType="fileVO">
+select *
+from file
+where file_num = #{fileNum}
+</select>
+
+<!-- 파일 업로드 -->
+<insert id="uploadFile" parameterType="fileVO">
+insert into
+file(board_num, file_num, file_title, file_content, file_size,
+file_content_type, file_upload_date, file_date, userid)
+values(#{boardNum}, #{fileNum}), #{fileTitle}, #{fileContent}, #{fileSize},
+#{fileContentType}, #{fileUploadDate}, #{fileDate}, #{userId})
+</insert>
+
+<!-- 파일 수정 -->
+<update id="updateFile" parameterType="fileVO">
+update file set 
+file_title = #{fileTitle}, file_content = #{fileContent}, file_size = #{fileSize},
+file_content_type = #{fileContentType}, file_data = ${fileData} 
+where file_num = #{fileNum}
+</update>
+
+<!-- 파일 삭제 -->
+<delete id="deleteFile" parameterType="int">
+delete from file
+where file_num = #{fileNum}
+</delete>
+
+</mapper>
