@@ -9,16 +9,23 @@ import org.hibernate.validator.constraints.Length;
 public class FileVO {
 
 	private int boardNum;
+	
 	private int fileNum;
 	
 	@Length(min=2, max=20)
 	@NotEmpty
 	private String fileTitle;
+	
 	private String fileContent;
+	
 	private long fileSize;
+	
 	private String fileContentType;
+	
 	private Date fileUploadDate;
+	
 	private byte[] fileData;
+	
 	private String userId;
 
 	public int getBoardNum() {

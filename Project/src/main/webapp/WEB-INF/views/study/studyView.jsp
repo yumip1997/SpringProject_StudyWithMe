@@ -16,7 +16,7 @@
 <jsp:include page="/WEB-INF/resources/incl/header.jsp" />
 <a href="/study/chatRoom">실시간 채팅하기</a>
 <a href="/study/qna/qnaList/${study.boardNum}">QnA</a>
-<a href="/study/file/fileList?boardNum=${study.boardNum}">자료실</a>
+<a href="/study/file/fileList/${study.boardNum}">자료실</a>
 
 <div id="container">
 </div>

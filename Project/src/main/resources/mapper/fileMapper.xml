@@ -23,7 +23,7 @@ insert into
 file(board_num, file_num, file_title, file_content, file_size,
 file_content_type, file_upload_date, file_date, userid)
 values(#{boardNum}, #{fileNum}), #{fileTitle}, #{fileContent}, #{fileSize},
-#{fileContentType}, #{fileUploadDate}, #{fileDate}, #{userId})
+#{fileContentType}, #{fileUploadDate}, #{fileData}, #{userId})
 </insert>
 
 <!-- 파일 수정 -->

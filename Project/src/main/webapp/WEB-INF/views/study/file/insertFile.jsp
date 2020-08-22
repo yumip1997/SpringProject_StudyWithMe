@@ -19,8 +19,8 @@
 	<div class="container">
 		<h2>파일 업로드</h2>
 		<form:form action="/study/file/insertFile" method="post"
-			modelAttribute="file">
-			<input type="hidden" value="${qna.boardNum}" name="boardNum">
+			modelAttribute="file" enctype="multipart/form-data">
+			<input type="hidden" value="${boardNum}" name="boardNum">
 			<table class="table table-striped">
 				<tr>
 					<th>파일 제목</th>
@@ -33,10 +33,11 @@
 						<form:errors path="fileContent" /></td>
 				</tr>
 			</table>
+			<input type="file" name="file">
 			<input type="submit" value="등록하기" class="btn">
 			<input type="reset" value="초기화하기">
 			<input type="button" value="목록보기"
-				onclick="location.href='/study/qnaList/'+${qna.boardNum}">
+				onclick="location.href='/study/file/fileList/'+${boardNum}">
 		</form:form>
 	</div>
 </body>
