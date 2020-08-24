@@ -42,13 +42,13 @@ public class FileController {
 	}
 	
 	@PostMapping("/insertFile")
-	String insertQnA(@ModelAttribute("file")@Valid FileVO newfile,
+	String insertQnA(@ModelAttribute("file")@Valid FileVO file,
 			BindingResult result, Principal principal, @RequestParam("boardNum")int boardNum) {
 		
 		if(result.hasErrors()) {
 			return "/study/file/insertFile";
 		}
-		
+	
 		return "redirect:/file/fileList/"+boardNum;
 	}
 	

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans:beans
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<beans:beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:beans="http://www.springframework.org/schema/beans"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:security="http://www.springframework.org/schema/security"
@@ -34,9 +33,12 @@
 		up static resources in the ${webappRoot}/resources directory -->
 	<mvc:resources mapping="/resources/**"
 		location="/resources/" />
-	<mvc:resources location="/WEB-INF/resources/css/" mapping="/css/**" />
-	<mvc:resources location="/WEB-INF/resources/js/" mapping="/js/**" />
-	<mvc:resources location="/WEB-INF/resources/incl/" mapping="/incl/**" />
+	<mvc:resources location="/WEB-INF/resources/css/"
+		mapping="/css/**" />
+	<mvc:resources location="/WEB-INF/resources/js/"
+		mapping="/js/**" />
+	<mvc:resources location="/WEB-INF/resources/incl/"
+		mapping="/incl/**" />
 
 	<!-- 뷰 해석기 -->
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources 
@@ -72,7 +74,7 @@
 	<context:component-scan
 		base-package="com.project.study.qna.controller" />
 	<context:component-scan
-		base-package="com.project.study.file.controller" />	
+		base-package="com.project.study.file.controller" />
 
 	<security:global-method-security
 		secured-annotations="enabled" pre-post-annotations="enabled" />
