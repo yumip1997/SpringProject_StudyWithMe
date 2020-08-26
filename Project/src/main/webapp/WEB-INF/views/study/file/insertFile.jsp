@@ -36,7 +36,6 @@
 				</tr>
 				<tr>
 				<td><input type="file" name="uploadfile" id="uploadfile">
-				<span>${errorMsg}</span>
 				</td>
 				</tr>
 			</table>

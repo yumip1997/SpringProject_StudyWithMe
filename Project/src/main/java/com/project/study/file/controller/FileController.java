@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -73,11 +74,16 @@ public class FileController {
 		}
 		
 		try {
+			if(uploadfile.getSize() > 15728640) {
+				throw new MaxUploadSizeExceededException(15728640);
+
+			}
 			if(uploadfile !=null && !uploadfile.isEmpty()) {
 				
 				file.setFileTitle(fileTitle);
 				file.setFileContent(fileContent);
 				file.setFileSize(uploadfile.getSize());
+				file.setFileName(uploadfile.getOriginalFilename());
 				file.setFileContentType(uploadfile.getContentType());
 				file.setFileData(uploadfile.getBytes());
 				file.setUserId(auth.getName());

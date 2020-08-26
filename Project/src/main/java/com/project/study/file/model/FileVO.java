@@ -20,6 +20,8 @@ public class FileVO {
 	
 	private String fileContent;
 	
+	private String fileName;
+	
 	private long fileSize;
 	
 	private String fileContentType;
@@ -57,6 +59,14 @@ public class FileVO {
 
 	public String getFileContent() {
 		return fileContent;
+	}
+	
+	public String getFileName() {
+		return fileName;
+	}
+
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
 	}
 
 	public long getFileSize() {
