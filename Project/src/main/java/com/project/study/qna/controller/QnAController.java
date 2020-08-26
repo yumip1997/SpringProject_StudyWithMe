@@ -1,10 +1,10 @@
 package com.project.study.qna.controller;
 
-import java.security.Principal;
-
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -54,17 +54,17 @@ public class QnAController {
 	}
 	
 	@PostMapping("/insertQnA")
-	String insertQnA(@ModelAttribute("qna")@Valid QnAVO qna,
-			BindingResult result, Principal principal, @RequestParam("boardNum")int boardNum) {
+	String insertQnA(@ModelAttribute("qna")@Valid QnAVO qna, BindingResult result) {
+		
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		
 		if(result.hasErrors()) {
 			return "/study/qna/insertQnA";
 		}
-		qna.setBoardNum(boardNum);
-		qna.setUserId(principal.getName());
-
+	
+		qna.setUserId(auth.getName());
 		qnaService.insertQnA(qna);
-		return "redirect:/qna/qnaList/"+boardNum;
+		return "redirect:/qna/qnaList/"+qna.getBoardNum();
 	}
 	
 	@PostMapping("/updateQnAPage")
@@ -74,8 +74,7 @@ public class QnAController {
 	}
 	
 	@PostMapping("/updateQnA")
-	String updateQnA(@ModelAttribute("qna")@Valid QnAVO qna, BindingResult result,
-			@RequestParam("boardNum")int boardNum) {
+	String updateQnA(@ModelAttribute("qna")@Valid QnAVO qna, BindingResult result) {
 		if(result.hasErrors()) {
 			return "/study/qna/updateQnA";
 		}

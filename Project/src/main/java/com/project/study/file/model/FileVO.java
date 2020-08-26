@@ -6,6 +6,8 @@ import javax.validation.constraints.NotEmpty;
 
 import org.hibernate.validator.constraints.Length;
 
+
+
 public class FileVO {
 
 	private int boardNum;
@@ -24,6 +26,7 @@ public class FileVO {
 	
 	private Date fileUploadDate;
 	
+	@NotEmpty
 	private byte[] fileData;
 	
 	private String userId;
@@ -99,5 +102,7 @@ public class FileVO {
 	public void setFileData(byte[] fileData) {
 		this.fileData = fileData;
 	}
+	
+	
 
 }

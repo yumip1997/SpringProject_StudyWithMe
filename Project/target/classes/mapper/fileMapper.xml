@@ -20,10 +20,10 @@ where file_num = #{fileNum}
 <!-- 파일 업로드 -->
 <insert id="uploadFile" parameterType="fileVO">
 insert into
-file(board_num, file_num, file_title, file_content, file_size,
-file_content_type, file_upload_date, file_date, userid)
-values(#{boardNum}, #{fileNum}), #{fileTitle}, #{fileContent}, #{fileSize},
-#{fileContentType}, #{fileUploadDate}, #{fileData}, #{userId})
+file(board_num, file_title, file_content, file_size,
+file_content_type, file_data, userid)
+values(#{boardNum}, #{fileTitle}, #{fileContent}, #{fileSize},
+#{fileContentType}, #{fileData}, #{userId})
 </insert>
 
 <!-- 파일 수정 -->
