@@ -10,7 +10,6 @@
 		<param-name>contextConfigLocation</param-name>
 		<param-value>classpath:app-context.xml
 			classpath:app-security.xml
-			classpath:websocket-context.xml
 		</param-value>
 	</context-param>
 
@@ -24,48 +23,7 @@
 		<listener-class>org.springframework.security.web.session.HttpSessionEventPublisher
 		</listener-class>
 	</listener>
-
-	<filter>
-		<filter-name>springSecurityFilterChain</filter-name>
-		<filter-class>org.springframework.web.filter.DelegatingFilterProxy
-		</filter-class>
-	</filter>
-
-	<filter-mapping>
-		<filter-name>springSecurityFilterChain</filter-name>
-		<url-pattern>/*</url-pattern>
-	</filter-mapping>
 	
-	<filter>
-		<display-name>springMultipartFilter</display-name>
-		<filter-name>springMultipartFilter</filter-name>
-		<filter-class>org.springframework.web.multipart.support.MultipartFilter
-		</filter-class>
-		<init-param>
-			<param-name>multipartResolverBeanName</param-name>
-			<param-value>multipartResolver</param-value>
-		</init-param>
-	</filter>
-	<filter-mapping>
-		<filter-name>springMultipartFilter</filter-name>
-		<url-pattern>/*</url-pattern>
-	</filter-mapping>
-
-	<!-- 인코딩 설정 -->
-	<filter>
-		<filter-name>encodingFilter</filter-name>
-		<filter-class>org.springframework.web.filter.CharacterEncodingFilter
-		</filter-class>
-		<init-param>
-			<param-name>encoding</param-name>
-			<param-value>UTF-8</param-value>
-		</init-param>
-	</filter>
-	<filter-mapping>
-		<filter-name>encodingFilter</filter-name>
-		<url-pattern>/*</url-pattern>
-	</filter-mapping>
-
 	<!-- Processes application requests -->
 	<servlet>
 		<servlet-name>appServlet</servlet-name>
@@ -84,6 +42,47 @@
 		<servlet-name>appServlet</servlet-name>
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
+
+	<filter>
+		<display-name>springMultipartFilter</display-name>
+		<filter-name>springMultipartFilter</filter-name>
+		<filter-class>org.springframework.web.multipart.support.MultipartFilter
+		</filter-class>
+		<init-param>
+			<param-name>multipartResolverBeanName</param-name>
+			<param-value>multipartResolver</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>springMultipartFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
+	<filter>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<filter-class>org.springframework.web.filter.DelegatingFilterProxy
+		</filter-class>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
+	<!-- 인코딩 설정 -->
+	<filter>
+		<filter-name>encodingFilter</filter-name>
+		<filter-class>org.springframework.web.filter.CharacterEncodingFilter
+		</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>encodingFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
 
 
 </web-app>

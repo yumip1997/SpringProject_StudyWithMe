@@ -9,7 +9,6 @@
 	<configs>
 		<config>src/main/resources/app-security.xml</config>
 		<config>src/main/resources/app-context.xml</config>
-		<config>src/main/resources/websocket-context.xml</config>
 	</configs>
 	<autoconfigs>
 	</autoconfigs>

@@ -6,23 +6,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-<link rel="stylesheet" href="/study/css/bootstrap.min.css">
+<jsp:include page="/WEB-INF/resources/incl/staticHeader.jsp" />
 <title>Insert title here</title>
 </head>
 <body>
-<nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
-  <a class="navbar-brand" href="/study"><span>Home</span></a>
-  <div class="collapse navbar-collapse" id="navbarCollapse">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item">
-        <a class="nav-link" href="/study/login">시작하기 </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/study/member/insertMember">가입하기</a>
-      </li>
-    </ul>
-  </div>
-</nav>
+<!-- menu -->
+<jsp:include page="/WEB-INF/resources/incl/header.jsp" />
 <div class="container">
 <h2>회원정보입력</h2>
 	<form:form action="insertMember" method="post" modelAttribute="member">

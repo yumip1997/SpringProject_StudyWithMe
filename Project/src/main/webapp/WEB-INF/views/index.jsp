@@ -8,82 +8,66 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-<link rel="stylesheet" href="/study/css/bootstrap.min.css">
-<title>Spring Board</title>
+<jsp:include page="/WEB-INF/resources/incl/staticHeader.jsp" />
+<title>Study With Me</title>
 </head>
 <body>
-<!-- navigation -->
-<sec:authorize access="hasRole('ROLE_USER')">
-<nav class="navbar navbar-expand-md bg-dark navbar-dark">
-  <a class="navbar-brand" href="/study"><span>Home</span></a>
-  <div class="collapse navbar-collapse" id="navbarCollapse">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item">
-        <a class="nav-link" href="/study/board/boardList">스터디 찾기 </a>
-      </li>
-       <li class="nav-item">
-        <a class="nav-link" href="/study/studyList">스터디 시작 </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/study/member/${userId}">마이페이지</a>
-      </li>
-       <li class="nav-item">
-        <a class="nav-link" href="/study/logout">로그아웃</a>
-      </li>
-    </ul>
-  </div>
-</nav>
-</sec:authorize>
-<!-- navigation -->
-<sec:authorize access="hasRole('ROLE_ADMIN')">
-<nav class="navbar navbar-expand-md bg-dark navbar-dark">
-  <a class="navbar-brand" href="/study"><span>Home</span></a>
-  <div class="collapse navbar-collapse" id="navbarCollapse">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item">
-        <a class="nav-link" href="/study/member/memberList">회원목록 </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/study/board/boardList">스터디 찾기</a>
-      </li>
-       <li class="nav-item">
-        <a class="nav-link" href="/study/studyList">스터디 시작 </a>
-      </li>
-       <li class="nav-item">
-        <a class="nav-link" href="/study/member/${userId}">마이페이지</a>
-      </li>
-       <li class="nav-item">
-        <a class="nav-link" href="/study/logout">로그아웃</a>
-      </li>
-    </ul>
-  </div>
-</nav>
-</sec:authorize>
-<!-- navigation -->
-<sec:authorize access="isAnonymous()">
-<nav class="navbar navbar-expand-md bg-dark navbar-dark">
-<div class="container">
- <a class="navbar-brand" href="/study">Home</a>
-<div class="collapse navbar-collapse" id="navbarCollapse">
-    <ul class="navbar-nav ml-auto">
-      <li class="nav-item">
-        <a class="nav-link py-3 px-0 px-lg-3" href="/study/login">시작하기</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link py-3 px-0 px-lg-3" href="/study/member/insertMember">가입하기</a>
-      </li>
-    </ul>
-  </div>
-</div>
-</nav>
-</sec:authorize>
+<jsp:include page="/WEB-INF/resources/incl/header.jsp" />
 
-<div class="jumbotron jumbotron-fluid">
-<div class="container">
+<!-- header -->
+<div class="jumbotron text-center jumbotron-fluid">
 <h1>Study With Me</h1>
-<h1>CRUD+BOARD</h1>
+</div>
+
+<!-- About us -->
+<div class="container text-center">
+<p class="h3">ABOUT US</p>
+<P>웹 상에서 스터디에 참여하고, <br>직접 만들어 보세요!</P>
+</div>
+
+<!-- Category -->
+<div class="container text-center">
+<p class="h3">Categories</p>
+<div class="row">
+<div class="col-md-12">
+<ul class="list-inline">
+<li class="list-inline-item"><i class="fa fa-star-o fa-2x"></i><h5>어학</h5></li>
+<li class="list-inline-item"><i class="fa fa-star-o fa-2x"></i><h5>공무원</h5></li>
+<li class="list-inline-item"><i class="fa fa-star-o fa-2x"></i><h5>고시</h5></li>
+<li class="list-inline-item"><i class="fa fa-star-o fa-2x"></i><h5>취업</h5></li>
+<li class="list-inline-item"><i class="fa fa-star-o fa-2x"></i><h5>기타</h5></li>
+</ul>
 </div>
 </div>
+</div>
+
+<!-- Introduction -->
+<div class="container text-center">
+
+<div class="row align-items-center">
+<div class="col-md-6"><p>원하는 스터디를 <br>직접 만들어 보세요!</p></div>
+<div class="col-md-6"><img src="image/make.png"></div>
+</div>
+
+<div class="row align-items-center">
+<div class="col-md-6"><img src="image/search.png"></div>
+<div class="col-md-6"><p>목적에 맞는 스터디를 <br>카페고리 별로 찾아보세요!</p></div>
+</div>
+
+<div class="row align-items-center">
+<div class="col-md-6"><p>질의응답, 자료실 서비스를 <br>이용하세요!</p></div>
+<div class="col-md-6"><img src="image/study.png"></div>
+</div>
+
+</div>
+
+
+<!-- footer -->
+<div class="jumbotron text-center mt-5 mb-0">
+<h3 class="text-secondary">Study With Me</h3>
+</div>
+
+
 
 </body>
 </html>

@@ -20,8 +20,7 @@
 	<mvc:view-controller path="/" view-name="index"></mvc:view-controller>
 	<mvc:view-controller path="/logout"
 		view-name="index"></mvc:view-controller>
-	<mvc:view-controller path="/error/autherror"
-		view-name="error/autherror" />
+	<mvc:view-controller path="/error/autherror" view-name="error/autherror" />
 
 	<mvc:annotation-driven>
 		<mvc:argument-resolvers>
@@ -40,6 +39,9 @@
 		mapping="/js/**" />
 	<mvc:resources location="/WEB-INF/resources/incl/"
 		mapping="/incl/**" />
+	<mvc:resources location="/WEB-INF/resources/image/"
+		mapping="/image/**" />
+		
 
 	<!-- 뷰 해석기 -->
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources 
@@ -64,9 +66,26 @@
 		</beans:property>
 	</beans:bean>
 	
+	<!-- File 업로드 처리 -->
+	<beans:bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<beans:property name="maxUploadSize">
+			<beans:value>15728640</beans:value>    
+		</beans:property>
+	</beans:bean>
+	
+	<!-- 예외처리 -->
+	<beans:bean id="exceptionResolver" class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+    <beans:property name="exceptionMappings">
+        <beans:props>
+        <!-- 파일 업로드 예외처리 -->
+            <beans:prop key="org.springframework.web.multipart.MaxUploadSizeExceededException">/error/fileSizeError</beans:prop>
+        </beans:props>
+    </beans:property>
+    </beans:bean>
+    
 	<context:component-scan base-package="com.project.study.member.controller" />
 	<context:component-scan base-package="com.project.study.board.controller" />
-	<context:component-scan base-package="com.project.study.websocket.controller" />
 	<context:component-scan base-package="com.project.study.study.controller" />
 	<context:component-scan base-package="com.project.study.qna.controller" />
 	<context:component-scan base-package="com.project.study.file.controller" />

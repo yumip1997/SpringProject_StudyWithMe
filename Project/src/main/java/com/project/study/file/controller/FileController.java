@@ -6,6 +6,10 @@ import java.io.UnsupportedEncodingException;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -50,6 +54,21 @@ public class FileController {
 		return "/study/file/fileView";
 	}
 	
+	@GetMapping("/download/{fileNum}")
+	public ResponseEntity<byte[]> downloadFile(@PathVariable("fileNum")int fileNum){
+		FileVO file = fileService.getFile(fileNum);
+		final HttpHeaders headers = new HttpHeaders();
+		if(file !=null) {
+			String[] mtypes = file.getFileContentType().split("/");
+			headers.setContentType(new MediaType(mtypes[0], mtypes[1]));
+			headers.setContentDispositionFormData("attachment", file.getFileName());
+			headers.setContentLength(file.getFileSize());
+			return new ResponseEntity<byte[]>(file.getFileData(), headers, HttpStatus.OK);
+		}else {
+			return new ResponseEntity<byte[]>(HttpStatus.NOT_FOUND);
+		}
+	}
+	
 	@GetMapping("/insertFile/{boardNum}")
 	public String insertFile(Model model, @PathVariable("boardNum")int boardNum) {
 		FileVO file = new FileVO();
@@ -59,7 +78,7 @@ public class FileController {
 	}
 	
 	@PostMapping("/insertFile")
-	String insertQnA(@ModelAttribute("file")@Valid FileVO file,
+	String insertFile(@ModelAttribute("file")@Valid FileVO file,
 			BindingResult result,
 			@RequestParam("uploadfile")MultipartFile uploadfile,
 			RedirectAttributes redirectAttrs) throws UnsupportedEncodingException{
@@ -73,11 +92,11 @@ public class FileController {
 			return "/study/file/insertFile";
 		}
 		
+		if(uploadfile.getSize() > 15728640) {
+			throw new MaxUploadSizeExceededException(15728640);
+		}
+		
 		try {
-			if(uploadfile.getSize() > 15728640) {
-				throw new MaxUploadSizeExceededException(15728640);
-
-			}
 			if(uploadfile !=null && !uploadfile.isEmpty()) {
 				
 				file.setFileTitle(fileTitle);

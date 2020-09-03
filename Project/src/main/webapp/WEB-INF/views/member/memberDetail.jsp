@@ -7,36 +7,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-<link rel="stylesheet" href="/study/css/bootstrap.min.css">
+<jsp:include page="/WEB-INF/resources/incl/staticHeader.jsp" />
 <title>Insert title here</title>
 </head>
 <body>
-
-<sec:authentication var="principal" property="principal" />
-<nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
-  <a class="navbar-brand" href="/study"><span>Home</span></a>
-  <div class="collapse navbar-collapse" id="navbarCollapse">
-    <ul class="navbar-nav mr-auto">
-    <sec:authorize access="hasRole('ROLE_ADMIN')">
-      <li class="nav-item">
-        <a class="nav-link" href="/study/member/memberList">회원목록 </a>
-      </li>
-      </sec:authorize>
-      <li class="nav-item">
-        <a class="nav-link" href="/study/board/boardList">스터디 찾기</a>
-      </li>
-       <li class="nav-item">
-        <a class="nav-link" href="/study/studyList">스터디 시작</a>
-      </li>
-       <li class="nav-item">
-        <a class="nav-link active" href="/study/member/${principal}">마이페이지</a>
-      </li>
-       <li class="nav-item">
-        <a class="nav-link" href="/study/logout">로그아웃</a>
-      </li>
-    </ul>
-  </div>
-</nav>
+<!-- menu -->
+<jsp:include page="/WEB-INF/resources/incl/header.jsp" />
 
 	<table class="table table-striped">
 		<tr>

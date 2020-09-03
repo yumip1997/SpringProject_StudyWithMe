@@ -14,22 +14,13 @@
 <title>Insert title here</title>
 </head>
 <body>
-<!-- navigation -->
-<nav class="navbar navbar-expand-md bg-dark navbar-dark">
+<jsp:include page="/WEB-INF/resources/incl/header.jsp" />
+
+<div class="jumbotron jumbotron-fluid">
 <div class="container">
- <a class="navbar-brand" href="/study">Home</a>
-<div class="collapse navbar-collapse" id="navbarCollapse">
-    <ul class="navbar-nav ml-auto">
-      <li class="nav-item">
-        <a class="nav-link py-3 px-0 px-lg-3" href="/study/login">시작하기</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link py-3 px-0 px-lg-3" href="/study/member/insertMember">가입하기</a>
-      </li>
-    </ul>
-  </div>
+<h1>Study With Me</h1>
 </div>
-</nav>
+</div>
 
 <!-- Login form-->
 		<div class="container">

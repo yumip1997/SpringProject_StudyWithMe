@@ -37,7 +37,8 @@
 	
 	<tr>
 	<th>자료 다운로드</th>
-	<td>${file.fileName}(
+	<td>
+	<a href="/study/file/download/${file.fileNum}">${file.fileTitle}(
 	<c:choose>
 	<c:when test="${file.fileSize ge 1048576}">
 	<fmt:formatNumber value="${file.fileSize/1048576}" pattern =".00"/>MB
@@ -45,7 +46,7 @@
 	<c:otherwise>
 	<fmt:formatNumber value="${file.fileSize/1024}" pattern ="0.00"/>KB
 	</c:otherwise>
-	</c:choose>)</td>
+	</c:choose>)</a></td>
 	</tr>
 	
 	</table>
@@ -59,7 +60,7 @@
 	</div>
 	
 	<script>
-	
+
 	</script>
 </body>
 </html>
