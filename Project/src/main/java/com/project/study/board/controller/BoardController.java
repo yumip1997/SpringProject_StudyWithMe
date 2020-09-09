@@ -61,7 +61,6 @@ public class BoardController {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		boolean checkLike = boardService.checkLike(boardNum, auth.getName());
 		model.addAttribute("checkLike", checkLike);
-		System.out.println(checkLike);
 		model.addAttribute("board", boardService.getBoard(boardNum));
 		boardService.increaseViews(boardNum);
 		return "board/boardDetail";
@@ -123,15 +122,17 @@ public class BoardController {
 		return "redirect:/board/" + board.getBoardNum();
 	}
 
-	// GetMapping 스터디 모집여부 변경
-	@GetMapping("/updateStudy")
-	public String updateStudy(@RequestParam("boardNum") int boardNum, @RequestParam("enabled") char enabled) {
+	// PostMapping 스터디 모집여부 변경
+	@PostMapping("/updateStudy")
+	@ResponseBody
+	public boolean updateStudy(@RequestParam("boardNum") int boardNum, @RequestParam("enabled") char enabled) {
 		if (enabled == '1') {
 			boardService.updateCloseBoard('0', boardNum);
+			return false;
 		} else {
 			boardService.updateCloseBoard('1', boardNum);
+			return true;
 		}
-		return "redirect:/board/" + boardNum;
 	}
 	
 	//좋아요 여부 체크

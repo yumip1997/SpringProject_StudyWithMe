@@ -1,12 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <sec:authentication var="principal" property="principal" />
 
 <!-- navigation -->
 <sec:authorize access="hasRole('ROLE_USER')">
 <nav class="navbar navbar-expand-md bg-dark navbar-dark">
-  <a class="navbar-brand" href="/study"><img src="image/logo.png"></a>
+  <a class="navbar-brand" href="/study"><img src="<c:url value='/image/logo.png' />" /></a>
   <div class="collapse navbar-collapse" id="navbarCollapse">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
@@ -28,7 +29,7 @@
 <!-- navigation -->
 <sec:authorize access="hasRole('ROLE_ADMIN')">
 <nav class="navbar navbar-expand-md bg-dark navbar-dark">
-  <a class="navbar-brand" href="/study"><span>Home</span></a>
+  <a class="navbar-brand" href="/study"><img src='<c:url value='/image/logo.png' />' /></a>
   <div class="collapse navbar-collapse" id="navbarCollapse">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
@@ -55,7 +56,7 @@
 <sec:authorize access="isAnonymous()">
 <nav class="navbar navbar-expand-md bg-dark navbar-dark">
 <div class="container">
- <a class="navbar-brand" href="/study"><img src="image/logo.png"></a>
+ <a class="navbar-brand" href="/study"><img src='<c:url value='/image/logo.png' />' /></a>
 <div class="collapse navbar-collapse" id="navbarCollapse">
     <ul class="navbar-nav ml-auto">
       <li class="nav-item">

@@ -53,46 +53,52 @@
 
 	<!-- search section -->
 	<div class="container pt-2">
-		<div class="form-row">
-			<form method="post" action="/study/board/search">
-				<div class="form-group col-md-2">
-				<select name="searchOption">
-					<option value="all">글 제목 + 상세내용</option>
-					<option value="board_title">글 제목</option>
-					<option value="board_content">상세내용</option>
-				</select> 
+		<form method="post" action="/study/board/search">
+			<div class="form-row">
+				<div class="form-group col-md-3">
+					<select name="searchOption" class="form-control">
+						<option value="all">글 제목 + 상세내용</option>
+						<option value="board_title">글 제목</option>
+						<option value="board_content">상세내용</option>
+					</select>
 				</div>
-				<div class="form-group col-md-4">
-				<input type="text" name="keyword" type="search"> 
-				<input type="hidden" name="studyType" value="${studyType}"> 
+				<div class="form-group col-md-8" class="form-control">
+					<input type="text" name="keyword" type="search"
+						class="form-control">
 				</div>
-				<div class="form-group col-md-2">
-				<input type="submit" value="검색">
+				<div class="form-group col-md-1">
+					<input type="hidden" name="studyType" value="${studyType}">
+					<input type="submit" value="검색" class="btn btn-secondary">
 				</div>
-			</form>
-		</div>
+			</div>
+		</form>
+
 		<div class="row">
 			<c:if test="${not empty count}">
 			${count}개의 스터디가 존재합니다.
 			</c:if>
 		</div>
 
-		<!-- top3 study section -->
-		<table class="table table-hover text-center">
-			<thead>
-				<tr>
-					<th colspan="6">${studyType}Top3스터디(QnA, File 업로드 수 기준)</th>
-				</tr>
-				<tr>
-					<th>순위</th>
-					<th>스터디 이름</th>
-					<th>작성자</th>
-					<th>작성일</th>
-					<th>질의응답 수</th>
-					<th>자료 수</th>
-				</tr>
-			</thead>
-			<c:if test="${not empty Top3List}">
+	</div>
+
+	<!-- top3 study section -->
+	<!-- 검색시에는 출력되지 않음 -->
+	<c:if test="${empty count}">
+		<div class="container pt-2">
+			<table class="table table-hover text-center">
+				<thead>
+					<tr>
+						<th colspan="6">${studyType} Top3스터디(QnA,File업로드수 기준)</th>
+					</tr>
+					<tr>
+						<th>순위</th>
+						<th>스터디 이름</th>
+						<th>작성자</th>
+						<th>작성일</th>
+						<th>질의응답 수</th>
+						<th>자료 수</th>
+					</tr>
+				</thead>
 				<c:forEach var="top3" varStatus="status" items="${Top3List}">
 					<tr>
 						<td>${status.count}</td>
@@ -103,11 +109,14 @@
 						<td>${top3.fileTotal}</td>
 					<tr>
 				</c:forEach>
-			</c:if>
-		</table>
 
-		<!-- study list section -->
-		<button class="btn btn-default pull-right" id="insert">스터디 생성</button>
+			</table>
+		</div>
+	</c:if>
+
+	<!-- study list section -->
+	<div class="container pt-2">
+		<button class="btn btn-default pull-left" id="insert">스터디 생성</button>
 		<table class="table table-hover" id="list">
 			<thead>
 				<tr>

@@ -16,14 +16,24 @@
 <body>
 	<!-- menu -->
 	<jsp:include page="/WEB-INF/resources/incl/header.jsp" />
+	
+	<!-- header -->
+	<div class="jumbotron bg-secondary">
+		<div class="container-fluid p-1 text-center">
+			<h1 class="text-white">Study With Me</h1>
+		</div>
+	</div>
 
-	<div class="container">
+	<!-- study board detail -->
+	<div class="container container-fluid pt-5">
+		<div class="container text-center">
+			<h2>${board.studyTitle} 스터디</h2>
+		</div>
+		<div class="conainter" id="enabled"></div>
 		<sec:authentication var="principal" property="principal" />
 		<input type="hidden" value="${principal}" id="principal">
 		<input type="hidden" value="${checkLike}" id="checkLike">
-		
-		<div id="enabled"></div>
-		<form id="target" method="post">
+		<form method="post">
 			<table class="table table-striped">
 				<tr>
 					<th>스터디 모집 글 제목</th>
@@ -70,15 +80,16 @@
 		
 		<button type="button" id="like"></button>
 		<button onclick="location.href='/study/board/boardList'">목록보기</button>
-		
 	</div>
+	
+	<!-- footer -->
+	<jsp:include page="/WEB-INF/resources/incl/footer.jsp" />
 </body>
 
 <script>
 
 window.onload = function(){
 	var enabled = ${board.enabled};
-	var like = ${checkLike};
 	
 	if(enabled == '1'){
 		$("#updateStudy").text("모집 마감하기");
@@ -121,6 +132,35 @@ window.onload = function(){
 		})
 	});
 	
+	$("#updateStudy").on("click", function() {
+		$.ajax({
+			async : 'true',
+			url : "/study/board/updateStudy",
+			type : 'post',
+			data : {
+				boardNum : $("#boardNum").val(),
+				enabled : enabled,
+				"${_csrf.parameterName}" : "${_csrf.token}"
+			},
+			dataType : 'json',
+			success : function(result) {
+				if (result) {
+					$("#updateStudy").text("모집하기");
+					$("#enabled").text('모집마감');
+				} else {
+					$("#updateStudy").text("모집 마감하기");
+					$("#enabled").text('모집 중');
+				}
+				return false;
+			},
+			error : function() {
+				alert('다시 시도해주세요.');
+				return false;
+			}
+		})
+	});
+	
+	
 	$("#like").on("click", function() {
 		$.ajax({
 			async : 'true',
@@ -151,9 +191,7 @@ window.onload = function(){
 	});
 	
 	
-	$("#updateStudy").on("click", function(){
-		location.href="/study/board/updateStudy?boardNum=${board.boardNum}&&enabled=${board.enabled}";
-	});	
+	
 	
 };
 
