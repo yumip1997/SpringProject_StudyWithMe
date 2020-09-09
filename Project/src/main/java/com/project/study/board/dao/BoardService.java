@@ -1,5 +1,6 @@
 package com.project.study.board.dao;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,15 +16,9 @@ public class BoardService implements IBoardService {
 	private IBoardRepository boardRepository;
 
 	@Override
-	public List<BoardVO> getBoardList() {
+	public List<BoardVO> getBoardList(String studyType) {
 		// TODO Auto-generated method stub
-		return boardRepository.getBoardList();
-	}
-	
-	@Override
-	public List<BoardVO> getBoardListByType(String studyType) {
-		// TODO Auto-generated method stub
-		return boardRepository.getBoardListByType(studyType);
+		return boardRepository.getBoardList(studyType);
 	}
 
 	@Override
@@ -31,7 +26,7 @@ public class BoardService implements IBoardService {
 		// TODO Auto-generated method stub
 		return boardRepository.getBoard(num);
 	}
-	
+
 	@Override
 	public List<BoardVO> searchBoard(String searchOption, String keyword, String studyType) {
 		// TODO Auto-generated method stub
@@ -43,7 +38,6 @@ public class BoardService implements IBoardService {
 		// TODO Auto-generated method stub
 		return boardRepository.countBoard(searchOption, keyword, studyType);
 	}
-	
 
 	@Transactional("txManager")
 	@Override
@@ -59,14 +53,14 @@ public class BoardService implements IBoardService {
 		// TODO Auto-generated method stub
 		boardRepository.updateBoard(board);
 	}
-	
+
 	@Transactional("txManager")
 	@Override
 	public void updateCloseBoard(char enabled, int boardNum) {
 		// TODO Auto-generated method stub
 		boardRepository.updateCloseBoard(enabled, boardNum);
 	}
-	
+
 	@Transactional("txManager")
 	@Override
 	public void deleteBoardbyMem(String userId) {
@@ -80,10 +74,60 @@ public class BoardService implements IBoardService {
 		// TODO Auto-generated method stub
 		boardRepository.increaseViews(num);
 	}
+	
+	@Override
+	public int getLikeCount(int boardNum) {
+		// TODO Auto-generated method stub
+		return boardRepository.getLikeCount(boardNum);
+	}
+	
+	@Override
+	public boolean checkLike(int boardNum, String userId) {
+		// TODO Auto-generated method stub
+		return boardRepository.checkLike(boardNum, userId);
+	}
+	
+	@Transactional("txManager")
+	@Override
+	public void insertLike(int boardNum, String userId) {
+		// TODO Auto-generated method stub
+		boardRepository.insertLike(boardNum, userId);
+	}
+
+	@Transactional("txManager")
+	@Override
+	public void deleteLike(int boardNum, String userId) {
+		// TODO Auto-generated method stub
+		boardRepository.deleteLike(boardNum, userId);
+	}
+	
+	@Transactional("txManager")
+	@Override
+	public void increaseLikes(int boardNum) {
+		// TODO Auto-generated method stub
+		boardRepository.increaseLikes(boardNum);
+	}
+	
+	@Transactional("txManager")
+	@Override
+	public void decreaseLikes(int boardNum) {
+		// TODO Auto-generated method stub
+		boardRepository.decreaseLikes(boardNum);
+	}
 
 	@Override
 	public int getMaxBoardNum() {
 		// TODO Auto-generated method stub
 		return boardRepository.getMaxBoardNum();
 	}
+
+	@Override
+	public List<HashMap<String, Object>> gettTop3Study(String studyType) {
+		// TODO Auto-generated method stub
+		return boardRepository.gettTop3Study(studyType);
+	}
+
+
+
+
 }

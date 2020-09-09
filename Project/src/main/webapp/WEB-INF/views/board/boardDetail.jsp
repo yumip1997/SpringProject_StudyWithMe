@@ -10,9 +10,8 @@
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 <jsp:include page="/WEB-INF/resources/incl/staticHeader.jsp" />
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<title>Insert title here</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<title>Study With Me</title>
 </head>
 <body>
 	<!-- menu -->
@@ -21,6 +20,8 @@
 	<div class="container">
 		<sec:authentication var="principal" property="principal" />
 		<input type="hidden" value="${principal}" id="principal">
+		<input type="hidden" value="${checkLike}" id="checkLike">
+		
 		<div id="enabled"></div>
 		<form id="target" method="post">
 			<table class="table table-striped">
@@ -54,7 +55,7 @@
 				</tr>
 				<tr>
 					<th>좋아요</th>
-					<td>${board.likes}</td>
+					<td id="likeCount">${board.likes}</td>
 				</tr>
 			</table>
 			<input type="hidden" value="${board.userId}" id="userId" name="userId"> 
@@ -66,7 +67,10 @@
 			<button type="button" id="updateStudy"></button>
 			</c:if>
 		</form>
+		
+		<button type="button" id="like"></button>
 		<button onclick="location.href='/study/board/boardList'">목록보기</button>
+		
 	</div>
 </body>
 
@@ -74,12 +78,20 @@
 
 window.onload = function(){
 	var enabled = ${board.enabled};
+	var like = ${checkLike};
+	
 	if(enabled == '1'){
 		$("#updateStudy").text("모집 마감하기");
 		$("#enabled").text('모집 중');
 	}else{
 		$("#updateStudy").text("모집하기");
 		$("#enabled").text('모집마감');
+	}
+	
+	if(!like){
+		$("#like").text("좋아요");
+	}else{
+		$("#like").text("좋아요 취소");
 	}
 	
 	$("#join").on("click", function() {
@@ -108,7 +120,37 @@ window.onload = function(){
 			}
 		})
 	});
-
+	
+	$("#like").on("click", function() {
+		$.ajax({
+			async : 'true',
+			url : "/study/board/updateLike",
+			type : 'post',
+			data : {
+				boardNum : $("#boardNum").val(),
+				userId : $("#principal").val(),
+				"${_csrf.parameterName}" : "${_csrf.token}"
+			},
+			dataType : 'json',
+			success : function(result) {
+				if (result.checkLike) {
+					$("#like").text("좋아요 취소");
+					$("#likeCount").text(result.count);
+					
+				} else {
+					$("#like").text("좋아요");
+					$("#likeCount").text(result.count);
+				}
+				return false;
+			},
+			error : function() {
+				alert('다시 시도해주세요.');
+				return false;
+			}
+		})
+	});
+	
+	
 	$("#updateStudy").on("click", function(){
 		location.href="/study/board/updateStudy?boardNum=${board.boardNum}&&enabled=${board.enabled}";
 	});	

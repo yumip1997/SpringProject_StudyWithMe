@@ -15,8 +15,6 @@
 			type="com.project.study.board.model.BoardVO" />
 		<typeAlias alias="memberVO"
 			type="com.project.study.member.model.MemberVO" />
-		<typeAlias alias="commentVO"
-			type="com.project.study.board.model.CommentVO" />
 		<typeAlias alias="studyVO"
 			type="com.project.study.study.model.StudyVO" />
 		<typeAlias alias="studyDetailVO"

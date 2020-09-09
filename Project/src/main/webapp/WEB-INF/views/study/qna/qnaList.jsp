@@ -7,7 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-<link rel="stylesheet" href="/study/css/bootstrap.min.css">
+<jsp:include page="/WEB-INF/resources/incl/staticHeader.jsp" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <title>Study With Me</title>
 </head>

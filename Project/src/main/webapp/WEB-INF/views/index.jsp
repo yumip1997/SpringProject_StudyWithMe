@@ -15,27 +15,29 @@
 <jsp:include page="/WEB-INF/resources/incl/header.jsp" />
 
 <!-- header -->
-<div class="jumbotron text-center jumbotron-fluid">
-<h1>Study With Me</h1>
+<div class="jumbotron bg-secondary">
+<div class="container-fluid p-5 text-center">
+<h1 class="text-white">Study With Me</h1>
+</div>
 </div>
 
 <!-- About us -->
-<div class="container text-center">
-<p class="h3">ABOUT US</p>
+<div class="container-fluid p-5 text-center">
+<h2>About us</h2>
 <P>웹 상에서 스터디에 참여하고, <br>직접 만들어 보세요!</P>
 </div>
 
 <!-- Category -->
-<div class="container text-center">
-<p class="h3">Categories</p>
+<div class="container-fluid p-5 bg-light text-center">
+<h2>Categories</h2>
 <div class="row">
 <div class="col-md-12">
-<ul class="list-inline">
-<li class="list-inline-item"><i class="fa fa-star-o fa-2x"></i><h5>어학</h5></li>
-<li class="list-inline-item"><i class="fa fa-star-o fa-2x"></i><h5>공무원</h5></li>
-<li class="list-inline-item"><i class="fa fa-star-o fa-2x"></i><h5>고시</h5></li>
-<li class="list-inline-item"><i class="fa fa-star-o fa-2x"></i><h5>취업</h5></li>
-<li class="list-inline-item"><i class="fa fa-star-o fa-2x"></i><h5>기타</h5></li>
+<ul class="list-inline m-4">
+<li class="list-inline-item p-3"><i class="fa fa-star-o fa-2x"></i><h5>어학</h5></li>
+<li class="list-inline-item p-3"><i class="fa fa-star-o fa-2x"></i><h5>공무원</h5></li>
+<li class="list-inline-item p-3"><i class="fa fa-star-o fa-2x"></i><h5>고시</h5></li>
+<li class="list-inline-item p-3"><i class="fa fa-star-o fa-2x"></i><h5>취업</h5></li>
+<li class="list-inline-item p-3"><i class="fa fa-star-o fa-2x"></i><h5>기타</h5></li>
 </ul>
 </div>
 </div>
@@ -43,7 +45,7 @@
 
 <!-- Introduction -->
 <div class="container text-center">
-
+<div class="container-fluid p-5">
 <div class="row align-items-center">
 <div class="col-md-6"><p>원하는 스터디를 <br>직접 만들어 보세요!</p></div>
 <div class="col-md-6"><img src="image/make.png"></div>
@@ -58,16 +60,9 @@
 <div class="col-md-6"><p>질의응답, 자료실 서비스를 <br>이용하세요!</p></div>
 <div class="col-md-6"><img src="image/study.png"></div>
 </div>
-
+</div>
 </div>
 
-
-<!-- footer -->
-<div class="jumbotron text-center mt-5 mb-0">
-<h3 class="text-secondary">Study With Me</h3>
-</div>
-
-
-
+<jsp:include page="/WEB-INF/resources/incl/footer.jsp" />
 </body>
 </html>

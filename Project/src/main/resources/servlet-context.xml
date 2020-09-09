@@ -74,6 +74,27 @@
 		</beans:property>
 	</beans:bean>
 	
+	 <beans:bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+        <!-- property name="defaultErrorView" value="error/defaultError"/ -->
+        <beans:property name="exceptionMappings">
+            <beans:props>
+                <!-- 파일이 없을때 -->
+                <beans:prop key="java.io.FileNotFoundException">error/filenotfound</beans:prop>
+                <!-- 예기치 않는 에러 -->
+                <beans:prop key="egovframework.rte.fdl.cmmn.exception.EgovBizException">egovframework/com/cmm/error/egovBizException</beans:prop>
+                <!-- 메뉴 권한 에러 -->
+                <beans:prop key="org.springframework.web.HttpSessionRequiredException">egovframework/com/uat/uia/EgovLoginUsr</beans:prop>
+                <!-- 게시글, 콘텐츠 권한에러 history.back(-2) -->
+                <beans:prop key="org.springframework.web.multipart.MaxUploadSizeExceededException">error/notpermit</beans:prop>
+                <!-- db 및 server 에러 발생 에러 -->
+                <beans:prop key="egovframework.com.cmm.exception.UnknownErrorException">error/unknown</beans:prop>
+                <!-- 파일 용량 초과 Error -->
+                <beans:prop key="egovframework.com.cmm.exception.FileSizeExceedException">error/fileSizsError</beans:prop>                
+            </beans:props>
+        </beans:property>
+    </beans:bean>
+
+	
 	<!-- 예외처리 -->
 	<beans:bean id="exceptionResolver" class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
     <beans:property name="exceptionMappings">

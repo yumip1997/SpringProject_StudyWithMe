@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.project.study.qna.model.QnAVO;
 
@@ -25,6 +26,7 @@ public class QnAService implements IQnAService{
 		return QnARepository.getQnA(qnaNum);
 	}
 
+	@Transactional("txManager")
 	@Override
 	public void insertQnA(QnAVO qnaVO) {
 		// TODO Auto-generated method stub
@@ -32,12 +34,14 @@ public class QnAService implements IQnAService{
 		
 	}
 
+	@Transactional("txManager")
 	@Override
 	public void updateQnA(QnAVO qnaVO) {
 		// TODO Auto-generated method stub
 		QnARepository.updateQnA(qnaVO);
 	}
 
+	@Transactional("txManager")
 	@Override
 	public void deleteQnA(int qnaNum) {
 		// TODO Auto-generated method stub
@@ -45,6 +49,7 @@ public class QnAService implements IQnAService{
 		
 	}
 
+	@Transactional("txManager")
 	@Override
 	public void increaseViews(int qnaNum) {
 		// TODO Auto-generated method stub

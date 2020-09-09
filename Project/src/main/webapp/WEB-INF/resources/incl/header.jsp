@@ -6,7 +6,7 @@
 <!-- navigation -->
 <sec:authorize access="hasRole('ROLE_USER')">
 <nav class="navbar navbar-expand-md bg-dark navbar-dark">
-  <a class="navbar-brand" href="/study"><span>Home</span></a>
+  <a class="navbar-brand" href="/study"><img src="image/logo.png"></a>
   <div class="collapse navbar-collapse" id="navbarCollapse">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
@@ -55,7 +55,7 @@
 <sec:authorize access="isAnonymous()">
 <nav class="navbar navbar-expand-md bg-dark navbar-dark">
 <div class="container">
- <a class="navbar-brand" href="/study">Home</a>
+ <a class="navbar-brand" href="/study"><img src="image/logo.png"></a>
 <div class="collapse navbar-collapse" id="navbarCollapse">
     <ul class="navbar-nav ml-auto">
       <li class="nav-item">

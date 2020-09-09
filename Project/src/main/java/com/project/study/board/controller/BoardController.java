@@ -1,11 +1,14 @@
 package com.project.study.board.controller;
 
 import java.security.Principal;
+import java.util.HashMap;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -15,9 +18,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.project.study.board.dao.IBoardService;
-import com.project.study.board.dao.ICommentService;
 import com.project.study.board.model.BoardVO;
 import com.project.study.study.dao.IStudyService;
 import com.project.study.study.model.StudyVO;
@@ -31,22 +34,23 @@ public class BoardController {
 	IBoardService boardService;
 
 	@Autowired
-	ICommentService commentService;
-
-	@Autowired
 	IStudyService studyService;
 
 	// 스터디 모집 글 전체 목록보기
 	@GetMapping("/boardList")
 	public String boardList(Model model) {
-		model.addAttribute("boardList", boardService.getBoardList());
+		String studyType = "all";
+		model.addAttribute("boardList", boardService.getBoardList(studyType));
+		model.addAttribute("Top3List", boardService.gettTop3Study(studyType));
+		model.addAttribute("studyType", "전체");
 		return "board/boardList";
 	}
 
 	// 스터디 타입에 따른 스터디 모집 글 목록보기
 	@GetMapping("/boardList/{studyType}")
 	public String boardListbyType(Model model, @PathVariable String studyType) {
-		model.addAttribute("boardList", boardService.getBoardListByType(studyType));
+		model.addAttribute("boardList", boardService.getBoardList(studyType));
+		model.addAttribute("Top3List", boardService.gettTop3Study(studyType));
 		model.addAttribute("studyType", studyType);
 		return "board/boardList";
 	}
@@ -54,6 +58,10 @@ public class BoardController {
 	// 스터디 모집 글 상세조회
 	@GetMapping("/{boardNum}")
 	public String viewBoard(Model model, @PathVariable int boardNum) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		boolean checkLike = boardService.checkLike(boardNum, auth.getName());
+		model.addAttribute("checkLike", checkLike);
+		System.out.println(checkLike);
 		model.addAttribute("board", boardService.getBoard(boardNum));
 		boardService.increaseViews(boardNum);
 		return "board/boardDetail";
@@ -62,7 +70,7 @@ public class BoardController {
 	// 스터디 검색
 	@PostMapping("/search")
 	public String searchStudy(Model model, @RequestParam("searchOption") String searchOption,
-			@RequestParam("keyword") String keyword, @RequestParam("studyType")String studyType) {
+			@RequestParam("keyword") String keyword, @RequestParam("studyType") String studyType) {
 		model.addAttribute("boardList", boardService.searchBoard(searchOption, keyword, studyType));
 		model.addAttribute("count", boardService.countBoard(searchOption, keyword, studyType));
 		return "board/boardList";
@@ -124,6 +132,25 @@ public class BoardController {
 			boardService.updateCloseBoard('1', boardNum);
 		}
 		return "redirect:/board/" + boardNum;
+	}
+	
+	//좋아요 여부 체크
+	@PostMapping("/updateLike")
+	@ResponseBody
+	public HashMap<String,Object> updateLike(int boardNum, String userId) {
+		HashMap<String, Object>map = new HashMap<String, Object>();
+		
+		if(!boardService.checkLike(boardNum, userId)) {
+			boardService.insertLike(boardNum, userId);
+			boardService.increaseLikes(boardNum);
+		}else {
+			boardService.deleteLike(boardNum, userId);
+			boardService.decreaseLikes(boardNum);
+		}
+		
+		map.put("checkLike", boardService.checkLike(boardNum, userId));
+		map.put("count", boardService.getLikeCount(boardNum));
+		return map;
 	}
 
 }

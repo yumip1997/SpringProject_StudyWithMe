@@ -2,91 +2,94 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="boardDAO">
-	<!-- 스터디 모집 글 목록 -->
-	<select id="getBoardList" resultType="boardVO">
+	<!-- 스터디 모집 글 목록 && 타입에 따른 목록-->
+	<select id="getBoardList" parameterType="String" resultType="boardVO">
 		select board_num, board_title, study_type,
 		writedate, views, likes, userid, enabled
 		from board
-		order by board_num desc
-	</select>
-	
-	<!-- 스터디 타입에 따른 목록 -->
-	<select id="getBoardListbyType" parameterType="String" resultType="boardVO">
-		select board_num, board_title, study_type,
-		writedate, views, likes, userid, enabled
-		from board
-		where study_type= #{studyType}
+		<include refid="checkType" />
 		order by board_num desc, writedate desc
 	</select>
-
+	
+	<!-- 스터디 타입 체크 -->
+	<sql id="checkType">
+	<if test="studyType !='all'">
+	where study_type = #{studyType}
+	</if>
+	</sql>
+	
 	<!-- 스터디 모집 글 상세 조회 -->
 	<select id="getBoard" parameterType="int" resultType="boardVO">
 		select *
 		from board
 		where board_num = #{boardNum}
 	</select>
-	
+
 	<!-- 스터디 모집 글 검색 -->
 	<select id="searchBoard" resultType="boardVO">
-	select board_num, board_title, study_type,
-	writedate, views, likes, userid, enabled
-	from board
-	<include refid="completedSearch"></include>
-	order by board_num desc, writedate desc
+		select board_num, board_title, study_type,
+		writedate, views, likes,
+		userid, enabled
+		from board
+		<include refid="completedSearch" />
+		order by board_num desc, writedate desc
 	</select>
-	
+
 	<!-- 검색된 스터디의 수 -->
 	<select id="countBoard" resultType="int">
-	select count(*)
-	from board
-	<include refid="completedSearch"></include>
+		select count(*)
+		from board
+		<include refid="completedSearch"></include>
 	</select>
-	
+
 	<!-- 스터디 검색 sql -->
 	<sql id="search">
-	<choose>
-	<when test="searchOption == 'all'">
-	where board_title like concat('%', #{keyword}, '%')
-	or board_content like concat('%', #{keyword}, '%')
-	</when>
-	<otherwise>
-	where ${searchOption} like concat('%', #{keyword}, '%')
-	</otherwise>
-	</choose>
+		<choose>
+			<when test="searchOption == 'all'">
+				where board_title like concat('%', #{keyword}, '%')
+				or board_content like concat('%', #{keyword}, '%')
+			</when>
+			<otherwise>
+				where ${searchOption} like concat('%', #{keyword}, '%')
+			</otherwise>
+		</choose>
 	</sql>
-	
+
 	<sql id="completedSearch">
-	<choose>
-	<when test="studyType !=null and !studyType.equals('')">
-	<include refid="search"></include>
-	and study_type = #{studyType}
-	</when>
-	<otherwise>
-	<include refid="search"></include>
-	</otherwise>
-	</choose>
+		<choose>
+			<when test="studyType !=null and !studyType.equals('')">
+				<include refid="search"></include>
+				and study_type = #{studyType}
+			</when>
+			<otherwise>
+				<include refid="search" />
+			</otherwise>
+		</choose>
 	</sql>
 
 	<!-- 스터디 모집 글 삽입 -->
 	<insert id="insertBoard" parameterType="boardVO">
-		insert into board(board_title,
+		insert into
+		board(board_title,
 		board_content, study_title, study_type, userid)
-		values(#{boardTitle}, #{boardContent}, #{studyTitle}, #{studyType}, #{userId})
+		values(#{boardTitle}, #{boardContent}, #{studyTitle}, #{studyType},
+		#{userId})
 	</insert>
 
 	<!-- 스터디 모집 글 수정 -->
 	<update id="updateBoard" parameterType="boardVO">
 		update board
-		set board_title = #{boardTitle}, board_content = #{boardContent},
+		set
+		board_title = #{boardTitle}, board_content = #{boardContent},
 		study_title = #{studyTitle}, study_type = #{studyType}
 		where board_num = #{boardNum}
 	</update>
-	
+
 	<!-- 스터디 모집 마감 여부 변경 -->
 	<update id="updateCloseBoard" parameterType="java.util.HashMap">
-	update board set
-	enabled = #{enabled}
-	where board_num = #{boardNum}
+		update board set
+		enabled = #{enabled}
+		where board_num = #{boardNum}
 	</update>
 
 	<!-- 특정 회원 스터디 모집 글 삭제 -->
@@ -98,12 +101,51 @@
 	<!-- 조회수 올리기 -->
 	<update id="increaseViews" parameterType="int">
 		update board
-		set views = views+1
+		set views =
+		views+1
 		where board_num = #{boardNum}
 	</update>
-	
+
 	<!-- 스터디 모집글 번호의 최대 값 -->
 	<select id="getMaxBoardNum" resultType="int">
-	select max(board_num) from board;
+		select max(board_num)
+		from board;
 	</select>
+	
+	<!-- 스터디 타입별 qna 개수, file개수 기준으로 총 개수가 많은 순으로 3개 스터디 목록 -->
+	<resultMap type="map" id="top3List">
+		<result column="board_num" property="boardNum" />
+		<result column="study_title" property="studyTitle" />
+		<result column="study_type" property="studyType" />
+		<result column="userid" property="userId" />
+		<result column="writedate" property="writedate" />
+		<result column="qna_total" property="qnaTotal" />
+		<result column="file_total" property="fileTotal" />
+	</resultMap>
+
+	<select id="gettTop3Study" resultMap="top3List">
+		select bq.board_num as board_num, bq.study_title as study_title,
+		bq.study_type as study_type,  
+		bq.userid as userid, date_format(bq.writedate,'%Y-%m-%d') as writedate,
+		bq.qna_total as qna_total, bf.file_total as file_total
+		from
+		(select b.board_num, b.study_title, b.study_type, b.writedate,
+		b.userid, count(*) as qna_total
+		from board b join qna q
+		on b.board_num = q.board_num
+		<include refid="checkType" />
+		group by b.board_num
+		order by qna_total desc
+		limit 3) as bq
+		join
+		(select b.board_num, count(*) as file_total
+		from board b join file f
+		on b.board_num = f.board_num
+		<include refid="checkType" />
+		group by f.board_num
+		order by file_total desc
+		limit 3) as bf
+		on bq.board_num = bf.board_num;
+	</select>
+
 </mapper>
