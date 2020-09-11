@@ -29,7 +29,8 @@
 		<div class="container text-center">
 			<h2>${board.studyTitle} 스터디</h2>
 		</div>
-		<div class="conainter" id="enabled"></div>
+		
+		<div class="conainter" id="checkEnabled"></div>
 		<sec:authentication var="principal" property="principal" />
 		<input type="hidden" value="${principal}" id="principal">
 		<input type="hidden" value="${checkLike}" id="checkLike">
@@ -74,7 +75,7 @@
 			<c:if test="${board.userId eq principal}">
 			<input type="submit" id="update" value="수정하기" 
 			onclick="javascript: form.action='updateBoardPage';">
-			<button type="button" id="updateStudy"></button>
+			<button type="button" id="updateEnabled"></button>
 			</c:if>
 		</form>
 		
@@ -90,16 +91,19 @@
 
 window.onload = function(){
 	var enabled = ${board.enabled};
-	
+	var checkLike = ${checkLike};
+
 	if(enabled == '1'){
-		$("#updateStudy").text("모집 마감하기");
-		$("#enabled").text('모집 중');
+		$("#join").show();
+		$("#updateEnabled").text("모집 마감하기");
+		$("#checkEnabled").text('모집 중');
 	}else{
-		$("#updateStudy").text("모집하기");
-		$("#enabled").text('모집마감');
+		$("#join").hide();
+		$("#updateEnabled").text("모집하기");
+		$("#checkEnabled").text('모집마감');
 	}
 	
-	if(!like){
+	if(!checkLike){
 		$("#like").text("좋아요");
 	}else{
 		$("#like").text("좋아요 취소");
@@ -108,7 +112,7 @@ window.onload = function(){
 	$("#join").on("click", function() {
 		$.ajax({
 			async : 'true',
-			url : "/study/idCheck",
+			url : "/study/join",
 			type : 'post',
 			data : {
 				userId : $("#principal").val(),
@@ -119,7 +123,6 @@ window.onload = function(){
 			success : function(check) {
 				if (check) {
 					alert('가입이 완료되었습니다!');
-					location.href = "/study/join/${board.boardNum}"
 				} else {
 					alert('이미 가입한 스터디입니다.');
 				}
@@ -131,35 +134,6 @@ window.onload = function(){
 			}
 		})
 	});
-	
-	$("#updateStudy").on("click", function() {
-		$.ajax({
-			async : 'true',
-			url : "/study/board/updateStudy",
-			type : 'post',
-			data : {
-				boardNum : $("#boardNum").val(),
-				enabled : enabled,
-				"${_csrf.parameterName}" : "${_csrf.token}"
-			},
-			dataType : 'json',
-			success : function(result) {
-				if (result) {
-					$("#updateStudy").text("모집하기");
-					$("#enabled").text('모집마감');
-				} else {
-					$("#updateStudy").text("모집 마감하기");
-					$("#enabled").text('모집 중');
-				}
-				return false;
-			},
-			error : function() {
-				alert('다시 시도해주세요.');
-				return false;
-			}
-		})
-	});
-	
 	
 	$("#like").on("click", function() {
 		$.ajax({
@@ -190,9 +164,38 @@ window.onload = function(){
 		})
 	});
 	
-	
-	
-	
+	$("#updateEnabled").on("click", function() {
+		$.ajax({
+			async : 'true',
+			url : "/study/board/updateStudy",
+			type : 'post',
+			data : {
+				boardNum : $("#boardNum").val(),
+				enabled : enabled,
+				"${_csrf.parameterName}" : "${_csrf.token}"
+			},
+			dataType : 'json',
+			success : function(result) {
+				if (result) {
+					$("#join").show();
+					$("#checkEnabled").text('모집중');
+					$("#updateEnabled").text("모집 마감하기");
+					enabled = 1;
+					
+				} else {
+					$("#join").hide();
+					$("#checkEnabled").text('모집마감');
+					$("#updateEnabled").text("모집 하기");
+					enabled = 0;
+				}
+				return false;
+			},
+			error : function() {
+				alert('다시 시도해주세요.');
+				return false;
+			}
+		})
+	});
 };
 
 </script>

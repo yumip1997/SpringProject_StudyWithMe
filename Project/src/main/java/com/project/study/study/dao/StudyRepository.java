@@ -24,8 +24,7 @@ public class StudyRepository implements IStudyRepository{
 	@Override
 	public boolean checkDuplication(StudyVO study) {
 		// TODO Auto-generated method stub
-		Integer a = sqlSessionTemplate.selectOne("studyDAO.checkDuplication", study);
-		return a==0 ? true : false;
+		return sqlSessionTemplate.selectOne("studyDAO.checkDuplication", study);
 	}
 
 	@Override

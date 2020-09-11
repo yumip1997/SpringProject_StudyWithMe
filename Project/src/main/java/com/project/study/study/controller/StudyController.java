@@ -22,24 +22,20 @@ public class StudyController {
 	
 	@Autowired
 	IBoardService boardService;
-	
-	@GetMapping("/join/{boardNum}")
-	public String joinStudy(@PathVariable int boardNum, Principal principal) {
-		String currentUser = principal.getName();
-		StudyVO study = new StudyVO();
-		study.setBoardNum(boardNum);
-		study.setUserId(currentUser);
-		studyService.insertStudy(study);
-		return "redirect:/board/"+boardNum;
-	}
-	
-	@PostMapping("/idCheck")
+		
+	@PostMapping("/join")
 	@ResponseBody
 	public boolean checkDuplication(int boardNum, String userId) {
 		StudyVO study = new StudyVO();
 		study.setBoardNum(boardNum);
 		study.setUserId(userId);
-		return studyService.checkDuplication(study);
+		
+		if(!studyService.checkDuplication(study)) {
+			studyService.insertStudy(study);
+			return true;
+		}else {
+			return false;
+		}
 	}
 	
 	//회원 별 스터디 목록

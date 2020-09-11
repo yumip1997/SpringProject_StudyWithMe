@@ -125,13 +125,13 @@ public class BoardController {
 	// PostMapping 스터디 모집여부 변경
 	@PostMapping("/updateStudy")
 	@ResponseBody
-	public boolean updateStudy(@RequestParam("boardNum") int boardNum, @RequestParam("enabled") char enabled) {
-		if (enabled == '1') {
-			boardService.updateCloseBoard('0', boardNum);
-			return false;
-		} else {
+	public boolean updateStudy(int boardNum, char enabled) {
+		if (enabled == '0') {
 			boardService.updateCloseBoard('1', boardNum);
 			return true;
+		} else {
+			boardService.updateCloseBoard('0', boardNum);
+			return false;
 		}
 	}
 	

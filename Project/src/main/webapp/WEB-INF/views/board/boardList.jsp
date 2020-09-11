@@ -88,7 +88,7 @@
 			<table class="table table-hover text-center">
 				<thead>
 					<tr>
-						<th colspan="6">${studyType} Top3스터디(QnA,File업로드수 기준)</th>
+						<th colspan="6">${studyType}Top3스터디(QnA,File업로드수기준)</th>
 					</tr>
 					<tr>
 						<th>순위</th>
@@ -116,31 +116,46 @@
 
 	<!-- study list section -->
 	<div class="container pt-2">
-		<button class="btn btn-default pull-left" id="insert">스터디 생성</button>
-		<table class="table table-hover" id="list">
-			<thead>
-				<tr>
-					<th></th>
-					<th>스터디 모집 글 제목</th>
-					<th>스터디 타입</th>
-					<th>작성자</th>
-					<th>작성일</th>
-					<th>조회수</th>
-					<th>좋아요</th>
-				</tr>
-			</thead>
-			<c:forEach var="board" items="${boardList}">
-				<tr>
-					<td>${board.enabled == '1'.charAt(0) ? '모집 중' : '모집 마감'}</td>
-					<td><a href="/study/board/${board.boardNum}">${board.boardTitle}</a></td>
-					<td>${board.studyType}</td>
-					<td>${board.userId}</td>
-					<td>${board.writedate}</td>
-					<td>${board.views}</td>
-					<td>${board.likes}</td>
-				</tr>
-			</c:forEach>
-		</table>
+		<div class="row justify-content-between">
+			<div class="col-4">
+				<button type="button" id="insert">스터디 생성</button>
+			</div>
+			<div class="col-2">
+				<form method="post" action="/study/board/selectOrder">
+					<select name="orderOption" class="form-control">
+						<option value="">최신순</option>
+						<option value="orderLike">인기순</option>
+					</select>
+				</form>
+			</div>
+		</div>
+
+		<div class="row">
+			<table class="table table-hover" id="list">
+				<thead>
+					<tr>
+						<th></th>
+						<th>스터디 모집 글 제목</th>
+						<th>스터디 타입</th>
+						<th>작성자</th>
+						<th>작성일</th>
+						<th>조회수</th>
+						<th>좋아요</th>
+					</tr>
+				</thead>
+				<c:forEach var="board" items="${boardList}">
+					<tr>
+						<td>${board.enabled == '1'.charAt(0) ? '모집 중' : '모집 마감'}</td>
+						<td><a href="/study/board/${board.boardNum}">${board.boardTitle}</a></td>
+						<td>${board.studyType}</td>
+						<td>${board.userId}</td>
+						<td>${board.writedate}</td>
+						<td>${board.views}</td>
+						<td>${board.likes}</td>
+					</tr>
+				</c:forEach>
+			</table>
+		</div>
 	</div>
 
 	<!-- footer -->

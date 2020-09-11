@@ -92,12 +92,6 @@
 		where board_num = #{boardNum}
 	</update>
 
-	<!-- 특정 회원 스터디 모집 글 삭제 -->
-	<delete id="deleteBoardbyMem" parameterType="String">
-		delete from board
-		where userId = #{userId}
-	</delete>
-
 	<!-- 조회수 올리기 -->
 	<update id="increaseViews" parameterType="int">
 		update board

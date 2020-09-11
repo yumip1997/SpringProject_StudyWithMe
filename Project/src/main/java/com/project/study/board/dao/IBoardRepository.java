@@ -28,9 +28,6 @@ public interface IBoardRepository {
 	// 스터디 모집 마감 여부 변경
 	public void updateCloseBoard(char enabled, int boardNum);
 
-	// 특정 회원의 게시글 삭제
-	public void deleteBoardbyMem(String userId);
-
 	// 조회수 증가
 	public void increaseViews(int num);
 	

@@ -58,7 +58,7 @@
 
 <div class="row align-items-center">
 <div class="col-md-6"><p>질의응답, 자료실 서비스를 <br>이용하세요!</p></div>
-<div class="col-md-6"><img src="image/study.png"></div>
+<div class="col-md-6"><img src="image/study.jpg"></div>
 </div>
 </div>
 </div>

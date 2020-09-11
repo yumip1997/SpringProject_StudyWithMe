@@ -126,11 +126,9 @@ public class MemberController {
 		String currentUser = principal.getName();
 		if(currentUser == userId) {
 			session.invalidate();
-			boardService.deleteBoardbyMem(userId);
 			memberService.deleteMember(userId);
 			return "redirect:../index";
 		}else {
-			boardService.deleteBoardbyMem(userId);
 			memberService.deleteMember(userId);
 			return "redirect:/member/memberList";
 		}

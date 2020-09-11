@@ -63,13 +63,6 @@ public class BoardService implements IBoardService {
 
 	@Transactional("txManager")
 	@Override
-	public void deleteBoardbyMem(String userId) {
-		// TODO Auto-generated method stub
-		boardRepository.deleteBoardbyMem(userId);
-	}
-
-	@Transactional("txManager")
-	@Override
 	public void increaseViews(int num) {
 		// TODO Auto-generated method stub
 		boardRepository.increaseViews(num);

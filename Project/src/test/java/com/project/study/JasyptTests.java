@@ -17,11 +17,9 @@ public class JasyptTests {
 		pbeEnc.setAlgorithm("PBEWithMD5AndDES");
 		pbeEnc.setPassword("key");
 		
-		String url = pbeEnc.encrypt("jdbc:log4jdbc:mysql://localhost:3306/study?serverTimezone=UTC");
 		String username =pbeEnc.encrypt("root");
 		String pw = pbeEnc.encrypt("1234");
 		
-		System.out.println(url);
 		System.out.println(username);
 		System.out.println(pw);
 	}

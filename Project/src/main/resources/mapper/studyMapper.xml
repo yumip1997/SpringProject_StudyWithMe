@@ -9,18 +9,20 @@
 	</insert>
 
 	<!-- 스터디 회원 중복확인 -->
-	<select id="checkDuplication" parameterType="studyVO"
-		resultType="int">
-		select count(*) from study where board_num=#{boardNum} and
-		userid=#{userId}
+	<select id="checkDuplication" resultType="boolean">
+		select if(ifnull(count(userid),false),true,false) as
+		idCheck
+		from study
+		where board_num=#{boardNum} and userid=#{userId};
 	</select>
 
 	<!-- 회원 별 스터디 목록 -->
-	<select id="getStudyListByMem" parameterType="String"
-		resultType="studyDetailVO">
-		select s.board_num, study_title, study_type, s.userid, b.userid as creator, b.writedate
-		from board b join study s on b.board_num = s.board_num
+	<select id="getStudyListByMem" parameterType="String" resultType="studyDetailVO">
+		select s.board_num, study_title, study_type, s.userid,
+		b.userid as creator, b.writedate
+		from board b join study s on
+		b.board_num = s.board_num
 		where s.userid=#{userId}
 	</select>
-	
+
 </mapper>

@@ -73,12 +73,6 @@ public class BoardRepository implements IBoardRepository{
 	}
 	
 	@Override
-	public void deleteBoardbyMem(String userId) {
-		// TODO Auto-generated method stub
-		sqlSessionTemplate.delete("boardDAO.deleteBoardbyMem", userId);
-	}
-
-	@Override
 	public void increaseViews(int num) {
 		// TODO Auto-generated method stub
 		sqlSessionTemplate.update("boardDAO.increaseViews", num);
