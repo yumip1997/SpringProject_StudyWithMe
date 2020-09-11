@@ -62,6 +62,7 @@
 				<beans:value>classpath:i18n/board</beans:value>
 				<beans:value>classpath:i18n/qna</beans:value>
 				<beans:value>classpath:i18n/file</beans:value>
+				<beans:value>classpath:i18n/comment</beans:value>
 			</beans:list>
 		</beans:property>
 	</beans:bean>
@@ -105,12 +106,8 @@
     </beans:property>
     </beans:bean>
     
-	<context:component-scan base-package="com.project.study.member.controller" />
-	<context:component-scan base-package="com.project.study.board.controller" />
-	<context:component-scan base-package="com.project.study.study.controller" />
-	<context:component-scan base-package="com.project.study.qna.controller" />
-	<context:component-scan base-package="com.project.study.file.controller" />
-
+    <context:component-scan base-package="com.project.study.**.controller" />
+	
 	<security:global-method-security
 		secured-annotations="enabled" pre-post-annotations="enabled" />
 

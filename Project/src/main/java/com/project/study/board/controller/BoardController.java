@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.project.study.board.dao.IBoardService;
 import com.project.study.board.model.BoardVO;
+import com.project.study.comment.dao.ICommentService;
 import com.project.study.study.dao.IStudyService;
 import com.project.study.study.model.StudyVO;
 
@@ -35,16 +36,9 @@ public class BoardController {
 
 	@Autowired
 	IStudyService studyService;
-
-	// 스터디 모집 글 전체 목록보기
-	@GetMapping("/boardList")
-	public String boardList(Model model) {
-		String studyType = "all";
-		model.addAttribute("boardList", boardService.getBoardList(studyType));
-		model.addAttribute("Top3List", boardService.gettTop3Study(studyType));
-		model.addAttribute("studyType", "전체");
-		return "board/boardList";
-	}
+	
+	@Autowired
+	ICommentService commentService;
 
 	// 스터디 타입에 따른 스터디 모집 글 목록보기
 	@GetMapping("/boardList/{studyType}")

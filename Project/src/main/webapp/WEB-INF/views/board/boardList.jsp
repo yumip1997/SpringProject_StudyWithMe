@@ -52,7 +52,7 @@
 	</div>
 
 	<!-- search section -->
-	<div class="container pt-2">
+	<div class="container">
 		<form method="post" action="/study/board/search">
 			<div class="form-row">
 				<div class="form-group col-md-3">
@@ -88,11 +88,12 @@
 			<table class="table table-hover text-center">
 				<thead>
 					<tr>
-						<th colspan="6">${studyType}Top3스터디(QnA,File업로드수기준)</th>
+						<th colspan="6">${studyType} Top3스터디(QnA,File업로드수기준)</th>
 					</tr>
 					<tr>
 						<th>순위</th>
 						<th>스터디 이름</th>
+						<th>스터디타입</th>
 						<th>작성자</th>
 						<th>작성일</th>
 						<th>질의응답 수</th>
@@ -103,6 +104,7 @@
 					<tr>
 						<td>${status.count}</td>
 						<td><a href="/study/board/${top3.boardNum}">${top3.studyTitle}</a></td>
+						<td>${top3.studyType}</td>
 						<td>${top3.userId}</td>
 						<td>${top3.writedate}</td>
 						<td>${top3.qnaTotal}</td>
@@ -116,20 +118,9 @@
 
 	<!-- study list section -->
 	<div class="container pt-2">
-		<div class="row justify-content-between">
-			<div class="col-4">
-				<button type="button" id="insert">스터디 생성</button>
-			</div>
-			<div class="col-2">
-				<form method="post" action="/study/board/selectOrder">
-					<select name="orderOption" class="form-control">
-						<option value="">최신순</option>
-						<option value="orderLike">인기순</option>
-					</select>
-				</form>
-			</div>
+		<div class="row justify-content-start by-1">
+				<button class="btn btn-outline-secondary mb-3" id="insert">스터디 생성</button>
 		</div>
-
 		<div class="row">
 			<table class="table table-hover" id="list">
 				<thead>
@@ -184,7 +175,7 @@
 	});
 
 	$("#total").on("click", function() {
-		location.href = "/study/board/boardList";
+		location.href = "/study/board/boardList/all";
 	});
 
 	$("#insert").on("click", function() {

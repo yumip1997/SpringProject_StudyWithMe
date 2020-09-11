@@ -6,8 +6,6 @@ import javax.validation.constraints.NotEmpty;
 
 import org.hibernate.validator.constraints.Length;
 
-
-
 public class FileVO {
 
 	private int boardNum;

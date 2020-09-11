@@ -6,7 +6,7 @@
 		<setting name="cacheEnabled" value="false" />
 		<!-- <setting name="useGenereateKeys" value="false" /> -->
 		<setting name="mapUnderscoreToCamelCase" value="true" />
-		<setting name="jdbcTypeForNull" value="NULL"/>
+		<setting name="jdbcTypeForNull" value="NULL" />
 	</settings>
 
 	<!-- 클래스 별칭 설정 -->
@@ -20,10 +20,12 @@
 		<typeAlias alias="studyDetailVO"
 			type="com.project.study.study.model.StudyDetailVO" />
 		<typeAlias alias="qnaVO"
-			type="com.project.study.qna.model.QnAVO" />	
+			type="com.project.study.qna.model.QnAVO" />
 		<typeAlias alias="fileVO"
-			type="com.project.study.file.model.FileVO" />	
-	
+			type="com.project.study.file.model.FileVO" />
+		<typeAlias alias="commentVO"
+			type="com.project.study.comment.model.CommentVO" />
+
 	</typeAliases>
 
 </configuration>

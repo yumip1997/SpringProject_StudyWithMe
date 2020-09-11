@@ -11,7 +11,7 @@
   <div class="collapse navbar-collapse" id="navbarCollapse">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
-        <a class="nav-link" href="/study/board/boardList">스터디 찾기 </a>
+        <a class="nav-link" href="/study/board/boardList/all">스터디 찾기 </a>
       </li>
        <li class="nav-item">
         <a class="nav-link" href="/study/studyList">스터디 시작 </a>
@@ -36,7 +36,7 @@
         <a class="nav-link" href="/study/member/memberList">회원목록 </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/study/board/boardList">스터디 찾기</a>
+        <a class="nav-link" href="/study/board/boardList/all">스터디 찾기</a>
       </li>
        <li class="nav-item">
         <a class="nav-link" href="/study/studyList">스터디 시작 </a>

@@ -10,13 +10,14 @@
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 <jsp:include page="/WEB-INF/resources/incl/staticHeader.jsp" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <title>Study With Me</title>
 </head>
 <body>
 	<!-- menu -->
 	<jsp:include page="/WEB-INF/resources/incl/header.jsp" />
-	
+
 	<!-- header -->
 	<div class="jumbotron bg-secondary">
 		<div class="container-fluid p-1 text-center">
@@ -26,177 +27,199 @@
 
 	<!-- study board detail -->
 	<div class="container container-fluid pt-5">
-		<div class="container text-center">
-			<h2>${board.studyTitle} 스터디</h2>
+		<div class="container text-center mb-2">
+			<h2>${board.studyTitle}스터디</h2>
 		</div>
-		
-		<div class="conainter" id="checkEnabled"></div>
-		<sec:authentication var="principal" property="principal" />
-		<input type="hidden" value="${principal}" id="principal">
-		<input type="hidden" value="${checkLike}" id="checkLike">
-		<form method="post">
-			<table class="table table-striped">
-				<tr>
-					<th>스터디 모집 글 제목</th>
-					<td>${board.boardTitle}</td>
-				</tr>
-				<tr>
-					<th>상세내용</th>
-					<td>${board.boardContent}</td>
-				</tr>
-				<tr>
-					<th>스터디 이름</th>
-					<td>${board.studyTitle}</td>
-				</tr>
-				<tr>
-					<th>스터디 타입</th>
-					<td>${board.studyType}</td>
-				</tr>
-				<tr>
-					<th>작성자</th>
-					<td>${board.userId}</td>
-				</tr>
-				<tr>
-					<th>작성일</th>
-					<td>${board.writedate}</td>
-				</tr>
-				<tr>
-					<th>조회수</th>
-					<td>${board.views}</td>
-				</tr>
-				<tr>
-					<th>좋아요</th>
-					<td id="likeCount">${board.likes}</td>
-				</tr>
-			</table>
-			<input type="hidden" value="${board.userId}" id="userId" name="userId"> 
-			<input type="hidden" value="${board.boardNum}" id="boardNum" name="boardNum"> 
-			<input type="button" value="가입하기" id="join">
-			<c:if test="${board.userId eq principal}">
-			<input type="submit" id="update" value="수정하기" 
-			onclick="javascript: form.action='updateBoardPage';">
-			<button type="button" id="updateEnabled"></button>
-			</c:if>
-		</form>
-		
-		<button type="button" id="like"></button>
-		<button onclick="location.href='/study/board/boardList'">목록보기</button>
+
+		<div class="container mb-2">
+			<button class="btn btn-info" id="checkEnabled" disabled></button>
+		</div>
+
+		<div class="container">
+			<sec:authentication var="principal" property="principal" />
+			<input type="hidden" value="${principal}" id="principal"> <input
+				type="hidden" value="${checkLike}" id="checkLike">
+			<form method="post">
+				<table class="table table-striped">
+					<tr>
+						<th>스터디 모집 글 제목</th>
+						<td>${board.boardTitle}</td>
+					</tr>
+					<tr>
+						<th>상세내용</th>
+						<td>${board.boardContent}</td>
+					</tr>
+					<tr>
+						<th>스터디 이름</th>
+						<td>${board.studyTitle}</td>
+					</tr>
+					<tr>
+						<th>스터디 타입</th>
+						<td>${board.studyType}</td>
+					</tr>
+					<tr>
+						<th>작성자</th>
+						<td>${board.userId}</td>
+					</tr>
+					<tr>
+						<th>작성일</th>
+						<td>${board.writedate}</td>
+					</tr>
+					<tr>
+						<th>조회수</th>
+						<td>${board.views}</td>
+					</tr>
+					<tr>
+						<th>좋아요</th>
+						<td id="likeCount">${board.likes}</td>
+					</tr>
+				</table>
+				<input type="hidden" value="${board.userId}" id="userId"
+					name="userId"> <input type="hidden"
+					value="${board.boardNum}" id="boardNum" name="boardNum"> <input
+					type="button" value="가입하기" class="btn btn-light m-1" id="join">
+				<c:if test="${board.userId eq principal}">
+					<button type="button" class="btn btn-light m-1" id="updateEnabled"></button>
+					<input type="submit" class="btn btn-light m-1" id="update"
+						value="수정하기" onclick="javascript: form.action='updateBoardPage';">
+				</c:if>
+			</form>
+		</div>
+
+		<div class="container">
+			<div class="row justify-content-end">
+				<button class="btn btn-outline-secondary mx-1" id="like"></button>
+				<button class="btn btn-outline-secondary" id="viewList">목록보기</button>
+			</div>
+		</div>
 	</div>
 	
+	<!-- comment -->
+	<div class="container">
+	<table>
+	<thead>
+	</thead>
+	</table>
+	</div>
+
+
 	<!-- footer -->
 	<jsp:include page="/WEB-INF/resources/incl/footer.jsp" />
 </body>
 
 <script>
+	window.onload = function() {
+		var enabled = ${board.enabled};
 
-window.onload = function(){
-	var enabled = ${board.enabled};
-	var checkLike = ${checkLike};
+		var checkLike = ${checkLike};
 
-	if(enabled == '1'){
-		$("#join").show();
-		$("#updateEnabled").text("모집 마감하기");
-		$("#checkEnabled").text('모집 중');
-	}else{
-		$("#join").hide();
-		$("#updateEnabled").text("모집하기");
-		$("#checkEnabled").text('모집마감');
-	}
-	
-	if(!checkLike){
-		$("#like").text("좋아요");
-	}else{
-		$("#like").text("좋아요 취소");
-	}
-	
-	$("#join").on("click", function() {
-		$.ajax({
-			async : 'true',
-			url : "/study/join",
-			type : 'post',
-			data : {
-				userId : $("#principal").val(),
-				boardNum : $("#boardNum").val(),
-				"${_csrf.parameterName}" : "${_csrf.token}"
-			},
-			dataType : 'json',
-			success : function(check) {
-				if (check) {
-					alert('가입이 완료되었습니다!');
-				} else {
-					alert('이미 가입한 스터디입니다.');
-				}
-				return false;
-			},
-			error : function() {
-				alert('다시 시도해주세요.');
-				return false;
-			}
-		})
-	});
-	
-	$("#like").on("click", function() {
-		$.ajax({
-			async : 'true',
-			url : "/study/board/updateLike",
-			type : 'post',
-			data : {
-				boardNum : $("#boardNum").val(),
-				userId : $("#principal").val(),
-				"${_csrf.parameterName}" : "${_csrf.token}"
-			},
-			dataType : 'json',
-			success : function(result) {
-				if (result.checkLike) {
-					$("#like").text("좋아요 취소");
-					$("#likeCount").text(result.count);
-					
-				} else {
-					$("#like").text("좋아요");
-					$("#likeCount").text(result.count);
-				}
-				return false;
-			},
-			error : function() {
-				alert('다시 시도해주세요.');
-				return false;
-			}
-		})
-	});
-	
-	$("#updateEnabled").on("click", function() {
-		$.ajax({
-			async : 'true',
-			url : "/study/board/updateStudy",
-			type : 'post',
-			data : {
-				boardNum : $("#boardNum").val(),
-				enabled : enabled,
-				"${_csrf.parameterName}" : "${_csrf.token}"
-			},
-			dataType : 'json',
-			success : function(result) {
-				if (result) {
-					$("#join").show();
-					$("#checkEnabled").text('모집중');
-					$("#updateEnabled").text("모집 마감하기");
-					enabled = 1;
-					
-				} else {
-					$("#join").hide();
-					$("#checkEnabled").text('모집마감');
-					$("#updateEnabled").text("모집 하기");
-					enabled = 0;
-				}
-				return false;
-			},
-			error : function() {
-				alert('다시 시도해주세요.');
-				return false;
-			}
-		})
-	});
-};
+		if (enabled == '1') {
+			$("#join").show();
+			$("#updateEnabled").text("모집 마감하기");
+			$("#checkEnabled").text('모집 중');
+		} else {
+			$("#join").hide();
+			$("#updateEnabled").text("모집하기");
+			$("#checkEnabled").text('모집마감');
+		}
 
+		if (!checkLike) {
+			$("#like").text("좋아요");
+		} else {
+			$("#like").text("좋아요 취소");
+		}
+
+		$("#join").on("click", function() {
+			$.ajax({
+				async : 'true',
+				url : "/study/join",
+				type : 'post',
+				data : {
+					userId : $("#principal").val(),
+					boardNum : $("#boardNum").val(),
+					"${_csrf.parameterName}" : "${_csrf.token}"
+				},
+				dataType : 'json',
+				success : function(check) {
+					if (check) {
+						alert('가입이 완료되었습니다!');
+					} else {
+						alert('이미 가입한 스터디입니다.');
+					}
+					return false;
+				},
+				error : function() {
+					alert('다시 시도해주세요.');
+					return false;
+				}
+			})
+		});
+
+		$("#like").on("click", function() {
+			$.ajax({
+				async : 'true',
+				url : "/study/board/updateLike",
+				type : 'post',
+				data : {
+					boardNum : $("#boardNum").val(),
+					userId : $("#principal").val(),
+					"${_csrf.parameterName}" : "${_csrf.token}"
+				},
+				dataType : 'json',
+				success : function(result) {
+					if (result.checkLike) {
+						$("#like").text("좋아요 취소");
+						$("#likeCount").text(result.count);
+
+					} else {
+						$("#like").text("좋아요");
+						$("#likeCount").text(result.count);
+					}
+					return false;
+				},
+				error : function() {
+					alert('다시 시도해주세요.');
+					return false;
+				}
+			})
+		});
+
+		$("#updateEnabled").on("click", function() {
+			$.ajax({
+				async : 'true',
+				url : "/study/board/updateStudy",
+				type : 'post',
+				data : {
+					boardNum : $("#boardNum").val(),
+					enabled : enabled,
+					"${_csrf.parameterName}" : "${_csrf.token}"
+				},
+				dataType : 'json',
+				success : function(result) {
+					if (result) {
+						$("#join").show();
+						$("#checkEnabled").text('모집중');
+						$("#updateEnabled").text("모집 마감하기");
+						enabled = 1;
+
+					} else {
+						$("#join").hide();
+						$("#checkEnabled").text('모집마감');
+						$("#updateEnabled").text("모집 하기");
+						enabled = 0;
+					}
+					return false;
+				},
+				error : function() {
+					alert('다시 시도해주세요.');
+					return false;
+				}
+			})
+		});
+
+		$("#viewList").on("click", function() {
+			location.href = "/study/board/boardList/all";
+		})
+	};
 </script>
 </html>
