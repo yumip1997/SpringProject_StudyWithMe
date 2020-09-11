@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="likeDAO">
+<!-- 좋아요 like_table 테이블 반영 -->
+<insert id="insertLike">
+insert into like_table(board_num, userid)
+values(#{boardNum}, #{userId})
+</insert>
+
+<!-- 좋아요 like_table 테이블에 반영 취소 -->
+<delete id="deleteLike">
+delete from like_table
+where board_num = #{boardNum} and userid = #{userId}
+</delete>
+
+<!-- 좋아요 board테이블에 반영 -->
+<update id="increaseLikes" parameterType="int">
+update board
+set likes = likes+1
+where board_num = #{boardNum}
+</update>
+
+<!-- 좋아요 board테이블에 반영 취소 -->
+<update id="decreaseLikes" parameterType="int">
+update board
+set likes = likes-1
+where board_num = #{boardNum}
+</update>
+
+<!--like 여부 확인 -->
+<select id="checkLike" resultType="boolean">
+select if(ifnull(count(like_check), false), true, false) as likeCheck
+from like_table
+where board_num = #{boardNum} and userid=#{userId};
+</select>
+
+<!-- like수 가져오기 -->
+<select id="getLikeCount" parameterType="int" resultType="int">
+select likes
+from board
+where board_num = #{boardNum}
+</select>
+</mapper>
+
