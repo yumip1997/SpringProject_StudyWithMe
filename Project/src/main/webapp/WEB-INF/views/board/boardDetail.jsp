@@ -1,17 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib uri="http://www.springframework.org/security/tags"
-	prefix="sec"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 <jsp:include page="/WEB-INF/resources/incl/staticHeader.jsp" />
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <title>Study With Me</title>
 </head>
 <body>
@@ -37,8 +36,8 @@
 
 		<div class="container">
 			<sec:authentication var="principal" property="principal" />
-			<input type="hidden" value="${principal}" id="principal"> <input
-				type="hidden" value="${checkLike}" id="checkLike">
+			<input type="hidden" value="${principal}" id="principal"> 
+			<input type="hidden" value="${checkLike}" id="checkLike">
 			<form method="post">
 				<table class="table table-striped">
 					<tr>
@@ -74,14 +73,13 @@
 						<td id="likeCount">${board.likes}</td>
 					</tr>
 				</table>
-				<input type="hidden" value="${board.userId}" id="userId"
-					name="userId"> <input type="hidden"
-					value="${board.boardNum}" id="boardNum" name="boardNum"> <input
-					type="button" value="가입하기" class="btn btn-light m-1" id="join">
+				<input type="hidden" value="${board.userId}" id="userId" name="userId"> 
+				<input type="hidden" value="${board.boardNum}" id="boardNum" name="boardNum"> 
+				<input type="button" value="가입하기" class="btn btn-light m-1" id="join">
 				<c:if test="${board.userId eq principal}">
 					<button type="button" class="btn btn-light m-1" id="updateEnabled"></button>
 					<input type="submit" class="btn btn-light m-1" id="update"
-						value="수정하기" onclick="javascript: form.action='updateBoardPage';">
+					value="수정하기" onclick="javascript: form.action='updateBoardPage';">
 				</c:if>
 			</form>
 		</div>
@@ -93,15 +91,49 @@
 			</div>
 		</div>
 	</div>
-	
+
 	<!-- comment -->
 	<div class="container">
-	<table>
-	<thead>
-	</thead>
-	</table>
-	</div>
+		<div class="form-group">
+			<h5>Comment (${commentCount}) : </h5>
+			<form action="insertComment" method="post" id="commentForm">
+				<textarea class="form-control" rows="2" id="commentContent" name="commentContent"></textarea>
+				<input type="hidden" value="${principal}" id="userId" name="userId">
+				<input type="hidden" value="${board.boardNum}" id="postNum" name="postNum"> 
+				<input type="hidden" value="board" id="postType" name="postType"> 
+				<input type="submit" value="등록하기" class="btn btn-light pull-right m-1" id="commentBtn">
+			</form>
+		</div>
 
+		<div class="container">
+			<table>
+				<c:forEach var="comment" items="${commentList}">
+					<c:choose>
+						<c:when test="${comment.groupOrder eq 0}">
+							<tr>
+								<td>${comment.userId}( ${comment.writedate} )</td>
+							</tr>
+							<tr>
+								<td>${comment.commentContent}</td>
+								<td>
+								<input type="hidden" value="${comment.commentNum}" id="commentNum">
+								<button class="btn btn-secondary" id="reply">답글</button></td>
+							</tr>
+						</c:when>
+						<c:otherwise>
+							<tr>
+								<td><i class="angle-right"></i>
+								 ${comment.userId} (${comment.writedate} )</td>
+							</tr>
+							<tr>
+								<td>${comment.commentContent}</td>
+							</tr>
+						</c:otherwise>
+					</c:choose>
+				</c:forEach>
+			</table>
+		</div>
+	</div>
 
 	<!-- footer -->
 	<jsp:include page="/WEB-INF/resources/incl/footer.jsp" />
@@ -109,8 +141,8 @@
 
 <script>
 	window.onload = function() {
-		var enabled = ${board.enabled};
 
+		var enabled = ${board.enabled};
 		var checkLike = ${checkLike};
 
 		if (enabled == '1') {
@@ -214,11 +246,38 @@
 					alert('다시 시도해주세요.');
 					return false;
 				}
-			})
+			});
 		});
 
 		$("#viewList").on("click", function() {
 			location.href = "/study/board/boardList/all";
+		});
+
+		$("#commentBtn").on("click", function() {
+			if ($("#commentContent").val() == "") {
+				alert("댓글을 입력해주세요.");
+				return false;
+			}
+
+			$.ajax({
+				async : 'false',
+				url : "/study/board/insertComment",
+				type : 'post',
+				data : $("#commentForm").serialize(),
+				dataType : 'json',
+				success : function(result) {
+					alert(result.commentContent);
+					return false;
+				},
+				error : function() {
+					alert('다시 시도해주세요.');
+					return false;
+				}
+			});
+		});
+		
+		$("#reply").on("click", function(){
+			alert($("#commentNum").val());
 		})
 	};
 </script>

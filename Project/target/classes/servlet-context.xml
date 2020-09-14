@@ -62,7 +62,6 @@
 				<beans:value>classpath:i18n/board</beans:value>
 				<beans:value>classpath:i18n/qna</beans:value>
 				<beans:value>classpath:i18n/file</beans:value>
-				<beans:value>classpath:i18n/comment</beans:value>
 			</beans:list>
 		</beans:property>
 	</beans:bean>

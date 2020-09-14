@@ -19,11 +19,32 @@ public class CommentRepository implements ICommentRepository{
 		// TODO Auto-generated method stub
 		return sqlSessionTemplate.selectList("commentDAO.getCommentList", postNum);
 	}
+	
+	@Override
+	public int getMaxCommentNum() {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectOne("commentDAO.getMaxCommentNum");
+	}
+
+	@Override
+	public int getMaxGroupOrder(int parentNum) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectOne("commentDAO.getMaxGroupOrder", parentNum);
+	}
 
 	@Override
 	public void insertComment(CommentVO comment) {
 		// TODO Auto-generated method stub
 		sqlSessionTemplate.insert("commentDAO.insertComment", comment);
+	}
+	
+	@Override
+	public void insertReply(CommentVO comment) {
+		// TODO Auto-generated method stub
+		int num = getMaxCommentNum();
+		comment.setCommentNum(num);
+		comment.setGroupOrder(getMaxGroupOrder(comment.getParentNum()));
+		sqlSessionTemplate.insert("commentDAO.insertReply", comment);
 	}
 
 	@Override
@@ -36,6 +57,12 @@ public class CommentRepository implements ICommentRepository{
 	public void deleteComment(int commentNum) {
 		// TODO Auto-generated method stub
 		sqlSessionTemplate.delete("commentDAO.deleteComment", commentNum);
+	}
+
+	@Override
+	public int getCountComment(int postNum) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectOne("commentDAO.getCountComment", postNum);
 	}
 
 }
