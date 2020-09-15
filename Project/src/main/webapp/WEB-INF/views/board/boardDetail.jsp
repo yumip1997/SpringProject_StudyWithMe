@@ -107,28 +107,29 @@
 		</div>
 
 		<div class="container">
-			<table id="commentBox">
+			<table id="commentBox" class="table table-borderless">
 			<tbody>
 				<c:forEach var="comment" items="${commentList}">
 					<c:choose>
 						<c:when test="${comment.groupOrder eq 0}">
 							<tr>
-								<td>${comment.userId}( ${comment.writedate} )</td>
+								<td><hr>${comment.userId}( ${comment.writedate} )</td>
 							</tr>
-							<tr>
-								<td>${comment.commentContent}</td>
-								<td><label class="btn btn-primary">
-								<input type="radio" class="custom-control" id="commentNum" value="${comment.commentNum}">답글
-								</label></td>
+							<tr id="${comment.commentNum}">
+								<td>${comment.commentContent}
+								<label class="btn btn-light pull-right">
+								<input type="radio" name="commentNum" value="${comment.commentNum}">답글
+								</label>
+								</td>
 							</tr>
 						</c:when>
 						<c:otherwise>
 							<tr>
-								<td><i class="angle-right"></i>
-								 ${comment.userId} (${comment.writedate} )</td>
+								<td class="pl-5"><i class="fa fa-chevron-right"></i>
+								${comment.userId} (${comment.writedate} )</td>
 							</tr>
 							<tr>
-								<td>${comment.commentContent}</td>
+								<td class="pl-5">${comment.commentContent}</td>
 							</tr>
 						</c:otherwise>
 					</c:choose>
@@ -271,10 +272,12 @@
 					dataType : 'json',
 					success : function(result) {
 						var date = moment(result.writedate).format('YYYY-MM-DD');
-						$("#commentBox > tbody:last").append("<tr><td>"+result.userId+"("+date+")"+"</td></tr>");
-						$("#commentBox > tbody:last").append("<tr><td>"+result.commentContent+
-								"<button class='btn btn-secondary' id='reply'>"+"답글"+"</button>"
-								+"</td></tr>");
+						var str ="<tr><td><hr>"+result.userId+" ("+date+")"+"</td></tr>";
+						str += "<tr id='result.commentNum'><td>";
+						str += result.commentContent;
+						str += '</td></tr>';
+						
+						$("#commentBox > tbody:last").append(str);
 						return false;
 					},
 					error : function() {
@@ -285,9 +288,25 @@
 			}
 		});
 		
-		$("#reply").on("click", function(){
-			alert($("#commentNum").val());
+		$("input:radio[name='commentNum']").one("click", function(){
+			var num = $(":radio[name='commentNum']:checked").val();
+			var str = '<tr><td>';
+			str += '<form action="insertReply" method="post" id="replyForm">';
+			str += '<textarea class="form-control" rows="2" name="commentContent"></textarea>';
+			str += '<input type="hidden" value="${principal}" name="userId">';
+			str += '<input type="hidden" value="${board.boardNum}" name="postNum">';
+			str += '<input type="hidden" value="board" name="postType">';
+			str += '<input type="button" value="답글달기" class="btn btn-light pull-right m-1" id="replyBtn">';
+			str += '</form>';
+			str += '</td></tr>';
+			$('tr#'+num).after(str);
+			
+			$("#replyBtn").on("click", function(){
+				
+			})
 		});
+		
+		
 	};
 </script>
 </html>
