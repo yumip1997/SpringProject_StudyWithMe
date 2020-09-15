@@ -21,6 +21,12 @@ public class CommentService implements ICommentService{
 	}
 	
 	@Override
+	public CommentVO getComment(int commentNum) {
+		// TODO Auto-generated method stub
+		return commentRepository.getComment(commentNum);
+	}
+	
+	@Override
 	public int getMaxCommentNum() {
 		// TODO Auto-generated method stub
 		return commentRepository.getMaxCommentNum();
@@ -65,6 +71,4 @@ public class CommentService implements ICommentService{
 		// TODO Auto-generated method stub
 		return commentRepository.getCountComment(postNum);
 	}
-
-
 }

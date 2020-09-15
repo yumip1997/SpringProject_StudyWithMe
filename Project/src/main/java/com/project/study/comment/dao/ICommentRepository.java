@@ -9,6 +9,9 @@ public interface ICommentRepository {
 	//댓글 목록
 	List<CommentVO> getCommentList(int postNum);
 	
+	//특정 댓글
+	CommentVO getComment(int commentNum);
+	
 	//댓글 번호의 최댓 값 +1 
 	int getMaxCommentNum();
 	

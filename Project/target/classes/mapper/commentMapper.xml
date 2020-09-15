@@ -1,12 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="commentDAO">
 
+<mapper namespace="commentDAO">
 <!-- 댓글 목록 -->
 <select id="getCommentList" parameterType="int" resultType="commentVO">
 select *
 from comment
 where post_num = #{postNum}
+</select>
+
+<!-- 특정 댓글 가져오기 -->
+<select id="getComment" parameterType="int" resultType="commentVO">
+select *
+from comment
+where comment_num = #{commentNum}
 </select>
 
 <!-- 댓글 번호의 최댓 값 +1 : 댓글 삽입 시 사용-->

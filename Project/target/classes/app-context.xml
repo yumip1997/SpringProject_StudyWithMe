@@ -16,8 +16,9 @@
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
 
-	<context:component-scan
-		base-package="com.project.study"></context:component-scan>
+	<context:component-scan base-package="com.project.study">
+	
+	</context:component-scan>
 
 	<!-- Root Context: defines shared resources visible to all other web components -->
 
@@ -91,10 +92,5 @@
 	<!-- 비밀번호 암호화 -->
 	<bean id="bcryptPasswordEncoder"
 		class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
-
-
-	<!-- Security Annotation 설정 -->
-	<security:global-method-security
-		secured-annotations="enabled" pre-post-annotations="enabled" />
 
 </beans>

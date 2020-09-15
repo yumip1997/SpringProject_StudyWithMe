@@ -10,6 +10,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 <jsp:include page="/WEB-INF/resources/incl/staticHeader.jsp" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <title>Study With Me</title>
 </head>
@@ -97,16 +98,17 @@
 		<div class="form-group">
 			<h5>Comment (${commentCount}) : </h5>
 			<form action="insertComment" method="post" id="commentForm">
-				<textarea class="form-control" rows="2" id="commentContent" name="commentContent"></textarea>
-				<input type="hidden" value="${principal}" id="userId" name="userId">
-				<input type="hidden" value="${board.boardNum}" id="postNum" name="postNum"> 
-				<input type="hidden" value="board" id="postType" name="postType"> 
-				<input type="submit" value="등록하기" class="btn btn-light pull-right m-1" id="commentBtn">
+				<textarea class="form-control" rows="2" name="commentContent"></textarea>
+				<input type="hidden" value="${principal}" name="userId">
+				<input type="hidden" value="${board.boardNum}" name="postNum"> 
+				<input type="hidden" value="board" name="postType"> 
+				<input type="button" value="등록하기" class="btn btn-light pull-right m-1" id="commentBtn">
 			</form>
 		</div>
 
 		<div class="container">
-			<table>
+			<table id="commentBox">
+			<tbody>
 				<c:forEach var="comment" items="${commentList}">
 					<c:choose>
 						<c:when test="${comment.groupOrder eq 0}">
@@ -115,9 +117,9 @@
 							</tr>
 							<tr>
 								<td>${comment.commentContent}</td>
-								<td>
-								<input type="hidden" value="${comment.commentNum}" id="commentNum">
-								<button class="btn btn-secondary" id="reply">답글</button></td>
+								<td><label class="btn btn-primary">
+								<input type="radio" class="custom-control" id="commentNum" value="${comment.commentNum}">답글
+								</label></td>
 							</tr>
 						</c:when>
 						<c:otherwise>
@@ -131,9 +133,12 @@
 						</c:otherwise>
 					</c:choose>
 				</c:forEach>
+				</tbody>
 			</table>
 		</div>
 	</div>
+	
+	<div id="aa"></div>
 
 	<!-- footer -->
 	<jsp:include page="/WEB-INF/resources/incl/footer.jsp" />
@@ -257,28 +262,32 @@
 			if ($("#commentContent").val() == "") {
 				alert("댓글을 입력해주세요.");
 				return false;
+			}else{
+				$.ajax({
+					async : 'true',
+					url : "/study/board/insertComment",
+					type : 'post',
+					data : $("#commentForm").serialize(),
+					dataType : 'json',
+					success : function(result) {
+						var date = moment(result.writedate).format('YYYY-MM-DD');
+						$("#commentBox > tbody:last").append("<tr><td>"+result.userId+"("+date+")"+"</td></tr>");
+						$("#commentBox > tbody:last").append("<tr><td>"+result.commentContent+
+								"<button class='btn btn-secondary' id='reply'>"+"답글"+"</button>"
+								+"</td></tr>");
+						return false;
+					},
+					error : function() {
+						alert('다시 시도해주세요.');
+						return false;
+					}
+				});
 			}
-
-			$.ajax({
-				async : 'false',
-				url : "/study/board/insertComment",
-				type : 'post',
-				data : $("#commentForm").serialize(),
-				dataType : 'json',
-				success : function(result) {
-					alert(result.commentContent);
-					return false;
-				},
-				error : function() {
-					alert('다시 시도해주세요.');
-					return false;
-				}
-			});
 		});
 		
 		$("#reply").on("click", function(){
 			alert($("#commentNum").val());
-		})
+		});
 	};
 </script>
 </html>

@@ -21,9 +21,8 @@ public class CommentController {
 	
 	@PostMapping("/insertComment")
 	@ResponseBody
-	public HashMap<String,Object> insertComment(@ModelAttribute CommentVO comment) 
+	public CommentVO insertComment(@ModelAttribute CommentVO comment) 
 	{
-		HashMap<String, Object>map = new HashMap<String, Object>();
 		//CommentVO의 나머지 변수들 설정 
 		int num = commentService.getMaxCommentNum();
 		comment.setCommentNum(num);
@@ -31,10 +30,7 @@ public class CommentController {
 		
 		//Comment삽입
 		commentService.insertComment(comment);
-		map.put("commentNum", comment.getCommentNum());
-		map.put("commentContent", comment.getCommentContent());
-		
-		return map;
+		return commentService.getComment(num);
 	}
 	
 	
