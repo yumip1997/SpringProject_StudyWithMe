@@ -7,21 +7,27 @@ import com.project.study.qna.model.QnAVO;
 public interface IQnAService {
 
 	// 스터디 별 QnA 목록
-	List<QnAVO> getQnAList(int boardNum);
+	public List<QnAVO> getQnAList(int boardNum);
 
 	// QnA 상세조회
-	QnAVO getQnA(int qnaNum);
+	public QnAVO getQnA(int qnaNum);
+
+	// QnA 검색
+	public List<QnAVO> searchQnA(String searchOption, String keyword, int boardNum);
+
+	// 검색된 QnA 개수
+	public int countQnA(String searchOption, String keyword, int boardNum);
 
 	// QnA 삽입
-	void insertQnA(QnAVO qnaVO);
+	public void insertQnA(QnAVO qnaVO);
 
 	// QnA 수정
-	void updateQnA(QnAVO qnaVO);
+	public void updateQnA(QnAVO qnaVO);
 
 	// QnA 삭제
-	void deleteQnA(int qnaNum);
+	public void deleteQnA(int qnaNum);
 
 	// QnA 조회수 올리기
-	void increaseViews(int qnaNum);
+	public void increaseViews(int qnaNum);
 
 }

@@ -16,7 +16,7 @@ public interface IBoardService {
 	// 스터디 모집 글 검색
 	public List<BoardVO> searchBoard(String searchOption, String keyword, String studyType);
 
-	// 검색된 스터디의 갯수
+	// 검색된 스터디의 개수
 	public int countBoard(String searchOption, String keyword, String studyType);
 
 	// 스터디 모집 글 삽입

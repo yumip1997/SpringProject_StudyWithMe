@@ -6,11 +6,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 <jsp:include page="/WEB-INF/resources/incl/staticHeader.jsp" />
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <title>Study With Me</title>
 </head>
 <body>
@@ -29,6 +27,7 @@
 		<div class="container p-3">
 			<h2>스터디 목록</h2>
 		</div>
+	
 		<div class="row text-center">
 			<div class="col-sm-2">
 				<button class="btn btn-outline-secondary" id="total">전체보기</button>
@@ -49,6 +48,7 @@
 				<button class="btn btn-outline-secondary" id="etc">기타</button>
 			</div>
 		</div>
+		
 	</div>
 
 	<!-- search section -->
@@ -78,7 +78,6 @@
 			${count}개의 스터디가 존재합니다.
 			</c:if>
 		</div>
-
 	</div>
 
 	<!-- top3 study section -->

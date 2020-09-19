@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.project.study.board.dao.IBoardService;
+import com.project.study.comment.dao.ICommentService;
 import com.project.study.qna.dao.IQnAService;
 import com.project.study.qna.model.QnAVO;
 
@@ -29,6 +30,9 @@ public class QnAController {
 	@Autowired
 	IBoardService boardService;
 	
+	@Autowired
+	ICommentService commentService;
+	
 	@GetMapping("/qnaList/{boardNum}")
 	String getQnAList(Model model, @PathVariable int boardNum) {
 		String studyTitle = boardService.getBoard(boardNum).getStudyTitle();
@@ -41,8 +45,21 @@ public class QnAController {
 	@GetMapping("/{qnaNum}")
 	String viewQnA(Model model, @PathVariable int qnaNum) {
 		model.addAttribute("qna", qnaService.getQnA(qnaNum));
+		model.addAttribute("commentList", commentService.getCommentList(qnaNum));
+		model.addAttribute("commentCount", commentService.getCountComment(qnaNum));
 		qnaService.increaseViews(qnaNum);
 		return "/study/qna/qnaView";
+	}
+	
+	@PostMapping("/search")
+	public String searchQnA(Model model, @RequestParam("searchOption") String searchOption,
+			@RequestParam("keyword") String keyword, @RequestParam("boardNum") int boardNum) {
+		String studyTitle = boardService.getBoard(boardNum).getStudyTitle();
+		model.addAttribute("boardNum", boardNum);
+		model.addAttribute("studyTitle", studyTitle);
+		model.addAttribute("qnaList", qnaService.searchQnA(searchOption, keyword, boardNum));
+		model.addAttribute("count", qnaService.countQnA(searchOption, keyword, boardNum));
+		return "/study/qna/qnaList";
 	}
 	
 	@GetMapping("/insertQnA/{boardNum}")

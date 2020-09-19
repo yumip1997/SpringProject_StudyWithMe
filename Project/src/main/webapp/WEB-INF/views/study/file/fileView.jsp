@@ -58,9 +58,21 @@
 	</c:if>
 	</form>
 	</div>
-	
+	<a href="/study/error/fileSizeError">에러..</a>
 	<script>
-
+	
+	$("#update").on("click", function(){
+		$("#target").attr("action", "updateFilePage");
+	});
+	
+	$("#delete").on("click", function(){
+		if (confirm("정말로 삭제하시겠습니까?") == true) {
+		$("#target").attr("action", "deleteFile");
+		return true;
+		}else{
+			return false;
+		}
+	})
 	</script>
 </body>
 </html>

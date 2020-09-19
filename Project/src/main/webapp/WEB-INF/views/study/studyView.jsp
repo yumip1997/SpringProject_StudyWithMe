@@ -24,14 +24,21 @@
 		</div>
 	</div>
 
-	<div class="container p-5">
-		<a href="/study/qna/qnaList/${study.boardNum}">QnA</a>
+	<!-- QnA & File  -->
+	<div class="container container-fluid mt-5">
+		<div class="row text-center p-4">
+			<div class="col-md-6">
+			<h3 class="pb-3">질의응답</h3>
+			<a href="/study/qna/qnaList/${study.boardNum}"><img src="/study/image/qna.png"></a>
+			</div>
+			<div class="col-md-6">
+			<h3 class="pb-3">자료실</h3>	
+			<a href="/study/file/fileList/${study.boardNum}"><img src="/study/image/download.png"></a>
+			</div>
+		</div>
 	</div>
 
-
-	<a href="/study/file/fileList/${study.boardNum}">자료실</a>
-
-	<div id="container"></div>
-
+	<!-- footer -->
+	<jsp:include page="/WEB-INF/resources/incl/footer.jsp" />
 </body>
 </html>

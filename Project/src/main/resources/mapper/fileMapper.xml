@@ -3,43 +3,73 @@
 
 <mapper namespace="fileDAO">
 
-<!-- 스터디 별 파일 목록 -->
-<select id="getFileList" parameterType="int" resultType="fileVO">
-select file_num, file_title, file_upload_date, file_size, userid ,views
-from file
-where board_num = #{boardNum}
-order by file_upload_date desc
-</select>
+	<!-- 스터디 별 파일 목록 -->
+	<select id="getFileList" parameterType="int" resultType="fileVO">
+		select file_num, file_title, file_upload_date, file_size, userid ,views
+		from file
+		where board_num = #{boardNum}
+		order by file_upload_date desc
+	</select>
 
-<!-- 파일 상세조회  & 다운로드-->
-<select id="getFile" parameterType="int" resultType="fileVO">
-select *
-from file
-where file_num = #{fileNum}
-</select>
+	<!-- 파일 상세조회 & 다운로드 -->
+	<select id="getFile" parameterType="int" resultType="fileVO">
+		select *
+		from file
+		where file_num = #{fileNum}
+	</select>
 
-<!-- 파일 업로드 -->
-<insert id="uploadFile" parameterType="fileVO">
-insert into
-file(board_num, file_title, file_content, file_name, file_size,
-file_content_type, file_data, userid)
-values(#{boardNum}, #{fileTitle}, #{fileContent}, #{fileName}, #{fileSize},
-#{fileContentType}, #{fileData}, #{userId})
-</insert>
+	<!-- 파일 찾기 -->
+	<select id="searchFile" resultType="fileVO">
+		select file_num, file_title, file_upload_date, file_size, userid ,views
+		from file
+		<include refid="search" />
+		order by file_upload_date desc
+	</select>
 
-<!-- 파일 수정 -->
-<update id="updateFile" parameterType="fileVO">
-update file set 
-file_title = #{fileTitle}, file_content = #{fileContent}, 
-file_name = #{fileName}, file_size = #{fileSize},
-file_content_type = #{fileContentType}, file_data = ${fileData} 
-where file_num = #{fileNum}
-</update>
+	<!-- 검색된 파일 수 -->
+	<select id="countFile" resultType="int">
+		select count(*)
+		from file
+		<include refid="search" />
+	</select>
 
-<!-- 파일 삭제 -->
-<delete id="deleteFile" parameterType="int">
-delete from file
-where file_num = #{fileNum}
-</delete>
+	<!-- File 검색 sql -->
+	<sql id="search">
+		<choose>
+			<when test="searchOption =='all'">
+				where (file_title like concat('%', #{keyword}, '%')
+				or file_content like concat('%', #{keyword}, '%')) and board_num =
+				#{boardNum}
+			</when>
+			<otherwise>
+				where ${searchOption} like concat('%', #{keyword}, '%') and board_num =
+				#{boardNum}
+			</otherwise>
+		</choose>
+	</sql>
+	
+	<!-- 파일 업로드 -->
+	<insert id="uploadFile" parameterType="fileVO">
+		insert into
+		file(board_num, file_title, file_content, file_name, file_size,
+		file_content_type, file_data, userid)
+		values(#{boardNum}, #{fileTitle}, #{fileContent}, #{fileName}, #{fileSize},
+		#{fileContentType}, #{fileData}, #{userId})
+	</insert>
+
+	<!-- 파일 수정 -->
+	<update id="updateFile" parameterType="fileVO">
+		update file set
+		file_title = #{fileTitle}, file_content = #{fileContent},
+		file_name = #{fileName}, file_size = #{fileSize},
+		file_content_type = #{fileContentType}, file_data = ${fileData}
+		where file_num = #{fileNum}
+	</update>
+
+	<!-- 파일 삭제 -->
+	<delete id="deleteFile" parameterType="int">
+		delete from file
+		where file_num = #{fileNum}
+	</delete>
 
 </mapper>

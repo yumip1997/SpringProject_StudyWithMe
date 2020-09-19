@@ -7,17 +7,23 @@ import com.project.study.file.model.FileVO;
 public interface IFileRepository {
 
 	// 스터디 별 파일 목록
-	List<FileVO> getFileList(int boardNum);
+	public List<FileVO> getFileList(int boardNum);
 	
 	//파일 상세조회
-	FileVO getFile(int fileNum);
+	public FileVO getFile(int fileNum);
+	
+	//파일 검색
+	public List<FileVO> searchFile(String searchOption, String keyword, int boardNum);
+	
+	//검색 된 파일 개수
+	public int countFile(String searchOption, String keyword, int boardNum);
 
 	// 파일 업로드
-	void uploadFile(FileVO file);
+	public void uploadFile(FileVO file);
 
 	// 파일 수정
-	void updateFile(FileVO file);
+	public void updateFile(FileVO file);
 
 	// 파일 삭제
-	void deleteFile(int fileNum);
+	public void deleteFile(int fileNum);
 }

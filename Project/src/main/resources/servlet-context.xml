@@ -12,8 +12,8 @@
 
 	<!-- DispatcherServlet Context: defines this servlet's request-processing 
 		infrastructure -->
-	<context:component-scan base-package="com.project.study.**.controller">
-		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller" />
+	<context:component-scan
+		base-package="com.project.study.**.controller">
 	</context:component-scan>
 
 	<!-- Enables the Spring MVC @Controller programming model -->
@@ -21,11 +21,8 @@
 	<mvc:annotation-driven />
 
 	<mvc:view-controller path="/" view-name="index"></mvc:view-controller>
-	<mvc:view-controller path="/logout"
-		view-name="index"></mvc:view-controller>
-	<mvc:view-controller path="/error/autherror"
-		view-name="error/autherror" />
-
+	<mvc:view-controller path="/logout" view-name="index"></mvc:view-controller>
+	<mvc:view-controller path="/error/autherror" view-name="error/autherror" />
 	<mvc:annotation-driven>
 		<mvc:argument-resolvers>
 			<beans:bean
@@ -35,11 +32,16 @@
 
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving 
 		up static resources in the ${webappRoot}/resources directory -->
-	<mvc:resources mapping="/resources/**" location="/resources/" />
-	<mvc:resources location="/WEB-INF/resources/css/" mapping="/css/**" />
-	<mvc:resources location="/WEB-INF/resources/js/" mapping="/js/**" />
-	<mvc:resources location="/WEB-INF/resources/incl/" mapping="/incl/**" />
-	<mvc:resources location="/WEB-INF/resources/image/" mapping="/image/**" />
+	<mvc:resources mapping="/resources/**"
+		location="/resources/" />
+	<mvc:resources location="/WEB-INF/resources/css/"
+		mapping="/css/**" />
+	<mvc:resources location="/WEB-INF/resources/js/"
+		mapping="/js/**" />
+	<mvc:resources location="/WEB-INF/resources/incl/"
+		mapping="/incl/**" />
+	<mvc:resources location="/WEB-INF/resources/image/"
+		mapping="/image/**" />
 
 
 	<!-- 뷰 해석기 -->
@@ -71,46 +73,11 @@
 		<beans:property name="maxUploadSize">
 			<beans:value>15728640</beans:value>
 		</beans:property>
+		<beans:property name="resolveLazily" value="true"/>
 	</beans:bean>
 
-	<beans:bean
-		class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
-		<!-- property name="defaultErrorView" value="error/defaultError"/ -->
-		<beans:property name="exceptionMappings">
-			<beans:props>
-				<!-- 파일이 없을때 -->
-				<beans:prop key="java.io.FileNotFoundException">error/filenotfound</beans:prop>
-				<!-- 예기치 않는 에러 -->
-				<beans:prop
-					key="egovframework.rte.fdl.cmmn.exception.EgovBizException">egovframework/com/cmm/error/egovBizException</beans:prop>
-				<!-- 메뉴 권한 에러 -->
-				<beans:prop
-					key="org.springframework.web.HttpSessionRequiredException">egovframework/com/uat/uia/EgovLoginUsr</beans:prop>
-				<!-- 게시글, 콘텐츠 권한에러 history.back(-2) -->
-				<beans:prop
-					key="org.springframework.web.multipart.MaxUploadSizeExceededException">error/notpermit</beans:prop>
-				<!-- db 및 server 에러 발생 에러 -->
-				<beans:prop
-					key="egovframework.com.cmm.exception.UnknownErrorException">error/unknown</beans:prop>
-				<!-- 파일 용량 초과 Error -->
-				<beans:prop
-					key="egovframework.com.cmm.exception.FileSizeExceedException">error/fileSizsError</beans:prop>
-			</beans:props>
-		</beans:property>
-	</beans:bean>
-
-
-	<!-- 예외처리 -->
-	<beans:bean id="exceptionResolver"
-		class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
-		<beans:property name="exceptionMappings">
-			<beans:props>
-				<!-- 파일 업로드 예외처리 -->
-				<beans:prop
-					key="org.springframework.web.multipart.MaxUploadSizeExceededException">/error/fileSizeError</beans:prop>
-			</beans:props>
-		</beans:property>
-	</beans:bean>
+	<beans:bean id="exceptionHandlerExceptionResolver"
+		class="org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver" />
 
 	<security:global-method-security
 		secured-annotations="enabled" pre-post-annotations="enabled" />

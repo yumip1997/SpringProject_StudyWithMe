@@ -7,6 +7,8 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,13 +32,9 @@ public class MemberController {
 	private IMemberService memberService;
 	
 	@Autowired
-	private IBoardService boardService;
-
-	@Autowired
 	private BCryptPasswordEncoder bpe;
 
 	// 회원 목록
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@GetMapping("/memberList")
 	public String memberList(Model model) {
 		model.addAttribute("memberList", memberService.getMemberList());
@@ -44,7 +42,6 @@ public class MemberController {
 	}
 
 	// 회원상세조회
-	@PreAuthorize("hasRole('ROLE_ADMIN') or(principal == #userId)")
 	@GetMapping("/{userId}")
 	public String viewMember(Model model, @PathVariable String userId) {
 		MemberVO member = new MemberVO();
@@ -60,8 +57,7 @@ public class MemberController {
 		return "member/memberDetail";
 	}
 	
-	//GetMapping 회원가입
-	@PreAuthorize("isAnonymous()") 
+	//GetMapping 회원가입 
 	@GetMapping("/insertMember")
 	public String insertMember(Model model) {
 		model.addAttribute("member", new MemberVO());
@@ -69,7 +65,6 @@ public class MemberController {
 	}
 	
 	//PostMapping 회원가입
-	@PreAuthorize("isAnonymous()") 
 	@PostMapping("/insertMember")
 	public String insertMember(@ModelAttribute("member") @Valid MemberVO member, BindingResult result) {
 		if (result.hasErrors()) {
@@ -82,7 +77,6 @@ public class MemberController {
 	}
 	
 	//GetMapping 회원정보 수정
-	@PreAuthorize("hasRole('ROLE_ADMIN') or(principal == #userId)")
 	@GetMapping("/updateMember")
 	public String updateMember(Model model, @RequestParam String userId) {
 		MemberVO member = new MemberVO();
@@ -98,7 +92,6 @@ public class MemberController {
 	}
 	
 	//PostMapping 회원정보 수정
-	@PreAuthorize("(principal == #userId)")
 	@PostMapping("/updateMember")
 	public String updateMember(@ModelAttribute("member") @Valid MemberVO member, BindingResult result,
 			@RequestParam("userId")String userId) {
@@ -110,7 +103,6 @@ public class MemberController {
 	}
 	
 	//회원 활성화 여부, 권한 변경
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@PostMapping("/updateAccount")
 	public String updateAccount(@RequestParam("userId")String userId, @RequestParam("enabled")char enabled,
 			@RequestParam("authority")String authority) {
@@ -120,14 +112,14 @@ public class MemberController {
 	}
 	
 	//회원 탈퇴
-	@PreAuthorize("hasRole('ROLE_ADMIN') or(principal == #userId)")
 	@GetMapping("/deleteMember/{userId}")
-	public String deleteMember(@PathVariable String userId, Principal principal, HttpSession session) {
-		String currentUser = principal.getName();
-		if(currentUser == userId) {
+	public String deleteMember(@PathVariable String userId, HttpSession session) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String currentUser = auth.getName();
+		if(currentUser.equals(userId)) {
 			session.invalidate();
 			memberService.deleteMember(userId);
-			return "redirect:../index";
+			return "redirect:/study/index";
 		}else {
 			memberService.deleteMember(userId);
 			return "redirect:/member/memberList";

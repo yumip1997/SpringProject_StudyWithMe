@@ -25,6 +25,18 @@ public class QnAService implements IQnAService{
 		// TODO Auto-generated method stub
 		return QnARepository.getQnA(qnaNum);
 	}
+	
+	@Override
+	public List<QnAVO> searchQnA(String searchOption, String keyword, int boardNum) {
+		// TODO Auto-generated method stub
+		return QnARepository.searchQnA(searchOption, keyword, boardNum);
+	}
+
+	@Override
+	public int countQnA(String searchOption, String keyword, int boardNum) {
+		// TODO Auto-generated method stub
+		return QnARepository.countQnA(searchOption, keyword, boardNum);
+	}
 
 	@Transactional("txManager")
 	@Override

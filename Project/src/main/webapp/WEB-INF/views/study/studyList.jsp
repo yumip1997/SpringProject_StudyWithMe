@@ -42,9 +42,10 @@
 					<td>${study.studyType}</td>
 					<td>${study.creator}</td>
 					<td>${study.writedate}</td>
-					<td><button id="enter"
-							onclick="location.href='/study/studyView/'+${study.boardNum}">스터디
-							입장</button></td>
+					<td>
+					<button id="enter" class="btn btn-light"
+					onclick="location.href='/study/studyView/'+${study.boardNum}">
+					스터디 입장</button></td>
 				</tr>
 			</c:forEach>
 		</table>

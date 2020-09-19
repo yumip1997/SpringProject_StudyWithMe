@@ -1,5 +1,6 @@
 package com.project.study.qna.dao;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -25,6 +26,26 @@ public class QnARepository implements IQnARepository{
 	public QnAVO getQnA(int qnaNum) {
 		// TODO Auto-generated method stub
 		return sqlSessionTemplate.selectOne("qnaDAO.getQnA", qnaNum);
+	}
+	
+	@Override
+	public List<QnAVO> searchQnA(String searchOption, String keyword, int boardNum) {
+		// TODO Auto-generated method stub
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("searchOption", searchOption);
+		map.put("keyword", keyword);
+		map.put("boardNum", boardNum);
+		return sqlSessionTemplate.selectList("qnaDAO.searchQnA", map);
+	}
+
+	@Override
+	public int countQnA(String searchOption, String keyword, int boardNum) {
+		// TODO Auto-generated method stub
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("searchOption", searchOption);
+		map.put("keyword", keyword);
+		map.put("boardNum", boardNum);
+		return sqlSessionTemplate.selectOne("qnaDAO.countQnA", map);
 	}
 
 	@Override

@@ -1,7 +1,5 @@
 package com.project.study.comment.controller;
 
-import java.util.HashMap;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -33,6 +31,29 @@ public class CommentController {
 		return commentService.getComment(num);
 	}
 	
+	@PostMapping("/insertReply")
+	@ResponseBody
+	public CommentVO insertReply(@ModelAttribute CommentVO reply) {
+		int commentNum = commentService.getMaxCommentNum();
+		int groupOrder = commentService.getMaxGroupOrder(reply.getParentNum());
+		reply.setCommentNum(commentNum);
+		reply.setGroupOrder(groupOrder);
+		
+		commentService.insertReply(reply);
+		return commentService.getComment(commentNum);
+	}
+	
+	@PostMapping("/deleteComment")
+	@ResponseBody
+	public void deleteComment(int commentNum) {
+		commentService.deleteComment(commentNum);
+	}
+	
+	@PostMapping("/deleteReply")
+	@ResponseBody
+	public void deleteReply(int commentNum) {
+		commentService.deleteComment(commentNum);
+	}
 	
 	
 	

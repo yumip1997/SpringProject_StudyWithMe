@@ -44,7 +44,7 @@ public class FileController {
 		String studyTitle = boardService.getBoard(boardNum).getStudyTitle();
 		model.addAttribute("boardNum", boardNum);
 		model.addAttribute("studyTitle", studyTitle);
-		model.addAttribute("filelist", fileService.getFileList(boardNum));
+		model.addAttribute("fileList", fileService.getFileList(boardNum));
 		return "/study/file/fileList";
 	}
 	
@@ -53,6 +53,18 @@ public class FileController {
 		model.addAttribute("file", fileService.getFile(fileNum));
 		return "/study/file/fileView";
 	}
+	
+	@PostMapping("/search")
+	public String searchQnA(Model model, @RequestParam("searchOption") String searchOption,
+			@RequestParam("keyword") String keyword, @RequestParam("boardNum") int boardNum) {
+		String studyTitle = boardService.getBoard(boardNum).getStudyTitle();
+		model.addAttribute("boardNum", boardNum);
+		model.addAttribute("studyTitle", studyTitle);
+		model.addAttribute("fileList", fileService.searchFile(searchOption, keyword, boardNum));
+		model.addAttribute("count", fileService.countFile(searchOption, keyword, boardNum));
+		return "/study/file/fileList";
+	}
+	
 	
 	@GetMapping("/download/{fileNum}")
 	public ResponseEntity<byte[]> downloadFile(@PathVariable("fileNum")int fileNum){
@@ -83,18 +95,18 @@ public class FileController {
 			@RequestParam("uploadfile")MultipartFile uploadfile,
 			RedirectAttributes redirectAttrs) throws UnsupportedEncodingException{
 		
+		System.out.println("error1");
+		
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
 		String fileTitle = new String(file.getFileTitle().getBytes("8859_1"),"utf-8");
 		String fileContent = new String(file.getFileContent().getBytes("8859_1"), "utf-8");
 		
 		if(result.hasErrors()) {
+			System.out.println("error2");
 			return "/study/file/insertFile";
 		}
 		
-		if(uploadfile.getSize() > 15728640) {
-			throw new MaxUploadSizeExceededException(15728640);
-		}
 		
 		try {
 			if(uploadfile !=null && !uploadfile.isEmpty()) {
@@ -112,6 +124,18 @@ public class FileController {
 			redirectAttrs.addFlashAttribute("message", e.getMessage());
 		}
 		return "redirect:/file/fileList/"+file.getBoardNum();
+	}
+	
+	@PostMapping("/updateFilePage")
+	String updateFilePage(Model model, @RequestParam("fileNum")int fileNum) {
+		model.addAttribute("file", fileService.getFile(fileNum));
+		return "/study/file/updateFile";
+	}
+	
+	@PostMapping("/deleteFile")
+	String deleteFile(@RequestParam("fileNum")int fileNum, @RequestParam("boardNum")int boardNum) {
+		fileService.deleteFile(fileNum);
+		return "redirect:/file/fileList/" + boardNum;
 	}
 	
 }

@@ -26,6 +26,18 @@ public class FileService implements IFileService{
 		return fileRepository.getFile(fileNum);
 	}
 	
+	@Override
+	public List<FileVO> searchFile(String searchOption, String keyword, int boardNum) {
+		// TODO Auto-generated method stub
+		return fileRepository.searchFile(searchOption, keyword, boardNum);
+	}
+
+	@Override
+	public int countFile(String searchOption, String keyword, int boardNum) {
+		// TODO Auto-generated method stub
+		return fileRepository.countFile(searchOption, keyword, boardNum);
+	}
+	
 	@Transactional("txManager")
 	@Override
 	public void uploadFile(FileVO file) {
@@ -45,5 +57,7 @@ public class FileService implements IFileService{
 		// TODO Auto-generated method stub
 		fileRepository.deleteFile(fileNum);
 	}
+
+
 
 }

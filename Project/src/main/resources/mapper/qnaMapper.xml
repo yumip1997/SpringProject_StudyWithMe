@@ -8,6 +8,7 @@
 		select qna_num, qna_title, userid, writedate, views
 		from qna
 		where board_num = #{boardNum}
+		order by qna_num desc
 	</select>
 
 	<!-- QnA 상세조회 -->
@@ -16,6 +17,33 @@
 		from qna
 		where qna_num = #{qnaNum}
 	</select>
+	
+	<!-- QnA 검색 -->
+	<select id="searchQnA" resultType="qnaVO">
+	select * from qna
+	<include refid="search" />
+	order by writedate desc
+	</select>
+	
+	<!-- 검색된 QnA 수 -->
+	<select id="countQnA" resultType="int">
+	select count(*)
+	from qna
+	<include refid="search" />
+	</select>
+	
+	<!-- QnA 검색 sql -->
+	<sql id="search">
+	<choose>
+	<when test="searchOption =='all'">
+	where (qna_title like concat('%', #{keyword}, '%')
+	or qna_content like concat('%', #{keyword}, '%')) and board_num = #{boardNum}
+	</when>
+	<otherwise>
+	where ${searchOption} like concat('%', #{keyword}, '%') and board_num = #{boardNum}
+	</otherwise>
+	</choose>
+	</sql>
 
 	<!-- QnA 삽입 -->
 	<insert id="insertQnA" parameterType="qnaVO">

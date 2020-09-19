@@ -5,10 +5,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 <jsp:include page="/WEB-INF/resources/incl/staticHeader.jsp" />
-<title>Insert title here</title>
+<title>Study With Me</title>
 </head>
 <body>
 	<!-- menu -->
@@ -19,11 +18,11 @@
 			<h1 class="text-white">Study With Me</h1>
 		</div>
 	</div>
-	
+
 	<!-- singup form -->
 	<div class="container container-fluid p-5">
 		<div class="container p-3 text-center">
-		<h3>회원정보입력</h3>
+			<h3>회원정보입력</h3>
 		</div>
 		<div class="row justify-content-center">
 			<div class="col-md-8 align-self-center">
@@ -58,14 +57,20 @@
 									path="email" /></td>
 						</tr>
 					</table>
-					<input type="submit" value="가입">
-					<input type="reset" value="초기화">
-					<button type="button" onclick="location.href='../index'">가입취소</button>
+					
+					<div class="container">
+						<div class="row-justify-content-end">
+							<input type="submit" value="가입" class="btn btn-outline-secondary m-1"> 
+							<input type="reset" value="초기화" class="btn btn-outline-secondary m-1">
+							<button type="button" class="btn btn-outline-secondary m-1"
+							onclick="location.href='/stduy/index'">가입취소</button>
+						</div>
+					</div>
 				</form:form>
 			</div>
 		</div>
 	</div>
-	
+
 	<jsp:include page="/WEB-INF/resources/incl/footer.jsp" />
 </body>
 </html>
