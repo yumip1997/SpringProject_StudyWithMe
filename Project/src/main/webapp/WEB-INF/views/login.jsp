@@ -30,17 +30,15 @@
 					<form action="loginCheck" method="post">
 						<h3>로그인</h3>
 						<div class="form-group">
-							<label class="control-label">아이디</label> <input
-								class="form-control" type="text" name="id">
+							<label class="control-label">아이디</label> 
+							<input class="form-control" type="text" name="id">
 						</div>
 						<div class="form-group">
-							<label class="control-label">비밀번호</label> <input
-								class="form-control" type="password" name="pw">
+							<label class="control-label">비밀번호</label> 
+							<input class="form-control" type="password" name="pw">
 						</div>
 						<div class="help-block">${message}
-							<%
-								session.removeAttribute("message");
-							%>
+							<%session.removeAttribute("message");%>
 						</div>
 						<input class="btn btn-secondary" type="submit" value="로그인">
 					</form>

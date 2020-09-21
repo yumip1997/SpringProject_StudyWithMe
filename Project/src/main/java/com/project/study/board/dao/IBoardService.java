@@ -4,8 +4,11 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.project.study.board.model.BoardVO;
+import com.project.study.util.PageVO;
 
 public interface IBoardService {
+	// 스터디 모집 글 전체 개수
+	public int getBoardCount();
 
 	// 스터디 모집 글 목록 && 타입에 따른 목록
 	public List<BoardVO> getBoardList(String studyType);
@@ -43,7 +46,7 @@ public interface IBoardService {
 	// 좋아요 like_table 테이블에 반영 취소
 	public void deleteLike(int boardNum, String userId);
 
-	// 좋아요 board테이블에 반영 
+	// 좋아요 board테이블에 반영
 	public void increaseLikes(int boardNum);
 
 	// 좋아요 board테이블에 반영 취소

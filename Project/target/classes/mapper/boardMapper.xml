@@ -2,22 +2,29 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="boardDAO">
-	<!-- 스터디 모집 글 목록 && 타입에 따른 목록-->
-	<select id="getBoardList" parameterType="String" resultType="boardVO">
+	<!-- 스터디 모집 글 전체 개수 -->
+	<select id="getBoardCount" resultType="int">
+		select count(*) as listCnt
+		from board
+	</select>
+	
+	<!-- 스터디 모집 글 목록 && 타입에 따른 목록 -->
+	<select id="getBoardList" resultType="boardVO">
 		select board_num, board_title, study_type,
-		writedate, views, likes, userid, enabled
+		writedate, views, likes,
+		userid, enabled
 		from board
 		<include refid="checkType" />
 		order by board_num desc
 	</select>
-	
+
 	<!-- 스터디 타입 체크 -->
 	<sql id="checkType">
-	<if test="studyType !='all'">
-	where study_type = #{studyType}
-	</if>
+		<if test="studyType !='all'">
+			where study_type = #{studyType}
+		</if>
 	</sql>
-	
+
 	<!-- 스터디 모집 글 상세 조회 -->
 	<select id="getBoard" parameterType="int" resultType="boardVO">
 		select *
@@ -82,7 +89,8 @@
 		set
 		board_title = #{boardTitle}, board_content = #{boardContent},
 		study_title = #{studyTitle}, study_type = #{studyType}
-		where board_num = #{boardNum}
+		where board_num
+		= #{boardNum}
 	</update>
 
 	<!-- 스터디 모집 마감 여부 변경 -->
@@ -105,7 +113,7 @@
 		select max(board_num)
 		from board;
 	</select>
-	
+
 	<!-- 스터디 타입별 qna 개수, file개수 기준으로 총 개수가 많은 순으로 3개 스터디 목록 -->
 	<resultMap type="map" id="top3List">
 		<result column="board_num" property="boardNum" />
@@ -119,27 +127,33 @@
 
 	<select id="gettTop3Study" resultMap="top3List">
 		select bq.board_num as board_num, bq.study_title as study_title,
-		bq.study_type as study_type,  
+		bq.study_type as study_type,
 		bq.userid as userid, date_format(bq.writedate,'%Y-%m-%d') as writedate,
 		bq.qna_total as qna_total, bf.file_total as file_total
 		from
-		(select b.board_num, b.study_title, b.study_type, b.writedate,
-		b.userid, count(*) as qna_total
+		(select
+		b.board_num, b.study_title, b.study_type, b.writedate,
+		b.userid,
+		count(*) as qna_total
 		from board b join qna q
-		on b.board_num = q.board_num
+		on b.board_num =
+		q.board_num
 		<include refid="checkType" />
 		group by b.board_num
 		order by qna_total desc
 		limit 3) as bq
 		join
-		(select b.board_num, count(*) as file_total
+		(select
+		b.board_num, count(*) as file_total
 		from board b join file f
-		on b.board_num = f.board_num
+		on
+		b.board_num = f.board_num
 		<include refid="checkType" />
 		group by f.board_num
 		order by file_total desc
 		limit 3) as bf
-		on bq.board_num = bf.board_num;
+		on
+		bq.board_num = bf.board_num;
 	</select>
 
 </mapper>

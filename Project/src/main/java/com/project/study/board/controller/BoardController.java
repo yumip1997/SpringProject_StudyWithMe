@@ -25,6 +25,7 @@ import com.project.study.board.model.BoardVO;
 import com.project.study.comment.dao.ICommentService;
 import com.project.study.study.dao.IStudyService;
 import com.project.study.study.model.StudyVO;
+import com.project.study.util.PageVO;
 
 @Controller
 @PreAuthorize("isAuthenticated()")
@@ -42,7 +43,8 @@ public class BoardController {
 
 	// 스터디 타입에 따른 스터디 모집 글 목록보기
 	@GetMapping("/boardList/{studyType}")
-	public String boardListbyType(Model model, @PathVariable String studyType) {
+	public String boardListbyType(Model model, 
+			@PathVariable String studyType) {
 		model.addAttribute("boardList", boardService.getBoardList(studyType));
 		model.addAttribute("Top3List", boardService.gettTop3Study(studyType));
 		model.addAttribute("studyType", studyType);

@@ -147,6 +147,8 @@
 			</table>
 		</div>
 	</div>
+	
+
 
 	<!-- footer -->
 	<jsp:include page="/WEB-INF/resources/incl/footer.jsp" />
@@ -180,5 +182,6 @@
 	$("#insert").on("click", function() {
 		location.href = "/study/board/insertBoard";
 	});
+	
 </script>
 </html>

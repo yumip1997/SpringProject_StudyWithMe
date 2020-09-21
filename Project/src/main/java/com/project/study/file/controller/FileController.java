@@ -94,16 +94,13 @@ public class FileController {
 			BindingResult result,
 			@RequestParam("uploadfile")MultipartFile uploadfile,
 			RedirectAttributes redirectAttrs) throws UnsupportedEncodingException{
-		
-		System.out.println("error1");
-		
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
-		String fileTitle = new String(file.getFileTitle().getBytes("8859_1"),"utf-8");
-		String fileContent = new String(file.getFileContent().getBytes("8859_1"), "utf-8");
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		
+		//한글 깨짐 방지
+		String fileNameOrg = new String(uploadfile.getOriginalFilename().getBytes("8859_1"),"utf-8");
+
 		if(result.hasErrors()) {
-			System.out.println("error2");
 			return "/study/file/insertFile";
 		}
 		
@@ -111,10 +108,10 @@ public class FileController {
 		try {
 			if(uploadfile !=null && !uploadfile.isEmpty()) {
 				
-				file.setFileTitle(fileTitle);
-				file.setFileContent(fileContent);
+				file.setFileTitle(file.getFileTitle());
+				file.setFileContent(file.getFileContent());
 				file.setFileSize(uploadfile.getSize());
-				file.setFileName(uploadfile.getOriginalFilename());
+				file.setFileName(fileNameOrg);
 				file.setFileContentType(uploadfile.getContentType());
 				file.setFileData(uploadfile.getBytes());
 				file.setUserId(auth.getName());

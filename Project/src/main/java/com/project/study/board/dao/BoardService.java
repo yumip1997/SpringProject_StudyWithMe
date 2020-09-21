@@ -8,12 +8,19 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.project.study.board.model.BoardVO;
+import com.project.study.util.PageVO;
 
 @Service
 public class BoardService implements IBoardService {
 
 	@Autowired
 	private IBoardRepository boardRepository;
+	
+	@Override
+	public int getBoardCount() {
+		// TODO Auto-generated method stub
+		return boardRepository.getBoardCount();
+	}
 
 	@Override
 	public List<BoardVO> getBoardList(String studyType) {
@@ -119,8 +126,4 @@ public class BoardService implements IBoardService {
 		// TODO Auto-generated method stub
 		return boardRepository.gettTop3Study(studyType);
 	}
-
-
-
-
 }

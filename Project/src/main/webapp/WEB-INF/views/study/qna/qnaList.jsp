@@ -52,7 +52,7 @@
 
 			<div class="row">
 				<c:if test="${not empty count}">
-				<div class="col-md-10"><h6>${count}개의 스터디가 존재합니다.</h6></div>
+				<div class="col-md-10"><h6>${count}개의 질의응답이 존재합니다.</h6></div>
 				<div class="col-md-2"><h6><a href="/study/qna/qnaList/${boardNum}">질문 전체보기</a></h6></div>
 			</c:if>
 			</div>

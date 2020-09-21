@@ -52,7 +52,7 @@
 
 			<div class="row">
 				<c:if test="${not empty count}">
-				<div class="col-md-10"><h6>${count}개의 스터디가 존재합니다.</h6></div>
+				<div class="col-md-10"><h6>${count}개의 파일이 존재합니다.</h6></div>
 				<div class="col-md-2"><h6><a href="/study/file/fileList/${boardNum}">자료 전체보기</a></h6></div>
 			</c:if>
 			</div>
@@ -88,8 +88,10 @@
 		<button class="btn btn-outline-secondary" id="viewList">목록보기</button>
 		</div>
 		</div>
-		
 	</div>
+	
+		<!-- footer -->
+		<jsp:include page="/WEB-INF/resources/incl/footer.jsp" />
 	<script>
 	   
 		$("#insert").on("click", function() {

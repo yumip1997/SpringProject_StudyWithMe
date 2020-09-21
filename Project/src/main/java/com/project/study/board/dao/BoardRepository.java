@@ -8,17 +8,24 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.project.study.board.model.BoardVO;
+import com.project.study.util.PageVO;
 
 @Repository
 public class BoardRepository implements IBoardRepository{
 
 	@Autowired
 	private SqlSessionTemplate sqlSessionTemplate;
+	
+	@Override
+	public int getBoardCount() {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectOne("boardDAO.getBoardCount");
+	}
 
 	@Override
 	public List<BoardVO> getBoardList(String studyType) {
 		// TODO Auto-generated method stub
-		HashMap<String, String> map = new HashMap<String, String>();
+		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("studyType", studyType);
 		return sqlSessionTemplate.selectList("boardDAO.getBoardList", map);
 	}
@@ -138,5 +145,7 @@ public class BoardRepository implements IBoardRepository{
 		map.put("studyType", studyType);
 		return sqlSessionTemplate.selectList("boardDAO.gettTop3Study", map);
 	}
+
+	
 	
 }
