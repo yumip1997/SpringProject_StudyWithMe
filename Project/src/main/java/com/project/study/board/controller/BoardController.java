@@ -25,7 +25,7 @@ import com.project.study.board.model.BoardVO;
 import com.project.study.comment.dao.ICommentService;
 import com.project.study.study.dao.IStudyService;
 import com.project.study.study.model.StudyVO;
-import com.project.study.util.PageVO;
+import com.project.study.util.PageMaker;
 
 @Controller
 @PreAuthorize("isAuthenticated()")
@@ -37,15 +37,15 @@ public class BoardController {
 
 	@Autowired
 	IStudyService studyService;
-	
+
 	@Autowired
 	ICommentService commentService;
 
 	// 스터디 타입에 따른 스터디 모집 글 목록보기
 	@GetMapping("/boardList/{studyType}")
-	public String boardListbyType(Model model, 
-			@PathVariable String studyType) {
-		model.addAttribute("boardList", boardService.getBoardList(studyType));
+	public String boardListbyType(Model model, @PathVariable String studyType, @RequestParam(required=false, defaultValue="1")int page) {
+		model.addAttribute("boardList", boardService.getBoardList(studyType, page));
+		model.addAttribute("pageMaker", new PageMaker(boardService.getBoardCount(studyType), page));
 		model.addAttribute("Top3List", boardService.gettTop3Study(studyType));
 		model.addAttribute("studyType", studyType);
 		return "board/boardList";
@@ -132,21 +132,21 @@ public class BoardController {
 			return false;
 		}
 	}
-	
-	//좋아요 여부 체크
+
+	// 좋아요 여부 체크
 	@PostMapping("/updateLike")
 	@ResponseBody
-	public HashMap<String,Object> updateLike(int boardNum, String userId) {
-		HashMap<String, Object>map = new HashMap<String, Object>();
-		
-		if(!boardService.checkLike(boardNum, userId)) {
+	public HashMap<String, Object> updateLike(int boardNum, String userId) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+
+		if (!boardService.checkLike(boardNum, userId)) {
 			boardService.insertLike(boardNum, userId);
 			boardService.increaseLikes(boardNum);
-		}else {
+		} else {
 			boardService.deleteLike(boardNum, userId);
 			boardService.decreaseLikes(boardNum);
 		}
-		
+
 		map.put("checkLike", boardService.checkLike(boardNum, userId));
 		map.put("count", boardService.getLikeCount(boardNum));
 		return map;

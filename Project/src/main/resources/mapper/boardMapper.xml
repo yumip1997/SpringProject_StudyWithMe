@@ -6,6 +6,7 @@
 	<select id="getBoardCount" resultType="int">
 		select count(*) as listCnt
 		from board
+		<include refid="checkType" />
 	</select>
 	
 	<!-- 스터디 모집 글 목록 && 타입에 따른 목록 -->
@@ -16,6 +17,7 @@
 		from board
 		<include refid="checkType" />
 		order by board_num desc
+		limit #{start}, #{end}
 	</select>
 
 	<!-- 스터디 타입 체크 -->

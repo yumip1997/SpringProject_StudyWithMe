@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.project.study.board.model.BoardVO;
-import com.project.study.util.PageVO;
 
 @Service
 public class BoardService implements IBoardService {
@@ -17,15 +16,15 @@ public class BoardService implements IBoardService {
 	private IBoardRepository boardRepository;
 	
 	@Override
-	public int getBoardCount() {
+	public int getBoardCount(String studyType) {
 		// TODO Auto-generated method stub
-		return boardRepository.getBoardCount();
+		return boardRepository.getBoardCount(studyType);
 	}
 
 	@Override
-	public List<BoardVO> getBoardList(String studyType) {
+	public List<BoardVO> getBoardList(String studyType, int page) {
 		// TODO Auto-generated method stub
-		return boardRepository.getBoardList(studyType);
+		return boardRepository.getBoardList(studyType, page);
 	}
 
 	@Override

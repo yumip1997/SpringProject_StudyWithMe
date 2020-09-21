@@ -4,14 +4,14 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.project.study.board.model.BoardVO;
-import com.project.study.util.PageVO;
+
 
 public interface IBoardService {
 	// 스터디 모집 글 전체 개수
-	public int getBoardCount();
+	public int getBoardCount(String studyType);
 
 	// 스터디 모집 글 목록 && 타입에 따른 목록
-	public List<BoardVO> getBoardList(String studyType);
+	public List<BoardVO> getBoardList(String studyType, int page);
 
 	// 스터디 모집 글 상세조회
 	public BoardVO getBoard(int num);

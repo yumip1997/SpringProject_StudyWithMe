@@ -28,7 +28,7 @@
 	<!-- study board detail -->
 	<div class="container container-fluid pt-5">
 		<div class="container text-center mb-2">
-			<h2>${board.studyTitle}스터디</h2>
+			<h2>${board.studyTitle} 스터디</h2>
 		</div>
 
 		<div class="container mb-2">

@@ -6,9 +6,11 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 <jsp:include page="/WEB-INF/resources/incl/staticHeader.jsp" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <title>Study With Me</title>
 </head>
 <body>
@@ -27,28 +29,39 @@
 		<div class="container p-3">
 			<h2>스터디 목록</h2>
 		</div>
-	
+
 		<div class="row text-center">
 			<div class="col-sm-2">
-				<button class="btn btn-outline-secondary" id="total">전체보기</button>
+				<label class="btn btn-outline-secondary"> 
+				<input type="radio" name="studyType" value="all">전체보기
+				</label>
 			</div>
 			<div class="col-sm-2">
-				<button class="btn btn-outline-secondary" id="language">어학</button>
+				<label class="btn btn-outline-secondary"> <input
+					type="radio" name="studyType" value="어학">어학
+				</label>
 			</div>
 			<div class="col-sm-2">
-				<button class="btn btn-outline-secondary" id="gongshi">공무원</button>
+				<label class="btn btn-outline-secondary"> 
+				<input type="radio" name="studyType" value="공무원">공무원
+				</label>
 			</div>
 			<div class="col-sm-2">
-				<button class="btn btn-outline-secondary" id="goshi">고시</button>
+				<label class="btn btn-outline-secondary"> 
+				<input type="radio" name="studyType" value="고시">고시
+				</label>
 			</div>
 			<div class="col-sm-2">
-				<button class="btn btn-outline-secondary" id="job">취업</button>
+				<label class="btn btn-outline-secondary"> 
+				<input type="radio" name="studyType" value="취업">취업
+				</label>
 			</div>
 			<div class="col-sm-2">
-				<button class="btn btn-outline-secondary" id="etc">기타</button>
+				<label class="btn btn-outline-secondary"> 
+				<input type="radio" name="studyType" value="기타">기타
+				</label>
 			</div>
 		</div>
-		
 	</div>
 
 	<!-- search section -->
@@ -63,8 +76,7 @@
 					</select>
 				</div>
 				<div class="form-group col-md-8" class="form-control">
-					<input type="text" name="keyword" type="search"
-						class="form-control">
+					<input type="text" name="keyword" type="search" class="form-control">
 				</div>
 				<div class="form-group col-md-1">
 					<input type="hidden" name="studyType" value="${studyType}">
@@ -87,7 +99,7 @@
 			<table class="table table-hover text-center">
 				<thead>
 					<tr>
-						<th colspan="6">${studyType} Top3스터디(QnA,File업로드수기준)</th>
+						<th colspan="6">${studyType}Top3스터디(QnA,File업로드수기준)</th>
 					</tr>
 					<tr>
 						<th>순위</th>
@@ -118,7 +130,8 @@
 	<!-- study list section -->
 	<div class="container pt-2">
 		<div class="row justify-content-start by-1">
-				<button class="btn btn-outline-secondary mb-3" id="insert">스터디 생성</button>
+			<button class="btn btn-outline-secondary mb-3" id="insert">스터디
+				생성</button>
 		</div>
 		<div class="row">
 			<table class="table table-hover" id="list">
@@ -147,41 +160,41 @@
 			</table>
 		</div>
 	</div>
-	
 
+	<!-- Page -->
+	<div class="container mt-3">
+		<div class="row">
+				<ul class="pagination">
+					<li class="page-item">
+					<a class="page-link" href="/study/board/boardList/${studyType}?page=1">처음</a></li>
+					<c:if test="${pageMaker.nowBlock gt 1}">
+						<li class="page-item">
+						<a class="page-link" href="/study/board/boardList/${studyType}?page=${pageMaker.startPage-1}">이전</a>
+					</c:if>
+					<c:forEach var="i" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
+						<li class="page-item">
+						<a class="page-link" href="/study/board/boardList/${studyType}?page=${i}">${i}</a></li>
+					</c:forEach>
+					<c:if test="${pageMaker.nowBlock < pageMaker.totalBlock}">
+						<li class="page-item">
+						<a class="page-link" href="/study/board/boardList/${studyType}?page=${pageMaker.endPage+1}">다음</a></li>
+					</c:if>
+				</ul>
+		</div>
+	</div>
 
 	<!-- footer -->
 	<jsp:include page="/WEB-INF/resources/incl/footer.jsp" />
 </body>
 
 <script>
-	$("#language").on("click", function() {
-		location.href = "/study/board/boardList/어학";
-	});
-
-	$("#gongshi").on("click", function() {
-		location.href = "/study/board/boardList/공무원";
-	});
-
-	$("#goshi").on("click", function() {
-		location.href = "/study/board/boardList/고시";
-	});
-
-	$("#job").on("click", function() {
-		location.href = "/study/board/boardList/취업";
-	});
-
-	$("#etc").on("click", function() {
-		location.href = "/study/board/boardList/기타";
-	});
-
-	$("#total").on("click", function() {
-		location.href = "/study/board/boardList/all";
+	$("input:radio[name='studyType']").on("click", function() {
+		var studyType = $(":radio[name='studyType']:checked").val();
+		location.href = "/study/board/boardList/" + studyType;
 	});
 
 	$("#insert").on("click", function() {
 		location.href = "/study/board/insertBoard";
 	});
-	
 </script>
 </html>

@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.project.study.board.model.BoardVO;
-import com.project.study.util.PageVO;
 
 @Repository
 public class BoardRepository implements IBoardRepository{
@@ -17,16 +16,22 @@ public class BoardRepository implements IBoardRepository{
 	private SqlSessionTemplate sqlSessionTemplate;
 	
 	@Override
-	public int getBoardCount() {
+	public int getBoardCount(String studyType) {
 		// TODO Auto-generated method stub
-		return sqlSessionTemplate.selectOne("boardDAO.getBoardCount");
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("studyType", studyType);
+		return sqlSessionTemplate.selectOne("boardDAO.getBoardCount", map);
 	}
 
 	@Override
-	public List<BoardVO> getBoardList(String studyType) {
+	public List<BoardVO> getBoardList(String studyType, int page) {
 		// TODO Auto-generated method stub
 		HashMap<String, Object> map = new HashMap<String, Object>();
+		int start = (page-1)*10;
+		int end = start+10;
 		map.put("studyType", studyType);
+		map.put("start",start);
+		map.put("end", end);
 		return sqlSessionTemplate.selectList("boardDAO.getBoardList", map);
 	}
 	
