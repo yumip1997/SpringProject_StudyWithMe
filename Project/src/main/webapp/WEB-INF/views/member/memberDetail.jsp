@@ -18,13 +18,14 @@
 
 	<!-- header -->
 	<div class="jumbotron bg-secondary">
-		<div class="container-fluid p-1 text-center">
+		<div class="container-fluid p-3 text-center">
 			<h1 class="text-white">Study With Me</h1>
 		</div>
 	</div>
 
-	<div class="container container-fluid mt-2 pt-2">
-		<div class="container p-3">
+	<!-- member detail -->
+	<div class="container container-fluid p-5">
+		<div class="container text-center">
 			<h2>회원 상세정보</h2>
 		</div>
 

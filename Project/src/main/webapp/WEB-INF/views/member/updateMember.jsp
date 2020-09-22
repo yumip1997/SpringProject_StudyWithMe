@@ -27,15 +27,16 @@
 
 	<!-- update form -->
 	<div class="container container-fluid p-5">
-		<div class="container p-3 text-center">
-			<h3>회원정보 수정</h3>
+		<div class="container text-center">
+			<h2>회원정보 수정</h2>
 		</div>
-		
+		<sec:authentication var="principal" property="principal" />
 		<div class="container">
 		<c:choose>
 			<c:when test="${principal eq memeber.userId}">
 				<form:form action="updateMember" method="post"
 					modelAttribute="member" class="form-group">
+					
 					<div class="form-group">
 						<label>아이디 : ${member.userId}</label>
 					</div>
@@ -53,23 +54,24 @@
 						class="form-control"/>
 						<form:errors path="email" />
 					</div>
-				</form:form>
-				<div class="container">
+					
+					<div class="container">
 					<div class="row-justify-content-end">
 						<input type="hidden" name="userId" value="${member.userId}">
-						<input type="submit" value="수정"
-							class="btn btn-outline-secondary m-1"> <input
-							type="reset" value="초기화" class="btn btn-outline-secondary m-1">
-						<input type="button" value="취소"
-							class="btn btn-outline-secondary m-1"
-							onclick="location.href='/study/member/'+${member.userId}">
+						<input type="submit" value="수정" class="btn btn-outline-secondary m-1"> 
+						<input type="reset" value="초기화" class="btn btn-outline-secondary m-1">
+						<input type="button" value="취소" class="btn btn-outline-secondary m-1"
+							onclick="location.href='/study/member/${member.userId}'">
 					</div>
-				</div>
+					</div>
+				</form:form>
+				
 			</c:when>
 
 			<c:otherwise>
-				<form action="/study/member/updateAccount" method="post">
-					<table border="1">
+				<form action="/study/member/updateAccount" method="post"
+				class="form-group">
+					<table class="table table-striped">
 						<tr>
 							<th>아이디</th>
 							<td>${member.userId}</td>
@@ -87,26 +89,36 @@
 
 						<tr>
 							<th>계정상태 변경</th>
-							<td><input type="radio" name="enabled" value='1'
-								checked="checked">활성화 <input type="radio" name="enabled"
-								value='0'>비활성화</td>
+							<td>
+							<select name="enabled" class="form-control"> 
+							<option value='1'>활성화</option>
+							<option value='0'>비활성화</option>
+							</select>
+							</td>
 						</tr>
 
 						<tr>
 							<th>권한 변경</th>
-							<td><input type="radio" name="authority" value="ROLE_USER"
-								checked="checked">회원 <input type="radio"
-								name="authority" value="ROLE_ADMIN">관리자</td>
+							<td>
+							<select name="authority" class="form-control">
+							<option value="ROLE_USER">회원</option>
+							<option value="ROLE_ADMIN">관리자</option>
+							</select>
 						</tr>
 					</table>
+					
+					<div class="container">
+					<div class="d-flex justify-content-end">
 					<input type="hidden" name="userId" value="${member.userId}">
-					<input type="submit" value="수정"> <input type="button"
-						value="취소"
-						onclick="location.href='<c:url value="../${member.userId}" />'">
+					<input type="submit" value="수정" class="btn btn-outline-secondary m-1"> 
+					<input type="button" value="취소" class="btn btn-outline-secondary m-1"
+					onclick="location.href='/study/member/${member.userId}'">
+					</div>
+					</div>
 				</form>
+			
 			</c:otherwise>
 		</c:choose>
 	</div>
-		</div>
-	</div>
+</div>
 </html>
