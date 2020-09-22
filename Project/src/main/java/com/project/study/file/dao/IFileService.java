@@ -5,9 +5,12 @@ import java.util.List;
 import com.project.study.file.model.FileVO;
 
 public interface IFileService {
+	
+	//스터디 별 파일 전체 개수
+	public int getFileCount(int boardNum);
 
 	// 스터디 별 파일 리스트
-	public List<FileVO> getFileList(int boardNum);
+	public List<FileVO> getFileList(int boardNum, int page);
 
 	// 파일 상세조회
 	public FileVO getFile(int fileNum);

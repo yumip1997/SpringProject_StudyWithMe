@@ -31,30 +31,30 @@
 					<table class="table table-striped">
 						<tr>
 							<td>아이디</td>
-							<td><form:input path="userId"
-									placeholder="4~20자의 영문대소문자와 숫자" onfocus="this.placeholder=''"
-									class="form-control" /> <form:errors path="userId" /></td>
+							<td><form:input path="userId" placeholder="4~20자의 영문대소문자와 숫자" 
+							onfocus="this.placeholder=''" class="form-control" /> 
+							<form:errors path="userId" /></td>
 						</tr>
 
 						<tr>
 							<td>이름</td>
-							<td><form:input path="name" placeholder="한글만 가능"
-									onfocus="this.placeholder=''" class="form-control" /> <form:errors
-									path="name" /></td>
+							<td><form:input path="name" placeholder="한글만 가능" 
+							onfocus="this.placeholder=''" class="form-control" /> 
+							<form:errors path="name" /></td>
 						</tr>
 
 						<tr>
 							<td>비밀번호</td>
 							<td><form:input type="password" path="password"
-									placeholder="6~12자의 영문대소문자와 숫자" onfocus="this.placeholder=''"
-									class="form-control" /> <form:errors path="password" /></td>
+								placeholder="6~12자의 영문대소문자와 숫자" onfocus="this.placeholder=''" class="form-control" /> 
+								<form:errors path="password" /></td>
 						</tr>
 
 						<tr>
 							<td>이메일</td>
 							<td><form:input path="email" placeholder="abcd@google.com"
-									onfocus="this.placeholder=''" class="form-control" /> <form:errors
-									path="email" /></td>
+							onfocus="this.placeholder=''" class="form-control" /> 
+							<form:errors path="email" /></td>
 						</tr>
 					</table>
 					

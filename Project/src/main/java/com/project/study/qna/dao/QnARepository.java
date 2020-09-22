@@ -15,11 +15,22 @@ public class QnARepository implements IQnARepository{
 	@Autowired
 	private SqlSessionTemplate sqlSessionTemplate;
 	
+	@Override
+	public int getQnACount(int boardNum) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectOne("qnaDAO.getQnACount", boardNum);
+	}
 	
 	@Override
-	public List<QnAVO> getQnAList(int boardNum) {
+	public List<QnAVO> getQnAList(int boardNum, int page) {
 		// TODO Auto-generated method stub
-		return sqlSessionTemplate.selectList("qnaDAO.getQnAList",boardNum);
+		int start = (page-1)*10;
+		int end = start+10;
+		HashMap<String, Integer>map = new HashMap<String, Integer>();
+		map.put("boardNum", boardNum);
+		map.put("start", start);
+		map.put("end", end);
+		return sqlSessionTemplate.selectList("qnaDAO.getQnAList",map);
 	}
 
 	@Override
@@ -71,5 +82,7 @@ public class QnARepository implements IQnARepository{
 		// TODO Auto-generated method stub
 		sqlSessionTemplate.update("qnaDAO.increaseViews", qnaNum);	
 	}
+
+	
 
 }

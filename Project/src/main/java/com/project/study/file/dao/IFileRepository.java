@@ -6,8 +6,11 @@ import com.project.study.file.model.FileVO;
 
 public interface IFileRepository {
 
+	//스터디 별 파일 전체 개수
+	public int getFileCount(int boardNum);
+	
 	// 스터디 별 파일 목록
-	public List<FileVO> getFileList(int boardNum);
+	public List<FileVO> getFileList(int boardNum, int page);
 	
 	//파일 상세조회
 	public FileVO getFile(int fileNum);

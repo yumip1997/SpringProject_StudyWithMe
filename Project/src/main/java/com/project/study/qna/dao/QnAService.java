@@ -13,11 +13,17 @@ public class QnAService implements IQnAService{
 	
 	@Autowired
 	IQnARepository QnARepository;
+	
+	@Override
+	public int getQnACount(int boardNum) {
+		// TODO Auto-generated method stub
+		return QnARepository.getQnACount(boardNum);
+	}
 
 	@Override
-	public List<QnAVO> getQnAList(int boardNum) {
+	public List<QnAVO> getQnAList(int boardNum, int page) {
 		// TODO Auto-generated method stub
-		return QnARepository.getQnAList(boardNum);
+		return QnARepository.getQnAList(boardNum, page);
 	}
 
 	@Override
@@ -25,7 +31,7 @@ public class QnAService implements IQnAService{
 		// TODO Auto-generated method stub
 		return QnARepository.getQnA(qnaNum);
 	}
-	
+
 	@Override
 	public List<QnAVO> searchQnA(String searchOption, String keyword, int boardNum) {
 		// TODO Auto-generated method stub
@@ -67,5 +73,7 @@ public class QnAService implements IQnAService{
 		// TODO Auto-generated method stub
 		QnARepository.increaseViews(qnaNum);
 	}
+
+	
 
 }

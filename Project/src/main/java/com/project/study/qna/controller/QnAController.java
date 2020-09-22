@@ -19,6 +19,7 @@ import com.project.study.board.dao.IBoardService;
 import com.project.study.comment.dao.ICommentService;
 import com.project.study.qna.dao.IQnAService;
 import com.project.study.qna.model.QnAVO;
+import com.project.study.util.PageMaker;
 
 @Controller
 @RequestMapping("/qna")
@@ -34,11 +35,13 @@ public class QnAController {
 	ICommentService commentService;
 	
 	@GetMapping("/qnaList/{boardNum}")
-	String getQnAList(Model model, @PathVariable int boardNum) {
+	String getQnAList(Model model, @PathVariable int boardNum, 
+			@RequestParam(required=false, defaultValue="1")int page) {
 		String studyTitle = boardService.getBoard(boardNum).getStudyTitle();
 		model.addAttribute("boardNum", boardNum);
 		model.addAttribute("studyTitle", studyTitle);
-		model.addAttribute("qnaList", qnaService.getQnAList(boardNum));
+		model.addAttribute("qnaList", qnaService.getQnAList(boardNum, page));
+		model.addAttribute("pageMaker", new PageMaker(qnaService.getQnACount(boardNum), page));
 		return "/study/qna/qnaList";
 	}
 	

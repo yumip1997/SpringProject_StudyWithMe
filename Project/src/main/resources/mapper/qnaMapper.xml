@@ -3,12 +3,20 @@
 
 <mapper namespace="qnaDAO">
 
+	<!-- 총 QnA 개수 -->
+	<select id="getQnACount" parameterType="int" resultType="int">
+		select count(*)
+		from qna
+		where board_num = #{boardNum}
+	</select>
+
 	<!-- 스터디 별 QnA 목록 -->
-	<select id="getQnAList" parameterType="int" resultType="qnaVO">
+	<select id="getQnAList" resultType="qnaVO">
 		select qna_num, qna_title, userid, writedate, views
 		from qna
 		where board_num = #{boardNum}
 		order by qna_num desc
+		limit #{start}, #{end}
 	</select>
 
 	<!-- QnA 상세조회 -->

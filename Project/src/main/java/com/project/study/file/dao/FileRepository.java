@@ -14,11 +14,23 @@ public class FileRepository implements IFileRepository{
 
 	@Autowired
 	private SqlSessionTemplate sqlSessionTemplate;
+	
+	@Override
+	public int getFileCount(int boardNum) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectOne("fileDAO.getFileCount", boardNum);
+	}
 
 	@Override
-	public List<FileVO> getFileList(int boardNum) {
+	public List<FileVO> getFileList(int boardNum, int page) {
 		// TODO Auto-generated method stub
-		return sqlSessionTemplate.selectList("fileDAO.getFileList", boardNum);
+		int start = (page-1)*10;
+		int end = start+10;
+		HashMap<String, Integer>map = new HashMap<String, Integer>();
+		map.put("boardNum", boardNum);
+		map.put("start",start);
+		map.put("end", end);
+		return sqlSessionTemplate.selectList("fileDAO.getFileList", map);
 	}
 	
 	@Override
@@ -65,6 +77,4 @@ public class FileRepository implements IFileRepository{
 		// TODO Auto-generated method stub
 		sqlSessionTemplate.delete("fileDAO.deleteFile", fileNum);
 	}
-
-
 }

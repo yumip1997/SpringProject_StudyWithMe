@@ -3,8 +3,15 @@
 
 <mapper namespace="fileDAO">
 
+	<!-- 스터디 별 파일 전체 개수 -->
+	<select id="getFileCount" resultType="int">
+	select count(*)
+	from file
+	where board_num = #{boardNum}
+	</select>
+	
 	<!-- 스터디 별 파일 목록 -->
-	<select id="getFileList" parameterType="int" resultType="fileVO">
+	<select id="getFileList" resultType="fileVO">
 		select file_num, file_title, file_upload_date, file_size, userid ,views
 		from file
 		where board_num = #{boardNum}
@@ -17,7 +24,7 @@
 		from file
 		where file_num = #{fileNum}
 	</select>
-
+	
 	<!-- 파일 찾기 -->
 	<select id="searchFile" resultType="fileVO">
 		select file_num, file_title, file_upload_date, file_size, userid ,views

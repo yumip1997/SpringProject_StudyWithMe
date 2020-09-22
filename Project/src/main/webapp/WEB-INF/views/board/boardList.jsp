@@ -161,7 +161,7 @@
 		</div>
 	</div>
 
-	<!-- Page -->
+	<!-- pagination -->
 	<div class="container mt-3">
 		<div class="row">
 				<ul class="pagination">

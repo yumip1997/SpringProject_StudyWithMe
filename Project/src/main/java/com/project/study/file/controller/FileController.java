@@ -28,6 +28,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.project.study.board.dao.IBoardService;
 import com.project.study.file.dao.IFileService;
 import com.project.study.file.model.FileVO;
+import com.project.study.util.PageMaker;
 
 @Controller
 @RequestMapping("/file")
@@ -40,11 +41,15 @@ public class FileController {
 	IBoardService boardService;
 	
 	@GetMapping("/fileList/{boardNum}")
-	public String fileList(Model model, @PathVariable("boardNum")int boardNum) {
+	public String fileList(Model model, @PathVariable("boardNum")int boardNum,
+			@RequestParam(required=false, defaultValue="1")int page) {
+		
 		String studyTitle = boardService.getBoard(boardNum).getStudyTitle();
+		model.addAttribute("fileList", fileService.getFileList(boardNum, page));
+		model.addAttribute("pageMaker", new PageMaker(fileService.getFileCount(boardNum), page));
 		model.addAttribute("boardNum", boardNum);
 		model.addAttribute("studyTitle", studyTitle);
-		model.addAttribute("fileList", fileService.getFileList(boardNum));
+		
 		return "/study/file/fileList";
 	}
 	
@@ -103,7 +108,6 @@ public class FileController {
 		if(result.hasErrors()) {
 			return "/study/file/insertFile";
 		}
-		
 		
 		try {
 			if(uploadfile !=null && !uploadfile.isEmpty()) {

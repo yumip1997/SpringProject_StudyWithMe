@@ -85,6 +85,29 @@
 			</div>
 		</div>
 	</div>
+	
+	<!-- pagination -->
+	<div class="container mt-3">
+		<div class="row">
+				<ul class="pagination">
+					<li class="page-item">
+					<a class="page-link" href="/study/qna/qnaList/${boardNum}?page=1">처음</a></li>
+					<c:if test="${pageMaker.nowBlock gt 1}">
+						<li class="page-item">
+						<a class="page-link" href="/study/qna/qnaList/${boardNum}?page=${pageMaker.startPage-1}">이전</a>
+					</c:if>
+					<c:forEach var="i" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
+						<li class="page-item">
+						<a class="page-link" href="/study/qna/qnaList/${boardNum}?page=${i}">${i}</a></li>
+					</c:forEach>
+					<c:if test="${pageMaker.nowBlock < pageMaker.totalBlock}">
+						<li class="page-item">
+						<a class="page-link" href="/study/qna/qnaList/${boardNum}?page=${pageMaker.endPage+1}">다음</a></li>
+					</c:if>
+				</ul>
+		</div>
+	</div>
+	
 	<!-- footer -->
 	<jsp:include page="/WEB-INF/resources/incl/footer.jsp" />
 

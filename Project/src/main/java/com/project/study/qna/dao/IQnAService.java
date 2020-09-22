@@ -6,12 +6,15 @@ import com.project.study.qna.model.QnAVO;
 
 public interface IQnAService {
 
+	//스터디 별 총 QnA 개수
+	public int getQnACount(int boardNum);
+	
 	// 스터디 별 QnA 목록
-	public List<QnAVO> getQnAList(int boardNum);
+	public List<QnAVO> getQnAList(int boardNum, int page);
 
 	// QnA 상세조회
 	public QnAVO getQnA(int qnaNum);
-
+	
 	// QnA 검색
 	public List<QnAVO> searchQnA(String searchOption, String keyword, int boardNum);
 

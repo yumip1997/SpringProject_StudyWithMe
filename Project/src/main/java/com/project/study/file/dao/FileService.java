@@ -13,11 +13,18 @@ public class FileService implements IFileService{
 	
 	@Autowired
 	IFileRepository fileRepository;
+	
+	@Override
+	public int getFileCount(int boardNum) {
+		// TODO Auto-generated method stub
+		return fileRepository.getFileCount(boardNum);
+	}
+
 
 	@Override
-	public List<FileVO> getFileList(int boardNum) {
+	public List<FileVO> getFileList(int boardNum, int page) {
 		// TODO Auto-generated method stub
-		return fileRepository.getFileList(boardNum);
+		return fileRepository.getFileList(boardNum, page);
 	}
 
 	@Override
@@ -57,7 +64,4 @@ public class FileService implements IFileService{
 		// TODO Auto-generated method stub
 		fileRepository.deleteFile(fileNum);
 	}
-
-
-
 }
