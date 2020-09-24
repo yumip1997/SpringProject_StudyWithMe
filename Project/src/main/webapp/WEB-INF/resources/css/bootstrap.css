@@ -70,6 +70,7 @@ body {
 	background-color: #fff;
 }
 
+
 div {
 	animation: fadein 1s;
 	-moz-animation: fadein 1s; /* Firefox */
@@ -384,11 +385,6 @@ h6, .h6 {
 	font-size: 1rem;
 }
 
-.form-signin {
-	width: 100%;
-	padding-top: 4%;
-	padding-bottom: 5%;
-}
 
 .lead {
 	font-size: 1.25rem;

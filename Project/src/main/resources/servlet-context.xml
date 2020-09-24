@@ -21,8 +21,12 @@
 	<mvc:annotation-driven />
 
 	<mvc:view-controller path="/" view-name="index"></mvc:view-controller>
-	<mvc:view-controller path="/logout" view-name="index"></mvc:view-controller>
-	<mvc:view-controller path="/error/autherror" view-name="error/autherror" />
+	<mvc:view-controller path="/logout"
+		view-name="index"></mvc:view-controller>
+	<mvc:view-controller path="/error/autherror"
+		view-name="error/autherror" />
+		<mvc:view-controller path="/error/fileSizeError"
+		view-name="error/fileSizeError" />
 	<mvc:annotation-driven>
 		<mvc:argument-resolvers>
 			<beans:bean
@@ -73,12 +77,9 @@
 		<beans:property name="maxUploadSize">
 			<beans:value>15728640</beans:value>
 		</beans:property>
-		<beans:property name="resolveLazily" value="true"/>
+		<beans:property name="defaultEncoding" value="utf-8" />
 	</beans:bean>
-
-	<beans:bean id="exceptionHandlerExceptionResolver"
-		class="org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver" />
-
+	
 	<security:global-method-security
 		secured-annotations="enabled" pre-post-annotations="enabled" />
 

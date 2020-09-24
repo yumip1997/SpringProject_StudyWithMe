@@ -115,6 +115,4 @@ public class MemberVO implements UserDetails {
 		// TODO Auto-generated method stub
 		return userId;
 	}
-	
-	
 }

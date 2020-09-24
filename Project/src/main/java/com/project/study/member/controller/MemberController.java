@@ -117,7 +117,7 @@ public class MemberController {
 		if(currentUser.equals(userId)) {
 			session.invalidate();
 			memberService.deleteMember(userId);
-			return "redirect:/study/index";
+			return "redirect:/index";
 		}else {
 			memberService.deleteMember(userId);
 			return "redirect:/member/memberList";

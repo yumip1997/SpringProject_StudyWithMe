@@ -14,40 +14,41 @@
 <title>Study With Me</title>
 </head>
 <body>
+	<!-- menu -->
 	<jsp:include page="/WEB-INF/resources/incl/header.jsp" />
 	<!-- header -->
 	<div class="jumbotron bg-secondary">
-		<div class="container-fluid p-3 text-center">
+		<div class="container-fluid p-1 text-center">
 			<h1 class="text-white">Study With Me</h1>
 		</div>
 	</div>
-	
-	<!-- signin form-->
-	<div class="form-signin">
-		<div class="container">
-			<div class="row">
-				<div class="col-md-6 offset-md-3">
-					<form action="loginCheck" method="post">
-						<h3>로그인</h3>
-						<div class="form-group">
-							<label class="control-label">아이디</label> 
-							<input class="form-control" type="text" name="id">
-						</div>
-						<div class="form-group">
-							<label class="control-label">비밀번호</label> 
-							<input class="form-control" type="password" name="pw">
-						</div>
-						<div class="help-block">${message}
-							<%session.removeAttribute("message");%>
-						</div>
-						<input class="btn btn-secondary" type="submit" value="로그인">
-					</form>
-				</div>
 
-			</div>
+	<!-- signin form-->
+	<div class="container container-fluid pt-5">
+		<div class="container text-center">
+			<h2>로그인</h2>
+		</div>
+		<div class="row justify-content-center">
+		<div class="col-md-5">
+				<form action="loginCheck" method="post">
+					<div class="form-group">
+						<label class="control-label">아이디</label> 
+						<input class="form-control" type="text" name="id">
+					</div>
+					<div class="form-group">
+						<label class="control-label">비밀번호</label> 
+						<input class="form-control" type="password" name="pw">
+					</div>
+					<div class="form-group">${message}
+						<%session.removeAttribute("message");%>
+					</div>
+					<input class="btn btn-secondary" type="submit" value="로그인">
+				</form>
+		</div>
 		</div>
 	</div>
-	
+
+
 	<!-- footer -->
 	<jsp:include page="/WEB-INF/resources/incl/footer.jsp" />
 </body>

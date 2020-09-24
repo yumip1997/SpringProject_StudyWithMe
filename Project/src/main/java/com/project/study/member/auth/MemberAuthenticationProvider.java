@@ -42,12 +42,13 @@ public class MemberAuthenticationProvider implements AuthenticationProvider{
 		//데이터베이스에서 password를 가져옴
 		String dbpw = memberService.getPassword(userId);
 		
+		//보안성을 높이기 위해 아이디, 비밀번호 오류 메시지를 통합함.
 		if(dbpw==null) {
-			throw new InternalAuthenticationServiceException("아이디가 존재하지 않습니다.");
+			throw new InternalAuthenticationServiceException("아이디 또는 비밀번호가 다릅니다.");
 		}
 		
 		if(!bpe.matches(password, dbpw)) {
-			throw new BadCredentialsException("비밀번호가 다릅니다.");
+			throw new BadCredentialsException("아이디 또는 비밀번호가 다릅니다.");
 		}
 		
 		MemberVO member= memberService.getMember(userId);

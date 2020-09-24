@@ -68,6 +68,7 @@ public class BoardController {
 	@PostMapping("/search")
 	public String searchStudy(Model model, @RequestParam("searchOption") String searchOption,
 			@RequestParam("keyword") String keyword, @RequestParam("studyType") String studyType) {
+		System.out.println(studyType);
 		model.addAttribute("boardList", boardService.searchBoard(searchOption, keyword, studyType));
 		model.addAttribute("count", boardService.countBoard(searchOption, keyword, studyType));
 		return "board/boardList";

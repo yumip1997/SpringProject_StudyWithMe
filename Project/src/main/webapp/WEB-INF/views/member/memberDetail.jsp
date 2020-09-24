@@ -80,12 +80,12 @@
 	});
 	
 	$("#deleteMember").on("click", function(){
-		if (confirm("작성한 글이 모두 삭제됩니다. 정말 탈퇴하시겠습니까?") == true) {
-			alert("탈퇴되었습니다!")
-			location.href = "/study/member/deleteMember/"+${member.userId};
+		if (confirm("정말 탈퇴하시겠습니까?") == true) {
+			location.href = "/study/member/deleteMember/${member.userId}";
+			return true;
 		} else {
 			return false;
 		}
-	})
+	});
 </script>
 </html>

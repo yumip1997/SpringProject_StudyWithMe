@@ -33,7 +33,7 @@
 		<sec:authentication var="principal" property="principal" />
 		<div class="container">
 		<c:choose>
-			<c:when test="${principal eq memeber.userId}">
+			<c:when test="${member.userId eq principal}">
 				<form:form action="updateMember" method="post"
 					modelAttribute="member" class="form-group">
 					
@@ -56,7 +56,7 @@
 					</div>
 					
 					<div class="container">
-					<div class="row-justify-content-end">
+					<div class="d-flex justify-content-end">
 						<input type="hidden" name="userId" value="${member.userId}">
 						<input type="submit" value="수정" class="btn btn-outline-secondary m-1"> 
 						<input type="reset" value="초기화" class="btn btn-outline-secondary m-1">

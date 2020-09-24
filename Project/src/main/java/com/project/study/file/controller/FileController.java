@@ -3,6 +3,7 @@ package com.project.study.file.controller;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,14 +16,17 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.project.study.board.dao.IBoardService;
@@ -31,7 +35,6 @@ import com.project.study.file.model.FileVO;
 import com.project.study.util.PageMaker;
 
 @Controller
-@RequestMapping("/file")
 public class FileController {
 
 	@Autowired
@@ -40,7 +43,7 @@ public class FileController {
 	@Autowired
 	IBoardService boardService;
 	
-	@GetMapping("/fileList/{boardNum}")
+	@GetMapping("/file/fileList/{boardNum}")
 	public String fileList(Model model, @PathVariable("boardNum")int boardNum,
 			@RequestParam(required=false, defaultValue="1")int page) {
 		
@@ -53,13 +56,13 @@ public class FileController {
 		return "/study/file/fileList";
 	}
 	
-	@GetMapping("/{fileNum}")
+	@GetMapping("/file/{fileNum}")
 	public String viewFile(Model model, @PathVariable("fileNum")int fileNum) {
 		model.addAttribute("file", fileService.getFile(fileNum));
 		return "/study/file/fileView";
 	}
 	
-	@PostMapping("/search")
+	@PostMapping("/file/search")
 	public String searchQnA(Model model, @RequestParam("searchOption") String searchOption,
 			@RequestParam("keyword") String keyword, @RequestParam("boardNum") int boardNum) {
 		String studyTitle = boardService.getBoard(boardNum).getStudyTitle();
@@ -71,8 +74,8 @@ public class FileController {
 	}
 	
 	
-	@GetMapping("/download/{fileNum}")
-	public ResponseEntity<byte[]> downloadFile(@PathVariable("fileNum")int fileNum){
+	@GetMapping("/file/download/{fileNum}")
+	public ResponseEntity<byte[]> downloadFile(@PathVariable("fileNum")int fileNum) {
 		FileVO file = fileService.getFile(fileNum);
 		final HttpHeaders headers = new HttpHeaders();
 		if(file !=null) {
@@ -85,26 +88,23 @@ public class FileController {
 			return new ResponseEntity<byte[]>(HttpStatus.NOT_FOUND);
 		}
 	}
-	
-	@GetMapping("/insertFile/{boardNum}")
+		
+	@GetMapping("/file/insertFile/{boardNum}")
 	public String insertFile(Model model, @PathVariable("boardNum")int boardNum) {
 		FileVO file = new FileVO();
 		file.setBoardNum(boardNum);
 		model.addAttribute("file", file);
 		return "/study/file/insertFile";
 	}
-	
-	@PostMapping("/insertFile")
+		
+	@PostMapping("/file/insertFile")
 	String insertFile(@ModelAttribute("file")@Valid FileVO file,
 			BindingResult result,
 			@RequestParam("uploadfile")MultipartFile uploadfile,
-			RedirectAttributes redirectAttrs) throws UnsupportedEncodingException{
+			RedirectAttributes redirectAttrs){
 
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		
-		//한글 깨짐 방지
-		String fileNameOrg = new String(uploadfile.getOriginalFilename().getBytes("8859_1"),"utf-8");
-
 		if(result.hasErrors()) {
 			return "/study/file/insertFile";
 		}
@@ -115,7 +115,7 @@ public class FileController {
 				file.setFileTitle(file.getFileTitle());
 				file.setFileContent(file.getFileContent());
 				file.setFileSize(uploadfile.getSize());
-				file.setFileName(fileNameOrg);
+				file.setFileName(uploadfile.getOriginalFilename());
 				file.setFileContentType(uploadfile.getContentType());
 				file.setFileData(uploadfile.getBytes());
 				file.setUserId(auth.getName());
@@ -127,16 +127,18 @@ public class FileController {
 		return "redirect:/file/fileList/"+file.getBoardNum();
 	}
 	
-	@PostMapping("/updateFilePage")
+	@PostMapping("/file/updateFilePage")
 	String updateFilePage(Model model, @RequestParam("fileNum")int fileNum) {
 		model.addAttribute("file", fileService.getFile(fileNum));
 		return "/study/file/updateFile";
 	}
 	
-	@PostMapping("/deleteFile")
+	@PostMapping("/file/deleteFile")
 	String deleteFile(@RequestParam("fileNum")int fileNum, @RequestParam("boardNum")int boardNum) {
 		fileService.deleteFile(fileNum);
 		return "redirect:/file/fileList/" + boardNum;
 	}
+	
+	
 	
 }
