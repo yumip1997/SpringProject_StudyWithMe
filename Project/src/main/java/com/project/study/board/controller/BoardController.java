@@ -58,7 +58,7 @@ public class BoardController {
 		boolean checkLike = boardService.checkLike(boardNum, auth.getName());
 		model.addAttribute("checkLike", checkLike);
 		model.addAttribute("board", boardService.getBoard(boardNum));
-		model.addAttribute("commentList", commentService.getCommentList(boardNum));
+		model.addAttribute("commentList", commentService.getCommentList(boardNum, "board"));
 		model.addAttribute("commentCount", commentService.getCountComment(boardNum));
 		boardService.increaseViews(boardNum);
 		return "board/boardDetail";

@@ -1,6 +1,11 @@
 package com.project.study.comment.controller;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,11 +16,17 @@ import com.project.study.comment.dao.ICommentService;
 import com.project.study.comment.model.CommentVO;
 
 @Controller
-@RequestMapping("/board")
+@RequestMapping("/comment")
 public class CommentController {
 
 	@Autowired
 	ICommentService commentService;
+	
+	@PostMapping("/commentList")
+	@ResponseBody
+	public List<CommentVO> commentList(int postNum, String postType){
+		return commentService.getCommentList(postNum, postType);
+	}
 	
 	@PostMapping("/insertComment")
 	@ResponseBody

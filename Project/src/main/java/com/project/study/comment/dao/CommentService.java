@@ -15,9 +15,9 @@ public class CommentService implements ICommentService{
 	private ICommentRepository commentRepository;
 	
 	@Override
-	public List<CommentVO> getCommentList(int postNum) {
+	public List<CommentVO> getCommentList(int postNum, String postType) {
 		// TODO Auto-generated method stub
-		return commentRepository.getCommentList(postNum);
+		return commentRepository.getCommentList(postNum, postType);
 	}
 	
 	@Override

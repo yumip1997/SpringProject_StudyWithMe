@@ -156,10 +156,8 @@
 
 <script>
 	window.onload = function() {
-
 		var enabled = ${board.enabled};
 		var checkLike = ${checkLike};
-
 		if (enabled == '1') {
 			$("#join").show();
 			$("#updateEnabled").text("모집 마감하기");
@@ -169,13 +167,11 @@
 			$("#updateEnabled").text("모집하기");
 			$("#checkEnabled").text('모집마감');
 		}
-
 		if (!checkLike) {
 			$("#like").text("좋아요");
 		} else {
 			$("#like").text("좋아요 취소");
 		}
-
 		$("#join").on("click", function() {
 			$.ajax({
 				async : 'true',
@@ -201,7 +197,6 @@
 				}
 			})
 		});
-
 		$("#like").on("click", function() {
 			$.ajax({
 				async : 'true',
@@ -217,7 +212,6 @@
 					if (result.checkLike) {
 						$("#like").text("좋아요 취소");
 						$("#likeCount").text(result.count);
-
 					} else {
 						$("#like").text("좋아요");
 						$("#likeCount").text(result.count);
@@ -230,7 +224,6 @@
 				}
 			})
 		});
-
 		$("#updateEnabled").on("click", function() {
 			$.ajax({
 				async : 'true',
@@ -248,7 +241,6 @@
 						$("#checkEnabled").text('모집중');
 						$("#updateEnabled").text("모집 마감하기");
 						enabled = 1;
-
 					} else {
 						$("#join").hide();
 						$("#checkEnabled").text('모집마감');
@@ -263,11 +255,9 @@
 				}
 			});
 		});
-
 		$("#viewList").on("click", function() {
 			location.href = "/study/board/boardList/all";
 		});
-
 		$("#commentBtn").on("click", function() {
 			if (!($("#commentContent").val())) {
 				alert("댓글을 입력해주세요.");
@@ -275,7 +265,7 @@
 			}else{
 				$.ajax({
 					async : 'true',
-					url : "/study/board/insertComment",
+					url : "/study/comment/insertComment",
 					type : 'post',
 					data : $("#commentForm").serialize(),
 					dataType : 'json',
@@ -320,7 +310,7 @@
 					$("#parentNum").val(num);
 					$.ajax({
 						async : 'true',
-						url : "/study/board/insertReply",
+						url : "/study/comment/insertReply",
 						type : 'post',
 						data : $("#replyForm").serialize(),
 						dataType : 'json',
@@ -348,7 +338,7 @@
 			if (confirm("정말 삭제하시겠습니까??") == true){
 				$.ajax({
 					async : 'true',
-					url : "/study/board/deleteComment",
+					url : "/study/comment/deleteComment",
 					type : 'post',
 					data : {commentNum : num},
 					success : function() {
@@ -372,7 +362,7 @@
 			if (confirm("정말 삭제하시겠습니까??") == true){
 				$.ajax({
 					async : 'true',
-					url : "/study/board/deleteReply",
+					url : "/study/comment/deleteReply",
 					type : 'post',
 					data : {commentNum : num},
 					success : function() {

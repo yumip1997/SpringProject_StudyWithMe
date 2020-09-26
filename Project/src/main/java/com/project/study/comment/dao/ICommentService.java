@@ -6,7 +6,7 @@ import com.project.study.comment.model.CommentVO;
 
 public interface ICommentService {
 	// 댓글 목록
-	List<CommentVO> getCommentList(int postNum);
+	List<CommentVO> getCommentList(int postNum, String postType);
 	
 	//특정 댓글
 	CommentVO getComment(int commentNum);

@@ -1,5 +1,6 @@
 package com.project.study.comment.dao;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -15,9 +16,12 @@ public class CommentRepository implements ICommentRepository{
 	private SqlSessionTemplate sqlSessionTemplate;
 	
 	@Override
-	public List<CommentVO> getCommentList(int postNum) {
+	public List<CommentVO> getCommentList(int postNum, String postType) {
 		// TODO Auto-generated method stub
-		return sqlSessionTemplate.selectList("commentDAO.getCommentList", postNum);
+		HashMap<String, Object>map = new HashMap<String, Object>();
+		map.put("postNum", postNum);
+		map.put("postType", postType);
+		return sqlSessionTemplate.selectList("commentDAO.getCommentList", map);
 	}
 	
 	@Override
