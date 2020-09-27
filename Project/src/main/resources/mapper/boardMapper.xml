@@ -66,7 +66,7 @@
 
 	<sql id="completedSearch">
 		<choose>
-			<when test="studyType !=null and !studyType.equals('')">
+			<when test="studyType !=all and !studyType.equals('all')">
 				<include refid="search"></include>
 				and study_type = #{studyType}
 			</when>

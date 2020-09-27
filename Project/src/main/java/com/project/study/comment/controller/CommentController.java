@@ -1,11 +1,8 @@
 package com.project.study.comment.controller;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,8 +27,7 @@ public class CommentController {
 	
 	@PostMapping("/insertComment")
 	@ResponseBody
-	public CommentVO insertComment(@ModelAttribute CommentVO comment) 
-	{
+	public CommentVO insertComment(@ModelAttribute CommentVO comment) {
 		//CommentVO의 나머지 변수들 설정 
 		int num = commentService.getMaxCommentNum();
 		comment.setCommentNum(num);

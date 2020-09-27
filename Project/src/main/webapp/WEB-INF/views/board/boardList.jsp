@@ -86,15 +86,15 @@
 		</form>
 
 		<div class="row">
-			<c:if test="${not empty count}">
-			${count}개의 스터디가 존재합니다.
+			<c:if test="${not empty searchedCount}">
+			${searchedCount}개의 스터디가 존재합니다.
 			</c:if>
 		</div>
 	</div>
 
 	<!-- top3 study section -->
 	<!-- 검색시에는 출력되지 않음 -->
-	<c:if test="${empty count}">
+	<c:if test="${empty searchedCount}">
 		<div class="container pt-2">
 			<table class="table table-hover text-center">
 				<thead>
@@ -162,6 +162,8 @@
 	</div>
 
 	<!-- pagination -->
+	<!-- 검색 시에는 출력되지 않음 -->
+	<c:if test="${empty searchedCount}">
 	<div class="container mt-3">
 		<div class="row">
 				<ul class="pagination">
@@ -182,6 +184,7 @@
 				</ul>
 		</div>
 	</div>
+	</c:if>
 
 	<!-- footer -->
 	<jsp:include page="/WEB-INF/resources/incl/footer.jsp" />

@@ -48,8 +48,6 @@ public class QnAController {
 	@GetMapping("/{qnaNum}")
 	String viewQnA(Model model, @PathVariable int qnaNum) {
 		model.addAttribute("qna", qnaService.getQnA(qnaNum));
-		//model.addAttribute("commentList", commentService.getCommentList(qnaNum));
-		//model.addAttribute("commentCount", commentService.getCountComment(qnaNum));
 		qnaService.increaseViews(qnaNum);
 		return "/study/qna/qnaView";
 	}

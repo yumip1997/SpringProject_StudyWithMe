@@ -58,8 +58,6 @@ public class BoardController {
 		boolean checkLike = boardService.checkLike(boardNum, auth.getName());
 		model.addAttribute("checkLike", checkLike);
 		model.addAttribute("board", boardService.getBoard(boardNum));
-		model.addAttribute("commentList", commentService.getCommentList(boardNum, "board"));
-		model.addAttribute("commentCount", commentService.getCountComment(boardNum));
 		boardService.increaseViews(boardNum);
 		return "board/boardDetail";
 	}
@@ -68,9 +66,8 @@ public class BoardController {
 	@PostMapping("/search")
 	public String searchStudy(Model model, @RequestParam("searchOption") String searchOption,
 			@RequestParam("keyword") String keyword, @RequestParam("studyType") String studyType) {
-		System.out.println(studyType);
 		model.addAttribute("boardList", boardService.searchBoard(searchOption, keyword, studyType));
-		model.addAttribute("count", boardService.countBoard(searchOption, keyword, studyType));
+		model.addAttribute("searchedCount",  boardService.countBoard(searchOption, keyword, studyType));
 		return "board/boardList";
 	}
 

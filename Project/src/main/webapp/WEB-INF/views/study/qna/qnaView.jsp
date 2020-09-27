@@ -1,14 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="sec"
-	uri="http://www.springframework.org/security/tags"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 <jsp:include page="/WEB-INF/resources/incl/staticHeader.jsp" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
@@ -32,6 +30,7 @@
 		</div>
 
 		<sec:authentication var="principal" property="principal" />
+		<input type="hidden" value="${principal}" id="principal"> 
 		<form id="target" method="post">
 			<table class="table">
 				<tr>
@@ -67,11 +66,11 @@
 	<!-- comment -->
 	<div class="container">
 		<div class="form-group">
-			<h5>Comment (<span id="totalComment">${commentCount}</span>) :</h5>
+		<h5>Comment (<span id="commentCount"></span>) : </h5>
 			<form action="insertComment" method="post" id="commentForm">
 				<textarea class="form-control" rows="2" name="commentContent" id="commentContent"></textarea>
 				<input type="hidden" value="${principal}" name="userId"> 
-				<input type="hidden" value="${qna.qnaNum}" name="postNum"> 
+				<input type="hidden" value="${qna.qnaNum}" name="postNum" id="postNum"> 
 				<input type="hidden" value="qna" name="postType"> 
 				<input type="button" value="등록하기" class="btn btn-light pull-right m-1" id="commentBtn">
 			</form>
@@ -80,42 +79,6 @@
 		<div class="container">
 			<table id="commentBox" class="table table-borderless">
 				<tbody>
-					<c:forEach var="comment" items="${commentList}">
-						<c:choose>
-							<c:when test="${comment.groupOrder eq 0}">
-								<tr>
-									<td><hr>${comment.userId}( ${comment.writedate} )</td>
-								</tr>
-								<tr id="${comment.commentNum}">
-									<td>${comment.commentContent}
-									<label class="btn btn-light pull-right"> 
-									<input type="radio" name="commentNum" value="${comment.commentNum}">답글
-									</label> 
-									<c:if test="${comment.userId eq principal}">
-									<label class="btn btn-light pull-right"> 
-									<input type="radio" name="deleteComment" value="${comment.commentNum}">삭제
-									</label>
-									</c:if>
-									</td>
-								</tr>
-							</c:when>
-							<c:otherwise>
-								<tr>
-									<td class="pl-5"><i class="fa fa-chevron-right"></i>
-										${comment.userId} (${comment.writedate} )</td>
-								</tr>
-								<tr id="${comment.commentNum}">
-									<td class="pl-5">${comment.commentContent}
-									<c:if test="${comment.userId eq principal}">
-									<label class="btn btn-light pull-right"> 
-									<input type="radio" name="deleteReply" value="${comment.commentNum}">삭제
-									</label>
-									</c:if>
-									</td>
-								</tr>
-							</c:otherwise>
-						</c:choose>
-					</c:forEach>
 				</tbody>
 			</table>
 		</div>
@@ -124,6 +87,55 @@
 	<!-- footer -->
 	<jsp:include page="/WEB-INF/resources/incl/footer.jsp" />
 	<script>
+	window.onload = function(){
+		
+		function commentList() {
+			$.ajax({
+				async: 'true',
+				url: "/study/comment/commentList",
+				type: 'post',
+				data: {
+					'postNum': $("#postNum").val(),
+					'postType': 'qna',
+					"${_csrf.parameterName}": "${_csrf.token}"
+				},
+				dataType: 'json',
+				success: function (result) {
+					var str = '';
+					$.each(result, function (key, value) {
+						if (value.groupOrder == 0) {
+							str += '<tr><td><hr>' + value.userId + ' (' + moment(value.writedate).format('YYYY-MM-DD') + ')' + '</td></tr>';
+							str += '<tr id="' + value.commentNum + '"><td>' + value.commentContent + '<label class="btn btn-light pull-right">';
+							str += '<input type="radio" name="commentNum" value="' + value.commentNum + '">답글</label>';
+							if (value.userId == $("#principal").val()) {
+								str += '<label class="btn btn-light pull-right">';
+								str += '<input type="radio" name="deleteComment" value="' + value.commentNum + '">삭제';
+							}
+							str += '</td></tr>'
+						} else {
+							str += '<tr><td class="pl-5"><i class="fa fa-chevron-right pr-2"></i>';
+							str += value.userId + ' (' + moment(value.writedate).format('YYYY-MM-DD') + ')' + '</td></tr>';
+							str += '<tr id="' + value.commentNum + '"><td class="pl-5">' + value.commentContent;
+							if (value.userId == $("#principal").val()) {
+								str += '<label class="btn btn-light pull-right">';
+								str += '<input type="radio" name="deleteReply" value="' + value.commentNum + '">삭제';
+							}
+							str += '</td></tr>'
+						}
+					});
+					$("#commentBox").html(str);
+					$("#commentCount").html(result.length);
+					return false;
+				},
+				error: function () {
+					alert('다시 시도해주세요.');
+					return false;
+				}
+			});
+		}
+		
+		commentList();
+		
 		$("#update").on("click", function() {
 			$("#target").attr("action", "updateQnAPage")
 		});
@@ -136,33 +148,27 @@
 				return false;
 			}
 		});
-		
-		$("#viewList").on("click", function(){
-			location.href ="/study/qna/qnaList/${qna.boardNum}";
+
+		$("#viewList").on("click", function() {
+			location.href = "/study/qna/qnaList/${qna.boardNum}";
 		});
 		
-		$("#commentBtn").on("click", function() {
+		$("#commentBtn").on("click", function () {
 			if (!($("#commentContent").val())) {
 				alert("댓글을 입력해주세요.");
 				return false;
-			}else{
+			} else {
 				$.ajax({
-					async : 'true',
-					url : "/study/board/insertComment",
-					type : 'post',
-					data : $("#commentForm").serialize(),
-					dataType : 'json',
-					success : function(result) {
-						var date = moment(result.writedate).format('YYYY-MM-DD');
-						var str ="<tr><td><hr>"+result.userId+" ("+date+")"+"</td></tr>";
-						str += "<tr id='result.commentNum'><td>";
-						str += result.commentContent;
-						str += '</td></tr>';
-						
-						$("#commentBox > tbody:last").append(str);
+					async: 'true',
+					url: "/study/comment/insertComment",
+					type: 'post',
+					data: $("#commentForm").serialize(),
+					dataType: 'json',
+					success: function (result) {
+						commentList();
 						return false;
 					},
-					error : function() {
+					error: function () {
 						alert('다시 시도해주세요.');
 						return false;
 					}
@@ -170,8 +176,9 @@
 				$('#commentContent').val('');
 			}
 		});
-		
-		$("input:radio[name='commentNum']").one("click", function(){
+
+		$('body').on('click', 'input:radio[name="commentNum"]', function () {
+			$(this).attr('disabled', true);
 			var num = $(":radio[name='commentNum']:checked").val();
 			var str = '<tr><td>';
 			str += '<form action="insertReply" method="post" id="replyForm">';
@@ -183,86 +190,88 @@
 			str += '<input type="button" value="답글달기" class="btn btn-light pull-right m-1" id="replyBtn">';
 			str += '</form>';
 			str += '</td></tr>';
-			$('tr#'+num).after(str);
-			
-			$("#replyBtn").on("click", function(){
-				if(!($("#replyContent").val())){
-					alert("답글을 입력해주세요.");
-					return false;
-				}else{
-					$("#parentNum").val(num);
-					$.ajax({
-						async : 'true',
-						url : "/study/board/insertReply",
-						type : 'post',
-						data : $("#replyForm").serialize(),
-						dataType : 'json',
-						success : function(result) {
-							var date = moment(result.writedate).format('YYYY-MM-DD');
-							var str = '<tr><td class="pl-5"><i class="fa fa-chevron-right"></i>';
-							str += result.userId + '(' + date +')</td></tr>';
-							str += '<tr><td class="pl-5">' + result.commentContent;
-							str += '</tr></td>';
-							$('tr#'+result.parentNum).after(str);
-							return false;
-						},
-						error : function() {
-							alert('다시 시도해주세요.');
-							return false;
-						}
-					});
-					$('#replyContent').val('');
-				}
-			})
+			$('tr#' + num).after(str);
 		});
-		
-		$("input:radio[name='deleteComment']").on("click", function(){
+
+		$('body').on('click', '#replyBtn', function () {
+			var num = $(":radio[name='commentNum']:checked").val();
+			if (!($("#replyContent").val())) {
+				alert("답글을 입력해주세요.");
+				return false;
+			} else {
+				$("#parentNum").val(num);
+				$.ajax({
+					async: 'true',
+					url: "/study/comment/insertReply",
+					type: 'post',
+					data: $("#replyForm").serialize(),
+					dataType: 'json',
+					success: function (result) {
+						commentList();
+						$('input:radio[name="commentNum"]').attr('disabled', false);
+						return false;
+					},
+					error: function () {
+						alert('다시 시도해주세요.');
+						return false;
+					}
+				});
+				$('#replyContent').val('');
+			}
+		});
+
+		$('body').on('click', 'input:radio[name="deleteComment"]', function () {
 			var num = $(":radio[name='deleteComment']:checked").val();
-			if (confirm("정말 삭제하시겠습니까??") == true){
+			if (confirm("정말 삭제하시겠습니까??") == true) {
 				$.ajax({
-					async : 'true',
-					url : "/study/board/deleteComment",
-					type : 'post',
-					data : {commentNum : num},
-					success : function() {
+					async: 'true',
+					url: "/study/comment/deleteComment",
+					type: 'post',
+					data: {
+						commentNum: num,
+						"${_csrf.parameterName}": "${_csrf.token}"
+					},
+					success: function () {
 						alert('삭제되었습니다.');
-						$('tr#'+num).prev().remove();
-						$('tr#'+num).remove();
+						commentList();
 						return false;
 					},
-					error : function() {
+					error: function () {
 						alert('다시 시도해주세요.');
 						return false;
 					}
 				});
-			}else{
-				return;
+			} else {
+				return false;
 			}
 		});
-		
-		$("input:radio[name='deleteReply']").on("click", function(){
+
+		$('body').on('click', 'input:radio[name="deleteReply"]', function () {
 			var num = $(":radio[name='deleteReply']:checked").val();
-			if (confirm("정말 삭제하시겠습니까??") == true){
+			if (confirm("정말 삭제하시겠습니까??") == true) {
 				$.ajax({
-					async : 'true',
-					url : "/study/board/deleteReply",
-					type : 'post',
-					data : {commentNum : num},
-					success : function() {
+					async: 'true',
+					url: "/study/comment/deleteReply",
+					type: 'post',
+					data: {
+						commentNum: num,
+						"${_csrf.parameterName}": "${_csrf.token}"
+					},
+					success: function () {
 						alert('삭제되었습니다.');
-						$('tr#'+num).prev().remove();
-						$('tr#'+num).remove();
+						commentList();
 						return false;
 					},
-					error : function() {
+					error: function () {
 						alert('다시 시도해주세요.');
 						return false;
 					}
 				});
-			}else{
-				return;
+			} else {
+				return false;
 			}
 		});
+	}
 	</script>
 </body>
 </html>

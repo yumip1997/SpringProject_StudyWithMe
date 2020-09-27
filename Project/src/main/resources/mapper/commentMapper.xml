@@ -3,10 +3,10 @@
 
 <mapper namespace="commentDAO">
 <!-- 댓글 목록 -->
-<select id="getCommentList" parameterType="int" resultType="commentVO">
+<select id="getCommentList" resultType="commentVO">
 select *
 from comment
-where post_num = #{postNum}
+where post_num = #{postNum} and post_type = #{postType}
 order by parent_num, group_order;
 </select>
 
