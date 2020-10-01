@@ -151,6 +151,18 @@ public class BoardRepository implements IBoardRepository{
 		return sqlSessionTemplate.selectList("boardDAO.gettTop3Study", map);
 	}
 
+	@Override
+	public void deleteBoard(int boardNum) {
+		// TODO Auto-generated method stub
+		sqlSessionTemplate.delete("boardDAO.deleteBoard", boardNum);
+	}
+
+	@Override
+	public void deleteLikeList(int boardNum) {
+		// TODO Auto-generated method stub
+		sqlSessionTemplate.delete("likeDAO.deleteLikeList", boardNum);
+	}
+
 	
 	
 }

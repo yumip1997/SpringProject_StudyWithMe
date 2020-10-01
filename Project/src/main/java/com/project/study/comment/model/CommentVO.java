@@ -20,6 +20,9 @@ public class CommentVO {
 	Date writedate;
 	
 	String userId;
+	
+	//스터디 모집글 번호
+	int boardNum;
 
 	// 글 번호(board 글번호 or QnA 글번호 or File 글번호)
 	int postNum;
@@ -74,6 +77,14 @@ public class CommentVO {
 	public void setUserId(String userId) {
 		this.userId = userId;
 	}
+	
+	public int getBoardNum() {
+		return boardNum;
+	}
+
+	public void setBoardNum(int boardNum) {
+		this.boardNum = boardNum;
+	}
 
 	public int getPostNum() {
 		return postNum;
@@ -90,7 +101,4 @@ public class CommentVO {
 	public void setPostType(String postType) {
 		this.postType = postType;
 	}
-	
-	
-
 }

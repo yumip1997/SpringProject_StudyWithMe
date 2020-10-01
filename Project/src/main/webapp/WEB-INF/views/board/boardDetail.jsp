@@ -100,6 +100,7 @@
 			<form action="insertComment" method="post" id="commentForm">
 				<textarea class="form-control" rows="2" name="commentContent" id="commentContent"></textarea>
 				<input type="hidden" value="${principal}" name="userId">
+				<input type="hidden" value="${board.boardNum}" name="boardNum">
 				<input type="hidden" value="${board.boardNum}" name="postNum"> 
 				<input type="hidden" value="board" name="postType"> 
 				<input type="button" value="등록하기" class="btn btn-light pull-right m-1" id="commentBtn">
@@ -304,6 +305,7 @@
 			str += '<textarea class="form-control" rows="2" name="commentContent" id="replyContent"></textarea>';
 			str += '<input type="hidden" id="parentNum" name="parentNum">';
 			str += '<input type="hidden" value="${principal}" name="userId">';
+			str += '<input type="hidden" value="${board.boardNum}" name="boardNum">';
 			str += '<input type="hidden" value="${board.boardNum}" name="postNum">';
 			str += '<input type="hidden" value="board" name="postType">';
 			str += '<input type="button" value="답글달기" class="btn btn-light pull-right m-1" id="replyBtn">';
@@ -341,7 +343,7 @@
 
 		$('body').on('click', 'input:radio[name="deleteComment"]', function () {
 			var num = $(":radio[name='deleteComment']:checked").val();
-			if (confirm("정말 삭제하시겠습니까??") == true) {
+			if (confirm("정말 삭제하시겠습니까?") == true) {
 				$.ajax({
 					async: 'true',
 					url: "/study/comment/deleteComment",
@@ -369,7 +371,7 @@
 
 		$('body').on('click', 'input:radio[name="deleteReply"]', function () {
 			var num = $(":radio[name='deleteReply']:checked").val();
-			if (confirm("정말 삭제하시겠습니까??") == true) {
+			if (confirm("정말 삭제하시겠습니까?") == true) {
 				$.ajax({
 					async: 'true',
 					url: "/study/comment/deleteReply",

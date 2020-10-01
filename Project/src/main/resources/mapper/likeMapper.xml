@@ -41,5 +41,12 @@ select likes
 from board
 where board_num = #{boardNum}
 </select>
+
+<!-- 특정 스터디 모집 글의 like 기록 삭제 -->
+<delete id="deleteLikeList" parameterType="int">
+delete 
+from like_table
+where board_num =#{boardNum}
+</delete>
 </mapper>
 

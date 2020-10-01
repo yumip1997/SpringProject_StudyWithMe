@@ -1,9 +1,7 @@
 package com.project.study.file.controller;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,30 +9,28 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.project.study.board.dao.IBoardService;
+import com.project.study.comment.dao.ICommentService;
 import com.project.study.file.dao.IFileService;
 import com.project.study.file.model.FileVO;
 import com.project.study.util.PageMaker;
 
 @Controller
+@PreAuthorize("isAuthenticated() and hasAnyRole('ROLE_USER','ROLE_ADMIN')")
 public class FileController {
 
 	@Autowired
@@ -42,6 +38,9 @@ public class FileController {
 	
 	@Autowired
 	IBoardService boardService;
+	
+	@Autowired
+	ICommentService commentService;
 	
 	@GetMapping("/file/fileList/{boardNum}")
 	public String fileList(Model model, @PathVariable("boardNum")int boardNum,
@@ -135,6 +134,7 @@ public class FileController {
 	
 	@PostMapping("/file/deleteFile")
 	String deleteFile(@RequestParam("fileNum")int fileNum, @RequestParam("boardNum")int boardNum) {
+		commentService.deleteComListByType(fileNum, "file");
 		fileService.deleteFile(fileNum);
 		return "redirect:/file/fileList/" + boardNum;
 	}

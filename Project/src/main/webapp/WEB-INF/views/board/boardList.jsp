@@ -129,9 +129,14 @@
 
 	<!-- study list section -->
 	<div class="container pt-2">
-		<div class="row justify-content-start by-1">
-			<button class="btn btn-outline-secondary mb-3" id="insert">스터디
-				생성</button>
+		<div class="row justify-content-between by-1">
+			<button class="btn btn-outline-secondary mb-3" id="insert">스터디 생성</button>
+			<form method="post" action="/study/board/option">
+				<select name="orderOption" id="listOption" class="form-control">
+					<option value="recent">최신순</option>
+					<option value="like">좋아요 순</option>
+				</select>
+			</form>
 		</div>
 		<div class="row">
 			<table class="table table-hover" id="list">
@@ -195,6 +200,10 @@
 		var studyType = $(":radio[name='studyType']:checked").val();
 		location.href = "/study/board/boardList/" + studyType;
 	});
+	
+	$("#orderOption").on("change", function(){
+		alert(this.value);
+	})
 
 	$("#insert").on("click", function() {
 		location.href = "/study/board/insertBoard";

@@ -125,4 +125,18 @@ public class BoardService implements IBoardService {
 		// TODO Auto-generated method stub
 		return boardRepository.gettTop3Study(studyType);
 	}
+
+	@Transactional("txManager")
+	@Override
+	public void deleteBoard(int boardNum) {
+		// TODO Auto-generated method stub
+		boardRepository.deleteBoard(boardNum);
+	}
+
+	@Transactional("txManager")
+	@Override
+	public void deleteLikeList(int boardNum) {
+		// TODO Auto-generated method stub
+		boardRepository.deleteLikeList(boardNum);
+	}
 }

@@ -67,8 +67,22 @@ public class CommentService implements ICommentService{
 	}
 
 	@Override
-	public int getCountComment(int postNum) {
+	public int getCountComment(int postNum, String postType) {
 		// TODO Auto-generated method stub
-		return commentRepository.getCountComment(postNum);
+		return commentRepository.getCountComment(postNum, postType);
+	}
+
+	@Transactional("txManager")
+	@Override
+	public void deleteComListByType(int postNum, String postType) {
+		// TODO Auto-generated method stub
+		commentRepository.deleteComListByType(postNum, postType);
+	}
+
+	@Transactional("txManager")
+	@Override
+	public void deleteCommentList(int boardNum) {
+		// TODO Auto-generated method stub
+		commentRepository.deleteCommentList(boardNum);
 	}
 }

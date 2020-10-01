@@ -1,5 +1,6 @@
 package com.project.study.study.dao;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -28,10 +29,32 @@ public class StudyRepository implements IStudyRepository{
 	}
 
 	@Override
-	public List<StudyDetailVO> getStudyListByMem(String userId) {
+	public List<StudyDetailVO> getStudyListByMem(String userId, int page) {
 		// TODO Auto-generated method stub
-		return sqlSessionTemplate.selectList("studyDAO.getStudyListByMem", userId);
+		int start = (page-1)*10;
+		int end = start+10;
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("userId", userId);
+		map.put("start", start);
+		map.put("end", end);
+		
+		return sqlSessionTemplate.selectList("studyDAO.getStudyListByMem", map);
 	}
+
+	@Override
+	public int getCountStudyByMem(String userId) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectOne("studyDAO.getCountStudyByMem", userId);
+	}
+
+	@Override
+	public void deleteStudyMem(int boardNum) {
+		// TODO Auto-generated method stub
+		sqlSessionTemplate.delete("studyDAO.deleteStudyMem", boardNum);
+	}
+
+
 
 
 }

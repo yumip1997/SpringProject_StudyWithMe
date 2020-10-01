@@ -11,9 +11,7 @@
 	
 	<!-- 스터디 모집 글 목록 && 타입에 따른 목록 -->
 	<select id="getBoardList" resultType="boardVO">
-		select board_num, board_title, study_type,
-		writedate, views, likes,
-		userid, enabled
+		select *
 		from board
 		<include refid="checkType" />
 		order by board_num desc
@@ -157,5 +155,12 @@
 		on
 		bq.board_num = bf.board_num;
 	</select>
+	
+	<!-- 스터디 모집 글 삭제 -->
+	<delete id="deleteBoard" parameterType="int">
+	delete
+	from board
+	where board_num = #{boardNum}
+	</delete>
 
 </mapper>

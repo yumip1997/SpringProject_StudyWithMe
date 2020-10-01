@@ -3,6 +3,7 @@ package com.project.study.qna.controller;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -22,6 +23,7 @@ import com.project.study.qna.model.QnAVO;
 import com.project.study.util.PageMaker;
 
 @Controller
+@PreAuthorize("isAuthenticated() and hasAnyRole('ROLE_USER','ROLE_ADMIN')")
 @RequestMapping("/qna")
 public class QnAController {
 
@@ -102,6 +104,7 @@ public class QnAController {
 	
 	@PostMapping("/deleteQnA")
 	String deleteQnA(@RequestParam("qnaNum")int qnaNum, @RequestParam("boardNum")int boardNum) {
+		commentService.deleteComListByType(qnaNum, "qna");
 		qnaService.deleteQnA(qnaNum);
 		return "redirect:/qna/qnaList/"+boardNum;
 	}

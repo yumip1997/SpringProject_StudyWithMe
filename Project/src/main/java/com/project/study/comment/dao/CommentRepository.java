@@ -67,11 +67,26 @@ public class CommentRepository implements ICommentRepository{
 	}
 
 	@Override
-	public int getCountComment(int postNum) {
+	public int getCountComment(int postNum, String postType) {
 		// TODO Auto-generated method stub
-		return sqlSessionTemplate.selectOne("commentDAO.getCountComment", postNum);
+		HashMap<String, Object>map = new HashMap<String,Object>();
+		map.put("postNum", postNum);
+		map.put("postType", postType);
+		return sqlSessionTemplate.selectOne("commentDAO.getCountComment", map);
 	}
 
-	
+	@Override
+	public void deleteComListByType(int postNum, String postType) {
+		// TODO Auto-generated method stub
+		HashMap<String, Object>map = new HashMap<String,Object>();
+		map.put("postNum", postNum);
+		map.put("postType", postType);
+		sqlSessionTemplate.delete("commentDAO.deleteComListByType", map);
+	}
 
+	@Override
+	public void deleteCommentList(int boardNum) {
+		// TODO Auto-generated method stub
+		sqlSessionTemplate.delete("commentDAO.deleteCommentList", boardNum);
+	}
 }

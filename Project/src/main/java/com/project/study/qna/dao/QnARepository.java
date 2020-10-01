@@ -76,13 +76,16 @@ public class QnARepository implements IQnARepository{
 		// TODO Auto-generated method stub
 		sqlSessionTemplate.delete("qnaDAO.deleteQnA", qnaNum);
 	}
+	
+	@Override
+	public void deleteQnAList(int boardNum) {
+		// TODO Auto-generated method stub
+		sqlSessionTemplate.delete("qnaDAO.deleteQnAList", boardNum);
+	}
 
 	@Override
 	public void increaseViews(int qnaNum) {
 		// TODO Auto-generated method stub
 		sqlSessionTemplate.update("qnaDAO.increaseViews", qnaNum);	
 	}
-
-	
-
 }

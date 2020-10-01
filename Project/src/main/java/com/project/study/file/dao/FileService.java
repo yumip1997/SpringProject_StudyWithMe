@@ -64,4 +64,12 @@ public class FileService implements IFileService{
 		// TODO Auto-generated method stub
 		fileRepository.deleteFile(fileNum);
 	}
+
+
+	@Transactional("txManager")
+	@Override
+	public void deleteFileList(int boardNum) {
+		// TODO Auto-generated method stub
+		fileRepository.deleteFileList(boardNum);
+	}
 }

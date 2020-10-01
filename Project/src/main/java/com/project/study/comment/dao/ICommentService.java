@@ -7,8 +7,8 @@ import com.project.study.comment.model.CommentVO;
 public interface ICommentService {
 	// 댓글 목록
 	List<CommentVO> getCommentList(int postNum, String postType);
-	
-	//특정 댓글
+
+	// 특정 댓글
 	CommentVO getComment(int commentNum);
 
 	// 댓글 번호의 최댓 값 +1
@@ -28,7 +28,13 @@ public interface ICommentService {
 
 	// 댓글 삭제
 	void deleteComment(int commentNum);
-	
-	//스터디 모집글 별 댓글 개수
-	int getCountComment(int postNum);
+
+	// 특정 게시글(스터디 모집글, QnA, File) 별 댓글 개수
+	int getCountComment(int postNum, String postType);
+
+	// 특정 게시글(스터디 모집글, QnA, File)의 댓글 리스트 삭제
+	void deleteComListByType(int postNum, String postType);
+
+	// 특정 스터디의 전체 댓글 리스트(스터디 모집글, QnA, File) 삭제
+	void deleteCommentList(int boardNum);
 }

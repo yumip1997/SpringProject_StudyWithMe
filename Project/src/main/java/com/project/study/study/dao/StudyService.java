@@ -27,8 +27,20 @@ public class StudyService implements IStudyService{
 	}
 
 	@Override
-	public List<StudyDetailVO> getStudyListByMem(String userId) {
+	public List<StudyDetailVO> getStudyListByMem(String userId, int page) {
 		// TODO Auto-generated method stub
-		return studyRepository.getStudyListByMem(userId);
+		return studyRepository.getStudyListByMem(userId, page);
+	}
+
+	@Override
+	public int getCountStudyByMem(String userId) {
+		// TODO Auto-generated method stub
+		return studyRepository.getCountStudyByMem(userId);
+	}
+
+	@Override
+	public void deleteStudyMem(int boardNum) {
+		// TODO Auto-generated method stub
+		studyRepository.deleteStudyMem(boardNum);
 	}
 }

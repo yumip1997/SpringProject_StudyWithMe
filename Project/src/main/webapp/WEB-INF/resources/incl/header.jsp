@@ -36,6 +36,9 @@
         <a class="nav-link" href="/study/member/memberList">회원목록 </a>
       </li>
       <li class="nav-item">
+        <a class="nav-link" href="/study/studyList_Admin">스터디 목록</a>
+       </li>
+      <li class="nav-item">
         <a class="nav-link" href="/study/board/boardList/all">스터디 찾기</a>
       </li>
        <li class="nav-item">

@@ -4,6 +4,7 @@ import java.sql.Date;
 
 public class StudyDetailVO {
 	int boardNum;
+	String boardTitle;
 	String studyTitle;
 	String studyType;
 	String userId;
@@ -15,6 +16,12 @@ public class StudyDetailVO {
 	}
 	public void setBoardNum(int boardNum) {
 		this.boardNum = boardNum;
+	}
+	public String getBoardTitle() {
+		return boardTitle;
+	}
+	public void setBoardTitle(String boardTitle) {
+		this.boardTitle = boardTitle;
 	}
 	public String getStudyTitle() {
 		return studyTitle;

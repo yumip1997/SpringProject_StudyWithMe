@@ -66,6 +66,13 @@ public class QnAService implements IQnAService{
 		QnARepository.deleteQnA(qnaNum);
 		
 	}
+	
+	@Transactional("txManager")
+	@Override
+	public void deleteQnAList(int boardNum) {
+		// TODO Auto-generated method stub
+		QnARepository.deleteQnAList(boardNum);
+	}
 
 	@Transactional("txManager")
 	@Override
@@ -73,7 +80,4 @@ public class QnAService implements IQnAService{
 		// TODO Auto-generated method stub
 		QnARepository.increaseViews(qnaNum);
 	}
-
-	
-
 }

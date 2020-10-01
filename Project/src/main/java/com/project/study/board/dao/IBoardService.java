@@ -5,7 +5,6 @@ import java.util.List;
 
 import com.project.study.board.model.BoardVO;
 
-
 public interface IBoardService {
 	// 스터디 모집 글 전체 개수
 	public int getBoardCount(String studyType);
@@ -57,4 +56,11 @@ public interface IBoardService {
 
 	// 스터디 타입별 qna 개수, file개수 기준으로 총 개수가 많은 순으로 3개 스터디 목록
 	public List<HashMap<String, Object>> gettTop3Study(String studyType);
+
+	// 스터디 모집 글 삭제
+	public void deleteBoard(int boardNum);
+
+	// 스터디 모집 글의 좋아요 기록 전체 삭제
+	public void deleteLikeList(int boardNum);
+
 }

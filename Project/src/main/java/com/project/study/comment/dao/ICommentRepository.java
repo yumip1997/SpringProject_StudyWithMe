@@ -30,7 +30,12 @@ public interface ICommentRepository {
 	//댓글 삭제
 	void deleteComment(int commentNum);
 	
-	//스터디 모집글 별 댓글 개수
-	int getCountComment(int postNum);
-
+	//특정 게시글(스터디 모집글, QnA, File) 별 댓글 개수
+	int getCountComment(int postNum, String postType);
+	
+	//특정 게시글(스터디 모집글, QnA, File)의 댓글 리스트 삭제 
+	void deleteComListByType(int postNum, String postType);
+	
+	//특정 스터디의 전체 댓글 리스트(스터디 모집글, QnA, File) 삭제 
+	void deleteCommentList(int boardNum);
 }

@@ -10,19 +10,39 @@
 
 	<!-- 스터디 회원 중복확인 -->
 	<select id="checkDuplication" resultType="boolean">
-		select if(ifnull(count(userid),false),true,false) as
+		select
+		if(ifnull(count(userid),false),true,false) as
 		idCheck
 		from study
-		where board_num=#{boardNum} and userid=#{userId};
+		where
+		board_num=#{boardNum} and userid=#{userId};
 	</select>
 
 	<!-- 회원 별 스터디 목록 -->
-	<select id="getStudyListByMem" parameterType="String" resultType="studyDetailVO">
-		select s.board_num, study_title, study_type, s.userid,
+	<select id="getStudyListByMem" resultType="studyDetailVO">
+		select s.board_num, b.board_title,
+		study_title, study_type, s.userid,
 		b.userid as creator, b.writedate
 		from board b join study s on
 		b.board_num = s.board_num
-		where s.userid=#{userId}
+		where
+		s.userid=#{userId}
+		limit #{start}, #{end}
 	</select>
+
+	<!-- 회원 별 가입 스터디 수 -->
+	<select id="getCountStudyByMem" resultType="int">
+		select count(*)
+		from board b join study s on
+		b.board_num = s.board_num
+		where s.userid = #{userId}
+	</select>
+	
+	<!-- 특정 스터디의 전체 회원 목록 삭제 -->
+	<delete id="deleteStudyMem" parameterType="int">
+	delete 
+	from study
+	where board_num = #{boardNum}
+	</delete>
 
 </mapper>

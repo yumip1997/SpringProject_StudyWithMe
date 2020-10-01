@@ -72,6 +72,12 @@
 		delete from qna
 		where qna_num = #{qnaNum}
 	</delete>
+	
+	<!-- 특정 스터디의 전체 QnA 삭제 -->
+	<delete id="deleteQnAList" parameterType="int">
+	delete from qna
+	where board_num = #{boardNum}
+	</delete>
 
 	<!-- QnA 조회수 올리기 -->
 	<update id="increaseViews" parameterType="int">

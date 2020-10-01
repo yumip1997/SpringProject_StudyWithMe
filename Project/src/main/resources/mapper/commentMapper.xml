@@ -6,7 +6,7 @@
 <select id="getCommentList" resultType="commentVO">
 select *
 from comment
-where post_num = #{postNum} and post_type = #{postType}
+where post_num=#{postNum} and post_type=#{postType}
 order by parent_num, group_order;
 </select>
 
@@ -14,7 +14,7 @@ order by parent_num, group_order;
 <select id="getComment" parameterType="int" resultType="commentVO">
 select *
 from comment
-where comment_num = #{commentNum}
+where comment_num=#{commentNum}
 </select>
 
 <!-- 댓글 번호의 최댓 값 +1 : 댓글 삽입 시 사용-->
@@ -33,34 +33,47 @@ where parent_num=#{parentNum}
 <!-- 댓글 삽입 -->
 <insert id="insertComment" parameterType="commentVO">
 insert into
-comment(comment_num, parent_num, group_order, comment_content, userid, post_num, post_type)
-values(#{commentNum}, #{parentNum}, #{groupOrder}, #{commentContent}, #{userId}, #{postNum}, #{postType})
+comment(comment_num, parent_num, group_order, comment_content, userid, board_num, post_num, post_type)
+values(#{commentNum}, #{parentNum}, #{groupOrder}, #{commentContent}, #{userId}, #{boardNum},#{postNum}, #{postType})
 </insert>
 
 <!-- 답글 삽입 -->
 <insert id="insertReply" parameterType="commentVO">
 insert into
-comment(comment_num, parent_num, group_order, comment_content, userid, post_num, post_type)
-values(#{commentNum}, #{parentNum}, #{groupOrder}, #{commentContent}, #{userId}, #{postNum}, #{postType})
+comment(comment_num, parent_num, group_order, comment_content, userid, board_num, post_num, post_type)
+values(#{commentNum}, #{parentNum}, #{groupOrder}, #{commentContent}, #{userId}, #{boardNum},#{postNum}, #{postType})
 </insert>
+
 <!-- 댓글 수정 -->
 <update id="updateComment">
 update comment
 set
-comment_content = #{commentContent}
-where comment_num = #{commentNum}
+comment_content=#{commentContent}
+where comment_num=#{commentNum}
 </update>
 
 <!-- 댓글 삭제 -->
 <delete id="deleteComment">
 delete from comment
-where comment_num = #{commentNum}
+where comment_num=#{commentNum}
 </delete>
 
 <!-- 스터디 모집글 별 댓글 개수 -->
-<select id="getCountComment" parameterType="int" resultType="int">
+<select id="getCountComment" resultType="int">
 select count(*)
 from comment
-where post_num = #{postNum}
+where post_num=#{postNum} and post_type=#{postType}
 </select>
+
+<!-- 특정 게시글(스터디 모집글, QnA, File)의 댓글 리스트 삭제 -->
+<delete id="deleteComListByType">
+delete from comment
+where post_num=#{postNum} and post_type=#{postType}
+</delete>
+
+<!-- 특정 스터디의 전체 댓글 리스트(스터디 모집글, QnA, File) 삭제 -->
+<delete id="deleteCommentList">
+delete from comment
+where board_num=#{boardNum}
+</delete>
 </mapper>

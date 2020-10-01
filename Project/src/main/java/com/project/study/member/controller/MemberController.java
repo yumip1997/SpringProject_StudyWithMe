@@ -4,7 +4,7 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -23,6 +23,7 @@ import com.project.study.member.dao.IMemberService;
 import com.project.study.member.model.MemberVO;
 
 @Controller
+@PreAuthorize("isAuthenticated() and hasAnyRole('ROLE_USER','ROLE_ADMIN')")
 @RequestMapping("/member")
 public class MemberController {
 
@@ -33,6 +34,7 @@ public class MemberController {
 	private BCryptPasswordEncoder bpe;
 
 	// 회원 목록
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@GetMapping("/memberList")
 	public String memberList(Model model) {
 		model.addAttribute("memberList", memberService.getMemberList());

@@ -5,8 +5,8 @@ import java.util.List;
 import com.project.study.file.model.FileVO;
 
 public interface IFileService {
-	
-	//스터디 별 파일 전체 개수
+
+	// 스터디 별 파일 전체 개수
 	public int getFileCount(int boardNum);
 
 	// 스터디 별 파일 리스트
@@ -29,5 +29,8 @@ public interface IFileService {
 
 	// 파일 삭제
 	public void deleteFile(int fileNum);
+
+	// 특정 스터디의 전체 파일 목록 삭제
+	public void deleteFileList(int boardNum);
 
 }

@@ -30,6 +30,9 @@ public interface IQnARepository {
 	//QnA 삭제
 	public void deleteQnA(int qnaNum);
 	
+	//특정 스터디의 전체 QnA 삭제 
+	public void deleteQnAList(int boardNum);
+	
 	//QnA 조회수 올리기
 	public void increaseViews(int qnaNum);
 

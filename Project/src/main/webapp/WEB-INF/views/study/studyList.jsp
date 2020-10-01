@@ -1,8 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib uri="http://www.springframework.org/security/tags"
-	prefix="sec"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -34,21 +33,46 @@
 				<th>스터디 타입</th>
 				<th>스터디 창시자</th>
 				<th>스터디 생성일</th>
+				<th>스터디 모집글 제목</th>
 				<th></th>
 			</tr>
+
 			<c:forEach var="study" items="${studies}">
 				<tr>
 					<td>${study.studyTitle}</td>
 					<td>${study.studyType}</td>
 					<td>${study.creator}</td>
 					<td>${study.writedate}</td>
-					<td>
-					<button id="enter" class="btn btn-light"
-					onclick="location.href='/study/studyView/'+${study.boardNum}">
-					스터디 입장</button></td>
+					<td><a href="/study/board/${study.boardNum}">${study.boardTitle}</a></td>
+					<td><button class="btn btn-light"
+					onclick="location.href='/study/studyView/'+${study.boardNum}"> 스터디 입장</button>
+					</td>
 				</tr>
 			</c:forEach>
 		</table>
+		</div>
+	</div>
+	
+	<!-- pagination -->
+	<!-- 검색 시에는 출력되지 않음 -->
+	<div class="container mt-3">
+		<div class="row">
+				<ul class="pagination">
+					<li class="page-item">
+					<a class="page-link" href="/study/studyList?page=1">처음</a></li>
+					<c:if test="${pageMaker.nowBlock gt 1}">
+						<li class="page-item">
+						<a class="page-link" href="/study/studyList?page=${pageMaker.startPage-1}">이전</a>
+					</c:if>
+					<c:forEach var="i" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
+						<li class="page-item">
+						<a class="page-link" href="/study/studyList?page=${i}">${i}</a></li>
+					</c:forEach>
+					<c:if test="${pageMaker.nowBlock < pageMaker.totalBlock}">
+						<li class="page-item">
+						<a class="page-link" href="/study/studyList?page=${pageMaker.endPage+1}">다음</a></li>
+					</c:if>
+				</ul>
 		</div>
 	</div>
 	
