@@ -16,13 +16,6 @@
 	<!-- menu -->
 	<jsp:include page="/WEB-INF/resources/incl/header.jsp" />
 	
-	<!-- header -->
-	<div class="jumbotron bg-secondary">
-		<div class="container-fluid p-3 text-center">
-			<h1 class="text-white">Study With Me</h1>
-		</div>
-	</div>
-	
 	<!-- Study List -->
 	<div class="container py-5">
 		<h2>전체 스터디 목록</h2>

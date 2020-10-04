@@ -42,12 +42,16 @@ public class BoardController {
 	ICommentService commentService;
 
 	// 스터디 타입에 따른 스터디 모집 글 목록보기
-	@GetMapping("/boardList/{studyType}")
-	public String boardListbyType(Model model, @PathVariable String studyType, @RequestParam(required=false, defaultValue="1")int page) {
-		model.addAttribute("boardList", boardService.getBoardList(studyType, page));
+	@GetMapping("/boardList")
+	public String boardListbyType(Model model, 
+			@RequestParam(required=false, defaultValue="all") String studyType, 
+			@RequestParam(required=false, defaultValue="writedate")String listOption, 
+			@RequestParam(required=false, defaultValue="1")int page) {
+		model.addAttribute("boardList", boardService.getBoardList(studyType, listOption, page));
 		model.addAttribute("pageMaker", new PageMaker(boardService.getBoardCount(studyType), page));
 		model.addAttribute("Top3List", boardService.gettTop3Study(studyType));
 		model.addAttribute("studyType", studyType);
+		model.addAttribute("listOption", listOption);
 		return "board/boardList";
 	}
 
@@ -68,6 +72,7 @@ public class BoardController {
 			@RequestParam("keyword") String keyword, @RequestParam("studyType") String studyType) {
 		model.addAttribute("boardList", boardService.searchBoard(searchOption, keyword, studyType));
 		model.addAttribute("searchedCount",  boardService.countBoard(searchOption, keyword, studyType));
+		model.addAttribute("studyType", studyType);
 		return "board/boardList";
 	}
 

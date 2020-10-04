@@ -17,18 +17,12 @@
 	<!-- menu -->
 	<jsp:include page="/WEB-INF/resources/incl/header.jsp" />
 
-	<!-- header -->
-	<div class="jumbotron bg-secondary">
-		<div class="container-fluid p-1 text-center">
-			<h1 class="text-white">Study With Me</h1>
-		</div>
-	</div>
-
 	<!-- study type -->
 	<div class="container container-fluid pt-2">
 		<div class="container p-3">
 			<h2>스터디 목록</h2>
 		</div>
+
 
 		<div class="row text-center">
 			<div class="col-sm-2">
@@ -37,8 +31,8 @@
 				</label>
 			</div>
 			<div class="col-sm-2">
-				<label class="btn btn-outline-secondary"> <input
-					type="radio" name="studyType" value="어학">어학
+				<label class="btn btn-outline-secondary"> 
+				<input type="radio" name="studyType" value="어학">어학
 				</label>
 			</div>
 			<div class="col-sm-2">
@@ -79,6 +73,7 @@
 					<input type="text" name="keyword" type="search" class="form-control">
 				</div>
 				<div class="form-group col-md-1">
+					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 					<input type="hidden" name="studyType" value="${studyType}">
 					<input type="submit" value="검색" class="btn btn-secondary">
 				</div>
@@ -131,12 +126,16 @@
 	<div class="container pt-2">
 		<div class="row justify-content-between by-1">
 			<button class="btn btn-outline-secondary mb-3" id="insert">스터디 생성</button>
-			<form method="post" action="/study/board/option">
-				<select name="orderOption" id="listOption" class="form-control">
-					<option value="recent">최신순</option>
-					<option value="like">좋아요 순</option>
+			<c:if test="${empty searchedCount}">
+			<form id="listOptionForm">
+				<select name="listOption" id="listOption" class="form-control">
+					<option value="">--정렬기준--</option>
+					<option value="writedate">최신순</option>
+					<option value="likes">좋아요 순</option>
 				</select>
+				<input type="hidden" name="studyType" value="${studyType}">
 			</form>
+			</c:if>
 		</div>
 		<div class="row">
 			<table class="table table-hover" id="list">
@@ -173,18 +172,18 @@
 		<div class="row">
 				<ul class="pagination">
 					<li class="page-item">
-					<a class="page-link" href="/study/board/boardList/${studyType}?page=1">처음</a></li>
+					<a class="page-link" href="/study/board/boardList?studyType=${studyType}&&listOption=${listOption}&&page=1">처음</a></li>
 					<c:if test="${pageMaker.nowBlock gt 1}">
 						<li class="page-item">
-						<a class="page-link" href="/study/board/boardList/${studyType}?page=${pageMaker.startPage-1}">이전</a>
+						<a class="page-link" href="/study/board/boardList?studyType=${studyType}&&listOption=${listOption}&&page=${pageMaker.startPage-1}">이전</a>
 					</c:if>
 					<c:forEach var="i" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
 						<li class="page-item">
-						<a class="page-link" href="/study/board/boardList/${studyType}?page=${i}">${i}</a></li>
+						<a class="page-link" href="/study/board/boardList?studyType=${studyType}&&listOption=${listOption}&&page=${i}">${i}</a></li>
 					</c:forEach>
 					<c:if test="${pageMaker.nowBlock < pageMaker.totalBlock}">
 						<li class="page-item">
-						<a class="page-link" href="/study/board/boardList/${studyType}?page=${pageMaker.endPage+1}">다음</a></li>
+						<a class="page-link" href="/study/board/boardList?studyType=${studyType}&&listOption=${listOption}&&page=${pageMaker.endPage+1}">다음</a></li>
 					</c:if>
 				</ul>
 		</div>
@@ -196,17 +195,19 @@
 </body>
 
 <script>
-	$("input:radio[name='studyType']").on("click", function() {
-		var studyType = $(":radio[name='studyType']:checked").val();
-		location.href = "/study/board/boardList/" + studyType;
-	});
-	
-	$("#orderOption").on("change", function(){
-		alert(this.value);
-	})
 
-	$("#insert").on("click", function() {
-		location.href = "/study/board/insertBoard";
-	});
+ 		$("input:radio[name='studyType']").on("click", function() {
+ 			var studyType = $(":radio[name='studyType']:checked").val();
+ 			location.href = "/study/board/boardList?studyType="+studyType;
+ 		});
+ 		
+ 		$("#listOption").on("change", function(){
+ 			$("#listOptionForm").submit();
+ 		})
+
+ 		$("#insert").on("click", function() {
+ 			location.href = "/study/board/insertBoard";
+ 		});
+ 
 </script>
 </html>

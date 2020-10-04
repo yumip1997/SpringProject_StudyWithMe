@@ -13,13 +13,6 @@
 	<!-- menu -->
 	<jsp:include page="/WEB-INF/resources/incl/header.jsp" />
 
-	<!-- header -->
-	<div class="jumbotron bg-secondary">
-		<div class="container-fluid p-1 text-center">
-			<h1 class="text-white">Study With Me</h1>
-		</div>
-	</div>
-
 	<!-- create Study -->
 	<div class="container container-fluid pt-5">
 		<div class="container text-center mb-2">
@@ -59,6 +52,7 @@
 
 			<div class="container">
 				<div class="row justify-content-end">
+					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 					<input type="submit" value="등록하기" class="btn btn-outline-secondary m-1"> 
 					<input type="reset" value="초기화하기" class="btn btn-outline-secondary m-1"> 
 					<input type="button" value="목록보기" class="btn btn-outline-secondary m-1"

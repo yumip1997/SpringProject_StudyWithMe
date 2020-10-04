@@ -18,13 +18,6 @@
 	<!-- menu -->
 	<jsp:include page="/WEB-INF/resources/incl/header.jsp" />
 
-	<!-- header -->
-	<div class="jumbotron bg-secondary">
-		<div class="container-fluid p-3 text-center">
-			<h1 class="text-white">Study With Me</h1>
-		</div>
-	</div>
-
 	<!-- update form -->
 	<div class="container container-fluid p-5">
 		<div class="container text-center">
@@ -57,6 +50,7 @@
 					
 					<div class="container">
 					<div class="d-flex justify-content-end">
+						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 						<input type="hidden" name="userId" value="${member.userId}">
 						<input type="submit" value="수정" class="btn btn-outline-secondary m-1"> 
 						<input type="reset" value="초기화" class="btn btn-outline-secondary m-1">
@@ -109,6 +103,7 @@
 					
 					<div class="container">
 					<div class="d-flex justify-content-end">
+					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 					<input type="hidden" name="userId" value="${member.userId}">
 					<input type="submit" value="수정" class="btn btn-outline-secondary m-1"> 
 					<input type="button" value="취소" class="btn btn-outline-secondary m-1"

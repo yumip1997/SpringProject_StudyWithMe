@@ -16,12 +16,6 @@
 <body>
 	<!-- menu -->
 	<jsp:include page="/WEB-INF/resources/incl/header.jsp" />
-	<!-- header -->
-	<div class="jumbotron bg-secondary">
-		<div class="container-fluid p-1 text-center">
-			<h1 class="text-white">Study With Me</h1>
-		</div>
-	</div>
 
 	<!-- signin form-->
 	<div class="container container-fluid pt-5">
@@ -42,6 +36,7 @@
 					<div class="form-group">${message}
 						<%session.removeAttribute("message");%>
 					</div>
+					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 					<input class="btn btn-secondary" type="submit" value="로그인">
 				</form>
 		</div>

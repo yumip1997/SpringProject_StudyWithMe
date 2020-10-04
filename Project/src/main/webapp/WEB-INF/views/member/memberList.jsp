@@ -14,13 +14,6 @@
 	<!-- menu -->
 	<jsp:include page="/WEB-INF/resources/incl/header.jsp" />
 
-	<!-- header -->
-	<div class="jumbotron bg-secondary">
-		<div class="container-fluid p-1 text-center">
-			<h1 class="text-white">Study With Me</h1>
-		</div>
-	</div>
-
 	<div class="container container-fluid pt-2">
 		<div class="container p-3">
 			<h2>회원 목록</h2>

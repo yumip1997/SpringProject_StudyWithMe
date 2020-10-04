@@ -10,7 +10,7 @@ public interface IBoardService {
 	public int getBoardCount(String studyType);
 
 	// 스터디 모집 글 목록 && 타입에 따른 목록
-	public List<BoardVO> getBoardList(String studyType, int page);
+	public List<BoardVO> getBoardList(String studyType, String listOption, int page);
 
 	// 스터디 모집 글 상세조회
 	public BoardVO getBoard(int num);

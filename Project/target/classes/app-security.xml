@@ -25,7 +25,7 @@
 		<security:access-denied-handler error-page="/error/autherror" />
 
 		<!-- csrf 공격 방어 -->
-		<security:csrf disabled="true" />
+		<security:csrf disabled="false" />
 
 		<!-- 중복로그인 방지 -->
 		<security:session-management>

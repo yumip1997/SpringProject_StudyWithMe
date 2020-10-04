@@ -24,12 +24,13 @@ public class BoardRepository implements IBoardRepository{
 	}
 
 	@Override
-	public List<BoardVO> getBoardList(String studyType, int page) {
+	public List<BoardVO> getBoardList(String studyType, String listOption, int page) {
 		// TODO Auto-generated method stub
 		int start = (page-1)*10;
 		int end = start+10;
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("studyType", studyType);
+		map.put("listOption", listOption);
 		map.put("start",start);
 		map.put("end", end);
 		return sqlSessionTemplate.selectList("boardDAO.getBoardList", map);

@@ -3,7 +3,6 @@ package com.project.study.study.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -59,7 +58,7 @@ public class StudyController {
 	@GetMapping("/studyList_Admin")
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public String studyListAdmin(Model model, @RequestParam(required = false, defaultValue = "1") int page) {
-		model.addAttribute("studies", boardService.getBoardList("all", page));
+		model.addAttribute("studies", boardService.getBoardList("all", "writedate", page));
 		model.addAttribute("pageMaker", new PageMaker(boardService.getBoardCount("all"), page));
 		return "/study/studyList_Admin";
 	}

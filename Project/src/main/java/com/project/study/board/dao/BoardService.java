@@ -22,9 +22,9 @@ public class BoardService implements IBoardService {
 	}
 
 	@Override
-	public List<BoardVO> getBoardList(String studyType, int page) {
+	public List<BoardVO> getBoardList(String studyType, String listOption, int page) {
 		// TODO Auto-generated method stub
-		return boardRepository.getBoardList(studyType, page);
+		return boardRepository.getBoardList(studyType, listOption, page);
 	}
 
 	@Override

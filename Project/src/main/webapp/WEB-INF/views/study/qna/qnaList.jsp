@@ -16,13 +16,6 @@
 	<!-- menu -->
 	<jsp:include page="/WEB-INF/resources/incl/header.jsp" />
 
-	<!-- header -->
-	<div class="jumbotron bg-secondary">
-		<div class="container-fluid p-1 text-center">
-			<h1 class="text-white">Study With Me</h1>
-		</div>
-	</div>
-
 	<!-- qna list -->
 	<div class="container container-fluid mt-5">
 		<div class="container">
@@ -44,6 +37,7 @@
 						<input type="text" name="keyword" type="search" class="form-control">
 					</div>
 					<div class="form-group col-md-1">
+						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 						<input type="hidden" value="${boardNum}" name="boardNum">
 						<input type="submit" value="검색" class="btn btn-secondary">
 					</div>
@@ -87,6 +81,7 @@
 	</div>
 	
 	<!-- pagination -->
+	<c:if test="${empty count}">
 	<div class="container mt-3">
 		<div class="row">
 				<ul class="pagination">
@@ -107,6 +102,7 @@
 				</ul>
 		</div>
 	</div>
+	</c:if>
 	
 	<!-- footer -->
 	<jsp:include page="/WEB-INF/resources/incl/footer.jsp" />

@@ -14,13 +14,6 @@
 <body>
 <jsp:include page="/WEB-INF/resources/incl/header.jsp" />
 
-<!-- header -->
-<div class="jumbotron bg-secondary">
-<div class="container-fluid p-5 text-center">
-<h1 class="text-white">Study With Me</h1>
-</div>
-</div>
-
 <!-- About us -->
 <div class="container-fluid p-5 text-center">
 <h2>About us</h2>

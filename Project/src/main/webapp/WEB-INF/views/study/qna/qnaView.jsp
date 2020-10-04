@@ -16,13 +16,6 @@
 	<!-- menu -->
 	<jsp:include page="/WEB-INF/resources/incl/header.jsp" />
 
-	<!-- header -->
-	<div class="jumbotron bg-secondary">
-		<div class="container-fluid p-1 text-center">
-			<h1 class="text-white">Study With Me</h1>
-		</div>
-	</div>
-
 	<!-- qna Detail -->
 	<div class="container container-fluid pt-5">
 		<div class="container text-center mb-2">
@@ -54,6 +47,7 @@
 				</tr>
 			</table>
 			<c:if test="${qna.userId eq principal}">
+				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 				<input type="hidden" value="${qna.qnaNum}" name="qnaNum">
 				<input type="hidden" value="${qna.boardNum}" name="boardNum">
 				<input type="submit" value="수정하기" class="btn btn-light m-1" id="update">
@@ -69,6 +63,7 @@
 		<h5>Comment (<span id="commentCount"></span>) : </h5>
 			<form action="insertComment" method="post" id="commentForm">
 				<textarea class="form-control" rows="2" name="commentContent" id="commentContent"></textarea>
+				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 				<input type="hidden" value="${principal}" name="userId"> 
 				<input type="hidden" value="${qna.boardNum}" name="boardNum"> 
 				<input type="hidden" value="${qna.qnaNum}" name="postNum" id="postNum"> 
@@ -184,6 +179,7 @@
 			var str = '<tr><td>';
 			str += '<form action="insertReply" method="post" id="replyForm">';
 			str += '<textarea class="form-control" rows="2" name="commentContent" id="replyContent"></textarea>';
+			str += '<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">';
 			str += '<input type="hidden" id="parentNum" name="parentNum">';
 			str += '<input type="hidden" value="${principal}" name="userId">';
 			str += '<input type="hidden" value="${qna.boardNum}" name="boardNum">';

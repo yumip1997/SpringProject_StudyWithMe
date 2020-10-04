@@ -23,7 +23,7 @@ import com.project.study.member.dao.IMemberService;
 import com.project.study.member.model.MemberVO;
 
 @Controller
-@PreAuthorize("isAuthenticated() and hasAnyRole('ROLE_USER','ROLE_ADMIN')")
+
 @RequestMapping("/member")
 public class MemberController {
 
@@ -42,6 +42,7 @@ public class MemberController {
 	}
 
 	// 회원상세조회
+	@PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
 	@GetMapping("/{userId}")
 	public String viewMember(Model model, @PathVariable String userId) {
 		MemberVO member = new MemberVO();
@@ -76,6 +77,7 @@ public class MemberController {
 		return "redirect:../index";
 	}
 	
+	@PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
 	//GetMapping 회원정보 수정
 	@GetMapping("/updateMember")
 	public String updateMember(Model model, @RequestParam String userId) {
@@ -92,6 +94,7 @@ public class MemberController {
 	}
 	
 	//PostMapping 회원정보 수정
+	@PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
 	@PostMapping("/updateMember")
 	public String updateMember(@ModelAttribute("member") @Valid MemberVO member, BindingResult result,
 			@RequestParam("userId")String userId) {
@@ -103,6 +106,7 @@ public class MemberController {
 	}
 	
 	//회원 활성화 여부, 권한 변경
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
 	@PostMapping("/updateAccount")
 	public String updateAccount(@RequestParam("userId")String userId, @RequestParam("enabled")char enabled,
 			@RequestParam("authority")String authority) {
@@ -112,6 +116,7 @@ public class MemberController {
 	}
 	
 	//회원 탈퇴
+	@PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
 	@GetMapping("/deleteMember/{userId}")
 	public String deleteMember(@PathVariable String userId, HttpSession session) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();

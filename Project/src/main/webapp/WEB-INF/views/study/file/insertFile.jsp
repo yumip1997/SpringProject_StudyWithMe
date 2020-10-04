@@ -16,21 +16,14 @@
 	<!-- menu -->
 	<jsp:include page="/WEB-INF/resources/incl/header.jsp" />
 
-	<!-- header -->
-	<div class="jumbotron bg-secondary">
-		<div class="container-fluid p-1 text-center">
-			<h1 class="text-white">Study With Me</h1>
-		</div>
-	</div>
-
 	<!-- upload file -->
 	<div class="container container-fluid pt-5">
 		<div class="container text-center mb-2">
 			<h2>파일 업로드</h2>
 		</div>
 
-		<form:form action="/study/file/insertFile" method="post"
-			modelAttribute="file" enctype="multipart/form-data"
+		<form:form action="/study/file/insertFile?${_csrf.parameterName}=${_csrf.token}" 
+			method="post" modelAttribute="file" enctype="multipart/form-data"
 			accept-charset="UTF-8" class="form-group">
 
 			<div class="form-group">

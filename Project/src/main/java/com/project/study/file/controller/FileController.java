@@ -62,7 +62,7 @@ public class FileController {
 	}
 	
 	@PostMapping("/file/search")
-	public String searchQnA(Model model, @RequestParam("searchOption") String searchOption,
+	public String searchFile(Model model, @RequestParam("searchOption") String searchOption,
 			@RequestParam("keyword") String keyword, @RequestParam("boardNum") int boardNum) {
 		String studyTitle = boardService.getBoard(boardNum).getStudyTitle();
 		model.addAttribute("boardNum", boardNum);

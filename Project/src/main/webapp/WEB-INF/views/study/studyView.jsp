@@ -6,23 +6,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 <jsp:include page="/WEB-INF/resources/incl/staticHeader.jsp" />
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <title>Study With Me</title>
 </head>
 <body>
 	<!-- menu -->
 	<jsp:include page="/WEB-INF/resources/incl/header.jsp" />
-
-	<!-- header -->
-	<div class="jumbotron bg-secondary">
-		<div class="container-fluid p-3 text-center">
-			<h1 class="text-white">Study With Me</h1>
-		</div>
-	</div>
 
 	<!-- QnA & File  -->
 	<div class="container container-fluid mt-5">

@@ -14,7 +14,14 @@
 		select *
 		from board
 		<include refid="checkType" />
-		order by board_num desc
+		<choose>
+		<when test="listOption !=null and !listOption.equals('null')">
+		order by ${listOption} desc
+		</when>
+		<otherwise>
+		order by writedate desc
+		</otherwise>
+		</choose>
 		limit #{start}, #{end}
 	</select>
 
@@ -64,9 +71,11 @@
 
 	<sql id="completedSearch">
 		<choose>
-			<when test="studyType !=all and !studyType.equals('all')">
+			<when test="studyType !=null and !studyType.equals('null')">
 				<include refid="search"></include>
+				<if test="studyType !=all and !studyType.equals('all')">
 				and study_type = #{studyType}
+				</if>
 			</when>
 			<otherwise>
 				<include refid="search" />
