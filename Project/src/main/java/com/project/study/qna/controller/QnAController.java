@@ -104,7 +104,6 @@ public class QnAController {
 	
 	@PostMapping("/deleteQnA")
 	String deleteQnA(@RequestParam("qnaNum")int qnaNum, @RequestParam("boardNum")int boardNum) {
-		commentService.deleteComListByType(qnaNum, "qna");
 		qnaService.deleteQnA(qnaNum);
 		return "redirect:/qna/qnaList/"+boardNum;
 	}

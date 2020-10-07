@@ -77,10 +77,4 @@ public class FileRepository implements IFileRepository{
 		// TODO Auto-generated method stub
 		sqlSessionTemplate.delete("fileDAO.deleteFile", fileNum);
 	}
-
-	@Override
-	public void deleteFileList(int boardNum) {
-		// TODO Auto-generated method stub
-		sqlSessionTemplate.delete("fileDAO.deleteFileList", boardNum);
-	}
 }

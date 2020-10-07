@@ -83,10 +83,4 @@ public class CommentRepository implements ICommentRepository{
 		map.put("postType", postType);
 		sqlSessionTemplate.delete("commentDAO.deleteComListByType", map);
 	}
-
-	@Override
-	public void deleteCommentList(int boardNum) {
-		// TODO Auto-generated method stub
-		sqlSessionTemplate.delete("commentDAO.deleteCommentList", boardNum);
-	}
 }

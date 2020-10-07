@@ -100,7 +100,7 @@ public class BoardController {
 		study.setUserId(userId);
 		studyService.insertStudy(study);
 
-		return "redirect:/board/boardList/all";
+		return "redirect:/board/boardList";
 	}
 
 	// PoatMapping 스터디 모집 글 수정페이지로 이동

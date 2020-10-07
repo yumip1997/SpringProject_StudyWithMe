@@ -37,12 +37,4 @@
 		b.board_num = s.board_num
 		where s.userid = #{userId}
 	</select>
-	
-	<!-- 특정 스터디의 전체 회원 목록 삭제 -->
-	<delete id="deleteStudyMem" parameterType="int">
-	delete 
-	from study
-	where board_num = #{boardNum}
-	</delete>
-
 </mapper>

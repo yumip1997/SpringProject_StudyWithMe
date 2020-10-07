@@ -30,15 +30,6 @@ public class StudyController {
 	@Autowired
 	IBoardService boardService;
 
-	@Autowired
-	IQnAService qnaService;
-
-	@Autowired
-	IFileService fileService;
-
-	@Autowired
-	ICommentService commentService;
-
 	@PostMapping("/join")
 	@ResponseBody
 	public boolean checkDuplication(int boardNum, String userId) {
@@ -84,20 +75,9 @@ public class StudyController {
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@GetMapping("/deleteStudy")
 	public String deleteStudy(@RequestParam("boardNum") int boardNum) {
-
-		// 해당 스터디의 스터디 모집글, qna, file의 댓글 리스트 삭제
-		commentService.deleteCommentList(boardNum);
-		// 해당 스터디의 전체 qna 삭제
-		qnaService.deleteQnAList(boardNum);
-		// 해당 스터디의 전체 file 삭제
-		fileService.deleteFileList(boardNum);
-		// 해당 스터디의 회원 목록 삭제
-		studyService.deleteStudyMem(boardNum);
-		// 해당 스터디의 스터디 모집 글 좋아요 기록 삭제
-		boardService.deleteLikeList(boardNum);
-		// 해당 스터디의 스터디 모집 글 삭제
+		
+		// 해당 스터디의 스터디 모집 글 삭제 -> on cascade delete속성으로 관계 된 스터디 명단, qna, file, like_table, comment 테이블의 컬럼이 모두 삭제 
 		boardService.deleteBoard(boardNum);
-
 		return "redirect:/studyList";
 	}
 

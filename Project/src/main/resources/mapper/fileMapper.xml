@@ -78,11 +78,4 @@
 		delete from file
 		where file_num = #{fileNum}
 	</delete>
-	
-	<!-- 특정 스터디의 전체 파일 목록 삭제 -->
-	<delete id="deleteFileList" parameterType="int">
-	delete from file
-	where board_num = #{boardNum}
-	</delete>
-
 </mapper>

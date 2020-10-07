@@ -47,14 +47,4 @@ public class StudyRepository implements IStudyRepository{
 		// TODO Auto-generated method stub
 		return sqlSessionTemplate.selectOne("studyDAO.getCountStudyByMem", userId);
 	}
-
-	@Override
-	public void deleteStudyMem(int boardNum) {
-		// TODO Auto-generated method stub
-		sqlSessionTemplate.delete("studyDAO.deleteStudyMem", boardNum);
-	}
-
-
-
-
 }

@@ -70,10 +70,4 @@ where post_num=#{postNum} and post_type=#{postType}
 delete from comment
 where post_num=#{postNum} and post_type=#{postType}
 </delete>
-
-<!-- 특정 스터디의 전체 댓글 리스트(스터디 모집글, QnA, File) 삭제 -->
-<delete id="deleteCommentList">
-delete from comment
-where board_num=#{boardNum}
-</delete>
 </mapper>

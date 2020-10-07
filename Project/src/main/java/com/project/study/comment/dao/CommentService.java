@@ -78,11 +78,4 @@ public class CommentService implements ICommentService{
 		// TODO Auto-generated method stub
 		commentRepository.deleteComListByType(postNum, postType);
 	}
-
-	@Transactional("txManager")
-	@Override
-	public void deleteCommentList(int boardNum) {
-		// TODO Auto-generated method stub
-		commentRepository.deleteCommentList(boardNum);
-	}
 }

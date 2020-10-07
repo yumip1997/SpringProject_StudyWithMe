@@ -37,10 +37,4 @@ public class StudyService implements IStudyService{
 		// TODO Auto-generated method stub
 		return studyRepository.getCountStudyByMem(userId);
 	}
-
-	@Override
-	public void deleteStudyMem(int boardNum) {
-		// TODO Auto-generated method stub
-		studyRepository.deleteStudyMem(boardNum);
-	}
 }

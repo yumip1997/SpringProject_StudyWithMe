@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.project.study.comment.dao.ICommentRepository;
 import com.project.study.qna.model.QnAVO;
 
 @Service
@@ -13,6 +14,9 @@ public class QnAService implements IQnAService{
 	
 	@Autowired
 	IQnARepository QnARepository;
+	
+	@Autowired
+	ICommentRepository CommentRepository;
 	
 	@Override
 	public int getQnACount(int boardNum) {
@@ -63,17 +67,10 @@ public class QnAService implements IQnAService{
 	@Override
 	public void deleteQnA(int qnaNum) {
 		// TODO Auto-generated method stub
+		CommentRepository.deleteComListByType(qnaNum, "qna");
 		QnARepository.deleteQnA(qnaNum);
-		
 	}
 	
-	@Transactional("txManager")
-	@Override
-	public void deleteQnAList(int boardNum) {
-		// TODO Auto-generated method stub
-		QnARepository.deleteQnAList(boardNum);
-	}
-
 	@Transactional("txManager")
 	@Override
 	public void increaseViews(int qnaNum) {

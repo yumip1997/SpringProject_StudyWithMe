@@ -29,8 +29,4 @@ public interface IFileService {
 
 	// 파일 삭제
 	public void deleteFile(int fileNum);
-
-	// 특정 스터디의 전체 파일 목록 삭제
-	public void deleteFileList(int boardNum);
-
 }

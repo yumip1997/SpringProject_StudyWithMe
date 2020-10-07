@@ -135,34 +135,27 @@
 	</resultMap>
 
 	<select id="gettTop3Study" resultMap="top3List">
-		select bq.board_num as board_num, bq.study_title as study_title,
-		bq.study_type as study_type,
-		bq.userid as userid, date_format(bq.writedate,'%Y-%m-%d') as writedate,
-		bq.qna_total as qna_total, bf.file_total as file_total
-		from
-		(select
-		b.board_num, b.study_title, b.study_type, b.writedate,
-		b.userid,
-		count(*) as qna_total
-		from board b join qna q
-		on b.board_num =
-		q.board_num
-		<include refid="checkType" />
-		group by b.board_num
-		order by qna_total desc
-		limit 3) as bq
-		join
-		(select
-		b.board_num, count(*) as file_total
-		from board b join file f
-		on
-		b.board_num = f.board_num
-		<include refid="checkType" />
-		group by f.board_num
-		order by file_total desc
-		limit 3) as bf
-		on
-		bq.board_num = bf.board_num;
+		select * from
+		<choose>
+		<when test="studyType == 'all'">
+		allTop3
+		</when>
+		<when test="studyType == '어학'">
+		lanTop3
+		</when>
+		<when test="studyType == '공무원'">
+		gongshiTop3
+		</when>
+		<when test="studyType == '고시'">
+		goshiTop3
+		</when>
+		<when test="studyType == '취업'">
+		jobTop3
+		</when>
+		<when test="studyType == '기타'">
+		etcTop3
+		</when>
+		</choose>
 	</select>
 	
 	<!-- 스터디 모집 글 삭제 -->

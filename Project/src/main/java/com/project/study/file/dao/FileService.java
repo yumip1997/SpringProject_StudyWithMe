@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.project.study.comment.dao.ICommentRepository;
 import com.project.study.file.model.FileVO;
 
 @Service
@@ -13,6 +14,9 @@ public class FileService implements IFileService{
 	
 	@Autowired
 	IFileRepository fileRepository;
+	
+	@Autowired
+	ICommentRepository commentRepository;
 	
 	@Override
 	public int getFileCount(int boardNum) {
@@ -51,6 +55,7 @@ public class FileService implements IFileService{
 		// TODO Auto-generated method stub
 		fileRepository.uploadFile(file);
 	}
+	
 	@Transactional("txManager")
 	@Override
 	public void updateFile(FileVO file) {
@@ -62,14 +67,7 @@ public class FileService implements IFileService{
 	@Override
 	public void deleteFile(int fileNum) {
 		// TODO Auto-generated method stub
+		commentRepository.deleteComListByType(fileNum, "file");
 		fileRepository.deleteFile(fileNum);
-	}
-
-
-	@Transactional("txManager")
-	@Override
-	public void deleteFileList(int boardNum) {
-		// TODO Auto-generated method stub
-		fileRepository.deleteFileList(boardNum);
 	}
 }
