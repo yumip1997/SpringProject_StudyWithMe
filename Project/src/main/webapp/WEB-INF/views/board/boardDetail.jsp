@@ -187,6 +187,7 @@
 				}
 			})
 		});
+		
 		$("#updateEnabled").on("click", function() {
 			$.ajax({
 				async : 'true',

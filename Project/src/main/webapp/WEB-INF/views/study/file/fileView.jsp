@@ -27,24 +27,24 @@
 		<sec:authentication var="principal" property="principal" />
 		<input type="hidden" value="${principal}" id="principal"> 
 		<form id="target" method="post" class="p-4">
-			<table class="table table-hover">
+			<table class="table table-striped">
 				<tr>
-					<th>자료 제목</th>
+					<td style="width : 30%">자료 제목</td>
 					<td>${file.fileTitle}</td>
 				</tr>
 
 				<tr>
-					<th>자료 설명</th>
+					<td>자료 설명</td>
 					<td>${file.fileContent}</td>
 				</tr>
 
 				<tr>
-					<th>작성자</th>
+					<td>작성자</td>
 					<td>${file.userId}</td>
 				</tr>
 
 				<tr>
-					<th>자료 다운로드</th>
+					<td>자료 다운로드</td>
 					<td><a href="/study/file/download/${file.fileNum}">${file.fileTitle}(
 							<c:choose>
 								<c:when test="${file.fileSize ge 1048576}">

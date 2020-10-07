@@ -61,7 +61,4 @@ public class CommentController {
 	public void deleteReply(int commentNum) {
 		commentService.deleteComment(commentNum);
 	}
-	
-	
-	
 }

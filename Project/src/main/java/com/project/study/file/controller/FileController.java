@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -31,6 +32,7 @@ import com.project.study.util.PageMaker;
 
 @Controller
 @PreAuthorize("isAuthenticated() and hasAnyRole('ROLE_USER','ROLE_ADMIN')")
+@RequestMapping("/file")
 public class FileController {
 
 	@Autowired
@@ -42,7 +44,7 @@ public class FileController {
 	@Autowired
 	ICommentService commentService;
 	
-	@GetMapping("/file/fileList/{boardNum}")
+	@GetMapping("/fileList/{boardNum}")
 	public String fileList(Model model, @PathVariable("boardNum")int boardNum,
 			@RequestParam(required=false, defaultValue="1")int page) {
 		
@@ -55,13 +57,13 @@ public class FileController {
 		return "/study/file/fileList";
 	}
 	
-	@GetMapping("/file/{fileNum}")
+	@GetMapping("/{fileNum}")
 	public String viewFile(Model model, @PathVariable("fileNum")int fileNum) {
 		model.addAttribute("file", fileService.getFile(fileNum));
 		return "/study/file/fileView";
 	}
 	
-	@PostMapping("/file/search")
+	@PostMapping("/search")
 	public String searchFile(Model model, @RequestParam("searchOption") String searchOption,
 			@RequestParam("keyword") String keyword, @RequestParam("boardNum") int boardNum) {
 		String studyTitle = boardService.getBoard(boardNum).getStudyTitle();
@@ -73,7 +75,7 @@ public class FileController {
 	}
 	
 	
-	@GetMapping("/file/download/{fileNum}")
+	@GetMapping("/download/{fileNum}")
 	public ResponseEntity<byte[]> downloadFile(@PathVariable("fileNum")int fileNum) {
 		FileVO file = fileService.getFile(fileNum);
 		final HttpHeaders headers = new HttpHeaders();
@@ -88,7 +90,7 @@ public class FileController {
 		}
 	}
 		
-	@GetMapping("/file/insertFile/{boardNum}")
+	@GetMapping("/insertFile/{boardNum}")
 	public String insertFile(Model model, @PathVariable("boardNum")int boardNum) {
 		FileVO file = new FileVO();
 		file.setBoardNum(boardNum);
@@ -96,7 +98,7 @@ public class FileController {
 		return "/study/file/insertFile";
 	}
 		
-	@PostMapping("/file/insertFile")
+	@PostMapping("/insertFile")
 	String insertFile(@ModelAttribute("file")@Valid FileVO file,
 			BindingResult result,
 			@RequestParam("uploadfile")MultipartFile uploadfile,
@@ -126,13 +128,13 @@ public class FileController {
 		return "redirect:/file/fileList/"+file.getBoardNum();
 	}
 	
-	@PostMapping("/file/updateFilePage")
+	@PostMapping("/updateFilePage")
 	String updateFilePage(Model model, @RequestParam("fileNum")int fileNum) {
 		model.addAttribute("file", fileService.getFile(fileNum));
 		return "/study/file/updateFile";
 	}
 	
-	@PostMapping("/file/deleteFile")
+	@PostMapping("/deleteFile")
 	String deleteFile(@RequestParam("fileNum")int fileNum, @RequestParam("boardNum")int boardNum) {
 		commentService.deleteComListByType(fileNum, "file");
 		fileService.deleteFile(fileNum);

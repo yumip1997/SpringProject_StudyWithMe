@@ -8,9 +8,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 <jsp:include page="/WEB-INF/resources/incl/staticHeader.jsp" />
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<title>Insert title here</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<title>Study With Me</title>
 </head>
 <body>
 	<!-- menu -->
@@ -22,9 +21,9 @@
 			<h2>파일 업로드</h2>
 		</div>
 
-		<form:form action="/study/file/insertFile?${_csrf.parameterName}=${_csrf.token}" 
+		<form:form action="/study/file/insertFile" 
 			method="post" modelAttribute="file" enctype="multipart/form-data"
-			accept-charset="UTF-8" class="form-group">
+			accept-charset="UTF-8" id="target" class="form-group">
 
 			<div class="form-group">
 				<label>자료 제목 : </label>
@@ -34,19 +33,19 @@
 
 			<div class="form-group">
 				<label>자료 설명 : </label>
-				<form:input path="fileContent" type="textarea" area="5" class="form-control" />
+				<form:textarea path="fileContent" type="textarea" rows="5" class="form-control" />
 				<form:errors path="fileContent" />
 			</div>
 
 			<div class="form-group">
 				<label>파일 업로드 </label> 
-				<input name="uploadfile" type="file" id="uploadfile" data-icon-name="fa fa-upload"/>
+				<input type="file" name="uploadfile" id="uploadfile"/>
 			</div>
 
 			<div class="container">
 				<div class="row justify-content-end">
 					<input type="hidden" value="${boardNum}" name="boardNum"> 
-					<input type="submit" value="등록하기" class="btn btn-outline-secondary m-1">
+					<input type="button" id="upload" value="등록하기" class="btn btn-outline-secondary m-1">
 					<input type="reset" value="초기화하기" class="btn btn-outline-secondary m-1"> 
 					<input type="button" value="목록보기" class="btn btn-outline-secondary m-1"
 					onclick="location.href='/study/file/fileList/'+${boardNum}">
@@ -59,9 +58,21 @@
 	<jsp:include page="/WEB-INF/resources/incl/footer.jsp" />
 
 	<script>
-		$("#submit").on("click", function() {
-			if ($("#uploadfile").val() == "") {
-				alert('파일을 첨부하세요');
+		$("input[id=uploadfile]").on("change", function(){
+			var maxSize = 15728640;
+			var fileSize = this.files[0].size;
+			if(maxSize < fileSize){
+				alert("업로드 가능한 최대 파일 사이즈는 15MB입니다.");
+				$("#uploadfile").val("");
+			}
+		});
+		
+		$("#upload").on("click", function() {
+			if($("#uploadfile").val() == ""){
+				alert('업로드 할 파일이 없습니다. 파일을 첨부해 주세요.');
+				return;
+			}else{
+				$("#target").submit();
 			}
 		});
 	</script>

@@ -110,13 +110,11 @@
 </body>
 	<script>
 		$("#insert").on("click", function() {
-			var boardNum = ${boardNum};
-			location.href = "/study/qna/insertQnA/" + boardNum;
+			location.href = "/study/qna/insertQnA/" + ${boardNum};
 		})
 
 		$("#viewList").on("click", function() {
-			var boardNum = ${boardNum};
-			location.href = "/study/studyView/" + boardNum;
+			location.href = "/study/studyView/" + ${boardNum};
 		})
 	</script>
 

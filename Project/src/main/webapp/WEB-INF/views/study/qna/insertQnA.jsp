@@ -29,7 +29,7 @@
 			
 			<div class="form-group">
 				<label>질문 내용 : </label>
-				<form:input path="qnaContent" type="textarea" rows="5" class="form-control"/>
+				<form:textarea path="qnaContent" type="textarea" rows="5" class="form-control"/>
 				<form:errors path="qnaContent" />
 			</div>
 

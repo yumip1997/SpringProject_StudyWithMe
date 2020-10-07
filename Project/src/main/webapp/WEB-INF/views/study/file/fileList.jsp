@@ -123,12 +123,10 @@
 
 <script>
 	$("#insert").on("click", function() {
-		var boardNum = ${boardNum};
-		location.href = "/study/file/insertFile/" + boardNum;
+		location.href = "/study/file/insertFile/" + ${boardNum};
 	});
 
 	$("#viewList").on("click", function() {
-		var boardNum = ${boardNum};
 		location.href = "/study/studyView/" + ${boardNum};
 	});
 </script>

@@ -56,7 +56,7 @@
 					<input type="submit" value="등록하기" class="btn btn-outline-secondary m-1"> 
 					<input type="reset" value="초기화하기" class="btn btn-outline-secondary m-1"> 
 					<input type="button" value="목록보기" class="btn btn-outline-secondary m-1"
-					onclick="location.href='/study/board/boardList/all'">
+					onclick="location.href='/study/board/boardList'">
 				</div>
 			</div>
 		</form:form>
