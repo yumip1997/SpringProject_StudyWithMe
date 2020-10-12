@@ -144,7 +144,7 @@
 		commentList();
 		
 		$("#update").on("click", function() {
-			$("#target").attr("action", "updateFilePage");
+			$("#target").attr("action", "updateFile");
 		});
 
 		$("#delete").on("click", function() {

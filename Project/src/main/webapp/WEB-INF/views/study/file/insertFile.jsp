@@ -21,25 +21,23 @@
 			<h2>파일 업로드</h2>
 		</div>
 
-		<form:form action="/study/file/insertFile" 
+		<form:form action="/study/file/insertFile?${_csrf.parameterName}=${_csrf.token}" 
 			method="post" modelAttribute="file" enctype="multipart/form-data"
 			accept-charset="UTF-8" id="target" class="form-group">
 
 			<div class="form-group">
 				<label>자료 제목 : </label>
-				<form:input path="fileTitle" class="form-control" />
-				<form:errors path="fileTitle" />
+				<input name="fileTitle" id="fileTitle" class="form-control" />
 			</div>
 
 			<div class="form-group">
 				<label>자료 설명 : </label>
-				<form:textarea path="fileContent" type="textarea" rows="5" class="form-control" />
-				<form:errors path="fileContent" />
+				<textarea name="fileContent" rows="5" class="form-control"></textarea>
 			</div>
 
 			<div class="form-group">
 				<label>파일 업로드 </label> 
-				<input type="file" name="uploadfile" id="uploadfile"/>
+				<input type="file" name="uploadedFile" id="uploadedFile"/>
 			</div>
 
 			<div class="container">
@@ -58,22 +56,30 @@
 	<jsp:include page="/WEB-INF/resources/incl/footer.jsp" />
 
 	<script>
-		$("input[id=uploadfile]").on("change", function(){
+		$("input[id=uploadedFile]").on("change", function(){
 			var maxSize = 15728640;
 			var fileSize = this.files[0].size;
 			if(maxSize < fileSize){
 				alert("업로드 가능한 최대 파일 사이즈는 15MB입니다.");
-				$("#uploadfile").val("");
+				$("#uploadedFile").val("");
 			}
 		});
 		
 		$("#upload").on("click", function() {
-			if($("#uploadfile").val() == ""){
+			var len = $("#fileTitle").val().length;
+			
+			if($("#uploadedFile").val() == ""){
 				alert('업로드 할 파일이 없습니다. 파일을 첨부해 주세요.');
-				return;
-			}else{
-				$("#target").submit();
+				return false;
 			}
+			
+			if(len<2 || len>20){
+				alert('자료 제목은 2~20자로 입력해주세요.');
+				return false;
+			}
+			
+			$("#target").submit();
+			
 		});
 	</script>
 </body>

@@ -100,8 +100,8 @@ public class FileController {
 		
 	@PostMapping("/insertFile")
 	String insertFile(@ModelAttribute("file")@Valid FileVO file,
+			@RequestParam("uploadedFile")MultipartFile uploadedFile,
 			BindingResult result,
-			@RequestParam("uploadfile")MultipartFile uploadfile,
 			RedirectAttributes redirectAttrs){
 
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -111,14 +111,13 @@ public class FileController {
 		}
 		
 		try {
-			if(uploadfile !=null && !uploadfile.isEmpty()) {
-				
+			if(uploadedFile != null && !(uploadedFile.isEmpty())) {
 				file.setFileTitle(file.getFileTitle());
 				file.setFileContent(file.getFileContent());
-				file.setFileSize(uploadfile.getSize());
-				file.setFileName(uploadfile.getOriginalFilename());
-				file.setFileContentType(uploadfile.getContentType());
-				file.setFileData(uploadfile.getBytes());
+				file.setFileSize(uploadedFile.getSize());
+				file.setFileName(uploadedFile.getOriginalFilename());
+				file.setFileContentType(uploadedFile.getContentType());
+				file.setFileData(uploadedFile.getBytes());
 				file.setUserId(auth.getName());
 				fileService.uploadFile(file);
 			}
@@ -128,7 +127,7 @@ public class FileController {
 		return "redirect:/file/fileList/"+file.getBoardNum();
 	}
 	
-	@PostMapping("/updateFilePage")
+	@PostMapping("/updateFile")
 	String updateFilePage(Model model, @RequestParam("fileNum")int fileNum) {
 		model.addAttribute("file", fileService.getFile(fileNum));
 		return "/study/file/updateFile";

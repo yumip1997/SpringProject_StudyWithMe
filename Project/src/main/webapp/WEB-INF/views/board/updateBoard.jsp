@@ -18,7 +18,7 @@
 	<!-- create Study -->
 	<div class="container container-fluid pt-5">
 		<div class="container text-center mb-2">
-			<h2>스터디 생성</h2>
+			<h2>스터디 수정</h2>
 		</div>
 		<form:form action="updateBoard" method="post" modelAttribute="board"
 			class="form-gruop">

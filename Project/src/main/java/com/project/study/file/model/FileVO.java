@@ -5,6 +5,7 @@ import java.sql.Date;
 import javax.validation.constraints.NotEmpty;
 
 import org.hibernate.validator.constraints.Length;
+import org.springframework.web.multipart.MultipartFile;
 
 public class FileVO {
 
@@ -26,11 +27,10 @@ public class FileVO {
 	
 	private Date fileUploadDate;
 	
-	@NotEmpty
 	private byte[] fileData;
 	
 	private String userId;
-
+	
 	public int getBoardNum() {
 		return boardNum;
 	}
@@ -110,7 +110,5 @@ public class FileVO {
 	public void setFileData(byte[] fileData) {
 		this.fileData = fileData;
 	}
-	
-	
 
 }
