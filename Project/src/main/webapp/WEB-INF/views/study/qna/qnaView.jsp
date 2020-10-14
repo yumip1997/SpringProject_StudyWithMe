@@ -133,7 +133,7 @@
 		commentList();
 		
 		$("#update").on("click", function() {
-			$("#target").attr("action", "updateQnAPage")
+			$("#target").attr("action", "updateQnAPage");
 		});
 
 		$("#delete").on("click", function() {

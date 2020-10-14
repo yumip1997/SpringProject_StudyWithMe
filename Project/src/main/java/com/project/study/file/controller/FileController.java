@@ -99,16 +99,10 @@ public class FileController {
 	}
 		
 	@PostMapping("/insertFile")
-	String insertFile(@ModelAttribute("file")@Valid FileVO file,
-			@RequestParam("uploadedFile")MultipartFile uploadedFile,
-			BindingResult result,
+	String insertFile(FileVO file,@RequestParam("uploadedFile")MultipartFile uploadedFile,
 			RedirectAttributes redirectAttrs){
 
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		
-		if(result.hasErrors()) {
-			return "/study/file/insertFile";
-		}
 		
 		try {
 			if(uploadedFile != null && !(uploadedFile.isEmpty())) {
@@ -127,10 +121,33 @@ public class FileController {
 		return "redirect:/file/fileList/"+file.getBoardNum();
 	}
 	
-	@PostMapping("/updateFile")
+	@PostMapping("/updateFilePage")
 	String updateFilePage(Model model, @RequestParam("fileNum")int fileNum) {
-		model.addAttribute("file", fileService.getFile(fileNum));
+		FileVO file = fileService.getFile(fileNum);
+		
+		model.addAttribute("file", file);
 		return "/study/file/updateFile";
+	}
+	
+	@PostMapping("/updateFile")
+	String updateFile(FileVO file, @RequestParam("uploadedFile")MultipartFile uploadedFile,
+			RedirectAttributes redirectAttrs) {
+		
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		
+		try {
+			if(uploadedFile != null && !(uploadedFile.isEmpty())) {
+				file.setFileSize(uploadedFile.getSize());
+				file.setFileName(uploadedFile.getOriginalFilename());
+				file.setFileContentType(uploadedFile.getContentType());
+				file.setFileData(uploadedFile.getBytes());
+				file.setUserId(auth.getName());
+				fileService.updateFile(file);
+			}
+		}catch(IOException e) {
+			redirectAttrs.addFlashAttribute("message", e.getMessage());
+		}
+		return "redirect:/file/"+file.getFileNum();
 	}
 	
 	@PostMapping("/deleteFile")

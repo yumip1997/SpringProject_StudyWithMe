@@ -26,7 +26,6 @@
 
 		<sec:authentication var="principal" property="principal" />
 		<input type="hidden" value="${principal}" id="principal"> 
-		<form id="target" method="post" class="p-4">
 			<table class="table table-striped">
 				<tr>
 					<td style="width : 30%">자료 제목</td>
@@ -58,12 +57,13 @@
 				</tr>
 
 			</table>
+		<form id="target" method="post">
 			<c:if test="${file.userId eq principal}">
 				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 				<input type="hidden" value="${file.fileNum}" name="fileNum">
 				<input type="hidden" value="${file.boardNum}" name="boardNum">
-				<input type="submit" value="수정하기" class="btn btn-light m-1" id="upadte">
-				<input type="submit" value="삭제하기" class="btn btn-light m-1" id="delete">
+				<button type="button" class="btn btn-light m-1" id="update">수정하기</button>
+				<button type="button" class="btn btn-light m-1" id="delete">삭제하기</button>
 			</c:if>
 		</form>
 		<button class="btn btn-outline-secondary pull-right" id="viewList">목록보기</button>
@@ -144,12 +144,14 @@
 		commentList();
 		
 		$("#update").on("click", function() {
-			$("#target").attr("action", "updateFile");
+			$("#target").attr("action", "updateFilePage")
+			$("#target").submit();
 		});
 
 		$("#delete").on("click", function() {
 			if (confirm("정말로 삭제하시겠습니까?") == true) {
 				$("#target").attr("action", "deleteFile");
+				$("#target").submit();
 				return true;
 			} else {
 				return false;

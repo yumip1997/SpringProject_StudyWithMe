@@ -21,8 +21,8 @@
 			<h2>파일 업로드</h2>
 		</div>
 
-		<form:form action="/study/file/insertFile?${_csrf.parameterName}=${_csrf.token}" 
-			method="post" modelAttribute="file" enctype="multipart/form-data"
+		<form action="/study/file/insertFile?${_csrf.parameterName}=${_csrf.token}" 
+			method="post" enctype="multipart/form-data"
 			accept-charset="UTF-8" id="target" class="form-group">
 
 			<div class="form-group">
@@ -49,7 +49,7 @@
 					onclick="location.href='/study/file/fileList/'+${boardNum}">
 				</div>
 			</div>
-		</form:form>
+		</form>
 	</div>
 	
 	<!-- footer -->

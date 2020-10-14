@@ -116,4 +116,7 @@
 		</c:choose>
 	</div>
 </div>
+	<!-- footer -->
+	<jsp:include page="/WEB-INF/resources/incl/footer.jsp" />
+</body>
 </html>
