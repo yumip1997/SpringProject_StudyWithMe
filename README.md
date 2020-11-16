@@ -1,5 +1,5 @@
 # SpringProject_StudyWithMe
-SpringProject
+StudyWithMe
 
 그룹 스터디 진행 플랫폼
 
