@@ -19,7 +19,7 @@
 
 	<!-- study type -->
 	<div class="container container-fluid pt-2">
-		<div class="container p-3">
+		<div class="container p-3 text-center">
 			<h2>스터디 목록</h2>
 		</div>
 

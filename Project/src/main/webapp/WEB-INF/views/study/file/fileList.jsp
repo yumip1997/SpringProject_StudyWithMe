@@ -19,8 +19,8 @@
 	<jsp:include page="/WEB-INF/resources/incl/header.jsp" />
 
 	<div class="container container-fluid mt-5">
-		<div class="container">
-			<h2>${studyTitle}자료실</h2>
+		<div class="container text-center">
+			<h2>${studyTitle} 자료실</h2>
 		</div>
 
 		<!-- search section -->

@@ -18,8 +18,8 @@
 
 	<!-- qna list -->
 	<div class="container container-fluid mt-5">
-		<div class="container">
-			<h2>${studyTitle} 질의응답 게시판</h2>
+		<div class="container text-center">
+			<h2>${studyTitle} 스터디 질의응답 게시판</h2>
 		</div>
 
 		<!-- search section -->
