@@ -32,6 +32,12 @@ public class MemberService implements IMemberService{
 		// TODO Auto-generated method stub
 		memberRepository.insertMember(member);
 	}
+	
+	@Override
+	public boolean checkIdDuplication(String userId) {
+		// TODO Auto-generated method stub
+		return memberRepository.checkIdDuplication(userId);
+	}
 
 	@Override
 	public String getPassword(String userId) {

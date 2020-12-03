@@ -13,6 +13,9 @@ public interface IMemberRepository {
 	
 	// 회원가입
 	void insertMember(MemberVO member);
+	
+	// 아이디 중복확인
+	boolean checkIdDuplication(String userId);
 
 	// 회원 비밀번호
 	String getPassword(String userId);

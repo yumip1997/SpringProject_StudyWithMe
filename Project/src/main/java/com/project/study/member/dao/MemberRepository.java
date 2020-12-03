@@ -26,6 +26,12 @@ public class MemberRepository implements IMemberRepository {
 		// TODO Auto-generated method stub
 		sqlSessionTemplate.insert("memberDAO.insertMember", member);
 	}
+	
+	@Override
+	public boolean checkIdDuplication(String userId) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectOne("memberDAO.checkIdDuplication", userId);
+	}
 
 	@Override
 	public MemberVO getMember(String userId) {
@@ -70,4 +76,5 @@ public class MemberRepository implements IMemberRepository {
 		// TODO Auto-generated method stub
 		sqlSessionTemplate.delete("memberDAO.deleteMember", userId);
 	}
+
 }

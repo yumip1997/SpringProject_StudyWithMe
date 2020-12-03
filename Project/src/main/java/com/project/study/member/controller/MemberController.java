@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.project.study.member.dao.IMemberService;
 import com.project.study.member.model.MemberVO;
@@ -75,6 +75,17 @@ public class MemberController {
 		member.setEnabled('1');
 		memberService.insertMember(member);
 		return "redirect:../index";
+	}
+	
+	//PostMapping 회원중복 체크
+	@PostMapping("/checkId")
+	@ResponseBody
+	public boolean checkIdDuplication(String userId) {
+		if(!memberService.checkIdDuplication(userId)) {
+			return true;
+		}else {
+			return false;
+		}
 	}
 	
 	@PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")

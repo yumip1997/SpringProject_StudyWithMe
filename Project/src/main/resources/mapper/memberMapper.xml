@@ -7,7 +7,7 @@
 		select userid, name, email
 		from member
 	</select>
-	
+
 	<!-- 회원상세조회 -->
 	<select id="getMember" parameterType="String"
 		resultType="memberVO">
@@ -15,7 +15,7 @@
 		from member
 		where userid = #{userId}
 	</select>
-	
+
 	<!-- 회원가입 -->
 	<insert id="insertMember" parameterType="memberVO">
 		insert into
@@ -24,7 +24,15 @@
 		(#{userId}, #{name},
 		#{password}, #{email}, '1', "ROLE_USER")
 	</insert>
-	
+
+	<!-- 회원 중복 확인 -->
+	<select id="checkIdDuplication" resultType="boolean">
+		select
+		if(ifnull(count(userid),false),true,false) as idCheck
+		from member
+		where userid=#{userId};
+	</select>
+
 	<!-- 회원 비밀번호 -->
 	<select id="getPassword" parameterType="String"
 		resultType="String">
@@ -53,12 +61,12 @@
 		authority = #{authority}
 		where userid=#{userId}
 	</update>
-	
+
 	<!-- 회원탈퇴 -->
 	<delete id="deleteMember" parameterType="String">
-	delete from member
-	where userid=#{userId}
+		delete from member
+		where userid=#{userId}
 	</delete>
-	
+
 
 </mapper>
