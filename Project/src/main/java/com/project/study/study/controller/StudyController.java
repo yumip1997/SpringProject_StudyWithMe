@@ -13,9 +13,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.project.study.board.dao.IBoardService;
-import com.project.study.comment.dao.ICommentService;
-import com.project.study.file.dao.IFileService;
-import com.project.study.qna.dao.IQnAService;
 import com.project.study.study.dao.IStudyService;
 import com.project.study.study.model.StudyVO;
 import com.project.study.util.PageMaker;

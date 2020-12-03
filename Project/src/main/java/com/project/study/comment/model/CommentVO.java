@@ -2,7 +2,6 @@ package com.project.study.comment.model;
 
 import java.sql.Date;
 
-import javax.validation.constraints.NotEmpty;
 
 public class CommentVO {
 	
