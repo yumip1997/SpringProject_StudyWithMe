@@ -88,8 +88,8 @@ public class MemberController {
 		}
 	}
 	
-	@PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
 	//GetMapping 회원정보 수정
+	@PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
 	@GetMapping("/updateMember")
 	public String updateMember(Model model, @RequestParam String userId) {
 		MemberVO member = new MemberVO();
