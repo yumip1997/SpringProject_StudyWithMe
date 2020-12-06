@@ -1,6 +1,6 @@
 # SpringProject_StudyWithMe
 StudyWithMe
-
+개발기간 2020.08~2020.10
 그룹 스터디 진행 플랫폼
 
 1. 어학, 공무원, 고시, 취업, 기타 카테고리 별로 스터디를 찾아보세요!
